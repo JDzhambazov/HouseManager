@@ -9,6 +9,7 @@
     using System.Threading.Tasks;
 
     using HouseManager.Data.Models;
+    using HouseManager.Services.Data;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -19,23 +20,26 @@
     using Microsoft.Extensions.Logging;
 
     [AllowAnonymous]
-    public class RegisterModel : PageModel
+    public class RegisterAddressModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
+        private readonly ILogger<RegisterAddressModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IAddressService _addressService;
 
-        public RegisterModel(
+        public RegisterAddressModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            ILogger<RegisterAddressModel> logger,
+            IEmailSender emailSender,
+            IAddressService addressService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _addressService = addressService;
         }
 
         [BindProperty]
@@ -70,13 +74,41 @@
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Парола")]
+            [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Потвърдете паролата")]
+            [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            //Address properties
+
+            [Required]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "Населено място")]
+            public string City { get; set; }
+
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "Квартал")]
+            public string District { get; set; }
+
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "Улица")]
+            public string Street { get; set; }
+
+
+            [StringLength(5, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+            [Display(Name = "Номер")]
+            public string Number { get; set; }
+
+            [StringLength(5, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+            [Display(Name = "Вход")]
+            public string Entrance { get; set; }
+
+            [Required]
+            [Display(Name = "Брой имоти(апартаменти,гаражи, ателиета и др.)")]
+            public int NumberOfProperties { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -101,6 +133,7 @@
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    _addressService.CreateAddress(Input.City, Input.District, Input.Street, Input.Number, Input.Entrance, Input.NumberOfProperties, user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

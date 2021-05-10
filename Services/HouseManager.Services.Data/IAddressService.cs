@@ -7,6 +7,8 @@
     public interface IAddressService
     {
         void CreateAddress(string cityName, string districtName, string streetName, string number, string entrance, int numberOfProperties);
+        
+        void CreateAddress(string cityName, string districtName, string streetName, string number, string entrance, int numberOfProperties, ApplicationUser manager);
 
         void SetAddressManager(int addressId, string userFullName);
 
