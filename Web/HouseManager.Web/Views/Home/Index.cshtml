@@ -1,4 +1,7 @@
 ﻿@using HouseManager.Common
+@using HouseManager.Web.ViewModels.Users
+
+@model IEnumerable<UserListViewModel>;
 @{
     this.ViewData["Title"] = "Home Page";
 }
@@ -6,4 +9,13 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+    <select>
+        @foreach (var item in Model)
+        {
+            <option value="@item.FullName">@item.FullName</option>
+        }
+    </select>
 </div>

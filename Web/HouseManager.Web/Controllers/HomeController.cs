@@ -1,16 +1,25 @@
 ﻿namespace HouseManager.Web.Controllers
 {
     using System.Diagnostics;
-
+    using HouseManager.Services.Data;
     using HouseManager.Web.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
+        private readonly IUserService userService;
+
+        public HomeController(IUserService userService)
+        {
+            this.userService = userService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var users = this.userService.GetAllUsersInAddress(1);
+
+            return this.View(users);
         }
 
         public IActionResult Privacy()
