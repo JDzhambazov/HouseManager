@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\HouseManager.Data.Common\HouseManager.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\HouseManager.Data.Models\HouseManager.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\HouseManager.Data\HouseManager.Data.csproj" />
+    <ProjectReference Include="..\..\Web\HouseManager.Web.ViewModels\HouseManager.Web.ViewModels.csproj" />
     <ProjectReference Include="..\HouseManager.Services.Mapping\HouseManager.Services.Mapping.csproj" />
   </ItemGroup>
 
