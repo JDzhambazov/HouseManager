@@ -1,4 +1,4 @@
-﻿namespace Services
+﻿namespace HouseManager.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;

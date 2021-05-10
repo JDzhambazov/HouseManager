@@ -17,7 +17,9 @@
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
     <None Include="appsettings.Production.json" />
+    <None Include="Views\DueAmount\MonthAmount.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

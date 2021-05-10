@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# SA1649: File name should match first type name
+dotnet_diagnostic.SA1649.severity = none
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = none
