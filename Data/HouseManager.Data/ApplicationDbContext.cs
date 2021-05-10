@@ -26,6 +26,34 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Address> Addresses { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<District> Districts { get; set; }
+
+        public DbSet<Street> Streets { get; set; }
+
+        public DbSet<Property> Properties { get; set; }
+
+        public DbSet<PropertyType> PropertiesTypes { get; set; }
+
+        public DbSet<Expens> Expens { get; set; }
+
+        public DbSet<MonthFee> MonthlyFees { get; set; }
+
+        public DbSet<RegularIncome> RegularIncomes { get; set; }
+
+        public DbSet<NotRegularIncome> NotRegularIncomes { get; set; }
+
+        public DbSet<RegularDueAmount> RegularDueAmounts { get; set; }
+
+        public DbSet<NotRegularDueAmount> NotRegularDueAmounts { get; set; }
+
+        public DbSet<FeeType> FeeTypes { get; set; }
+
+        public DbSet<ExpensType> ExpensesTypes { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -47,6 +75,24 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<MonthFee>()
+                .HasOne(x => x.Address)
+                .WithMany(x => x.MonthlyFees)
+                .HasForeignKey(x => x.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<RegularIncome>()
+                .HasOne(x => x.Address)
+                .WithMany(x => x.RegularIncomes)
+                .HasForeignKey(x => x.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<NotRegularIncome>()
+                .HasOne(x => x.Address)
+                .WithMany(x => x.NotRegularIncomes)
+                .HasForeignKey(x => x.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
