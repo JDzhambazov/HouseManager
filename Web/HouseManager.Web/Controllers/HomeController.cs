@@ -1,25 +1,26 @@
 ﻿namespace HouseManager.Web.Controllers
 {
     using System.Diagnostics;
+    using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Web.ViewModels;
-
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
         private readonly IUserService userService;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public HomeController(IUserService userService)
+        public HomeController(IUserService userService, SignInManager<ApplicationUser> signInManager)
         {
             this.userService = userService;
+            this.signInManager = signInManager;
         }
 
         public IActionResult Index()
         {
-            var users = this.userService.GetAllUsersInAddress(1);
-
-            return this.View(users);
+            return this.View(userService.GetUserAddresses(User.Identity.Name));
         }
 
         public IActionResult Privacy()
