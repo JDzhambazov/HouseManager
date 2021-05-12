@@ -6,7 +6,7 @@
 
     using HouseManager.Data.Models;
 
-    internal class SettingsSeeder : ISeeder
+    internal class SettingsSeeder1 : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
@@ -17,7 +17,7 @@
 
             await dbContext.Settings.AddAsync(new Setting { Name = "Setting1", Value = "value1" });
             await dbContext.Addresses.AddAsync(new Address
-            {
+            { 
                 City = new City { Name = "Бургас" },
                 District = new District { Name = "Лазур" },
                 Number = "88",
