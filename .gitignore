@@ -368,3 +368,4 @@ appsettings.Production.json
 *.min.css
 *.min.js
 SettingsSeeder.cs
+AddressSeeder.cs
