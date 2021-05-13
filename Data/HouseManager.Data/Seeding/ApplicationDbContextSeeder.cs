@@ -28,6 +28,7 @@
                               new RolesSeeder(),
                               new SettingsSeeder(),
                               new AddressSeeder(),
+                              new PropertiesTypesSeeder(),
                           };
 
             foreach (var seeder in seeders)
