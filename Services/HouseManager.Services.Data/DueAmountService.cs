@@ -124,6 +124,7 @@
                         .FirstOrDefault();
                     result.Add(new MounthAmountViewModel
                     {
+                        Id = property.Id,
                         PropertyName = property.Name,
                         ResidentName = user.FullName,
                         ResidentsCount = property.ResidentsCount,

@@ -2,6 +2,8 @@
 {
     public class MounthAmountViewModel
     {
+        public int Id { get; set; }
+
         public string PropertyName { get; set; }
 
         public string ResidentName { get; set; }

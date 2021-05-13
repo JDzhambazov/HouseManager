@@ -24,12 +24,12 @@
                     @foreach (var item in Model)
                     {
                         <tr class="text-center">
-                            <td class="text-warning">@item.PropertyName</td>
-                            <td class="text-warning">@item.ResidentName</td>
-                            <td class="text-warning">@item.ResidentsCount</td>
-                            <td class="text-warning">@item.RegularDueAmount лв.</td>
-                            <td class="text-warning">@item.NotRegularDueAmount лв.</td>
-                            <td class="text-warning"><button class="btn-inverse-warning">Плащане</button></td>
+                            <td class="text-primary h5">@item.PropertyName</td>
+                            <td class="text-primary h5">@item.ResidentName</td>
+                            <td class="text-primary h5">@item.ResidentsCount</td>
+                            <td class="text-primary h5">@item.RegularDueAmount лв.</td>
+                            <td class="text-primary h5">@item.NotRegularDueAmount лв.</td>
+                            <td class="text-primary h5"><a asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a></td>
                         </tr>
                     }
                 </tbody>

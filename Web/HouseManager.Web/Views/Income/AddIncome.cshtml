@@ -1,0 +1,49 @@
+﻿@using HouseManager.Web.ViewModels.DueAmount;
+
+@model MounthAmountViewModel
+
+@{
+    ViewData["Title"] = "Month Income";
+}
+
+<div class="row">
+    <div class="col-md-4 m-auto">
+        <form method="post">
+            <h4 class="text-center">Плащане на задължения</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @if (Model.RegularDueAmount > 0)
+            {
+                <div class="form-group">
+                    <label asp-for="@Model.RegularDueAmount" class="h5"> Задължения за общи части</label>
+                    <input asp-for="@Model.RegularDueAmount" value="@Model.RegularDueAmount" class="form-control" />
+                    @*<span asp-validation-for="Input.UserName" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label class="h5">Дата:</label>
+                    <input type="date" class="form-control" />
+                    @*<span asp-validation-for="Input.FirsName" class="text-danger"></span>*@
+                </div>
+            }
+
+            @if (Model.NotRegularDueAmount > 0)
+            {
+                <div class="form-group">
+                    <label asp-for="@Model.NotRegularDueAmount" class="h5">Задължения за ремонт</label>
+                    <input asp-for="@Model.NotRegularDueAmount" class="form-control" />
+                    @*<span asp-validation-for="Input.LastName" class="text-danger"></span>*@
+                </div>
+                @*<div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>*@
+            }
+            <button type="submit" class="btn btn-primary">Плащане</button>
+        </form>
+    </div>
+ </div>
+
+@*@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}*@
