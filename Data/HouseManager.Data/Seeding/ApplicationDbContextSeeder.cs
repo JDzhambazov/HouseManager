@@ -29,6 +29,7 @@
                               new SettingsSeeder(),
                               new AddressSeeder(),
                               new PropertiesTypesSeeder(),
+                              new PropertiesSeeder(),
                           };
 
             foreach (var seeder in seeders)
