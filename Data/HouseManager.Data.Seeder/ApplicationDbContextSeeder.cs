@@ -27,6 +27,7 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+                              new UserSeeder(),
                               // new AddressSeeder(),
                               // new PropertiesTypesSeeder(),
                               // new PropertiesSeeder(),

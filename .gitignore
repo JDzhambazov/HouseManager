@@ -367,5 +367,5 @@ FodyWeavers.xsd
 appsettings.Production.json
 *.min.css
 *.min.js
-SettingsSeeder.cs
+UserSeeder.cs
 AddressSeeder.cs
