@@ -1,6 +1,7 @@
 ﻿namespace HouseManager.Data.Seeding
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -14,13 +15,16 @@
             {
                 return;
             }
+            var propertiesTypes = new List<PropertyType>();
 
-            await dbContext.PropertiesTypes.AddAsync(new PropertyType { Name = "Апартамент" });
-            await dbContext.PropertiesTypes.AddAsync(new PropertyType { Name = "Ателие" });
-            await dbContext.PropertiesTypes.AddAsync(new PropertyType { Name = "Студио" });
-            await dbContext.PropertiesTypes.AddAsync(new PropertyType { Name = "Къща" });
-            await dbContext.PropertiesTypes.AddAsync(new PropertyType { Name = "Гараж" });
-            await dbContext.PropertiesTypes.AddAsync(new PropertyType { Name = "Паркомясто" });
+            propertiesTypes.Add(new PropertyType { Name = "Апартамент" });
+            propertiesTypes.Add(new PropertyType { Name = "Ателие" });
+            propertiesTypes.Add(new PropertyType { Name = "Студио" });
+            propertiesTypes.Add(new PropertyType { Name = "Къща" });
+            propertiesTypes.Add(new PropertyType { Name = "Гараж" });
+            propertiesTypes.Add(new PropertyType { Name = "Паркомясто" });
+
+            await dbContext.PropertiesTypes.AddRangeAsync(propertiesTypes);
         }
     }
 }

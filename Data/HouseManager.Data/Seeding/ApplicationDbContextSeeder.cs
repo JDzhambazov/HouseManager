@@ -30,6 +30,7 @@
                               new AddressSeeder(),
                               new PropertiesTypesSeeder(),
                               new PropertiesSeeder(),
+                              new FeesSeeder(),
                           };
 
             foreach (var seeder in seeders)
