@@ -26,14 +26,16 @@
                 ?? new FeeType { Name = feeName };
             var address = this.db.Addresses.FirstOrDefault(x => x.Id == addressId);
 
-            this.db.MonthlyFees.Add(new MonthFee
+            var fee = new MonthFee
             {
                 Address = address,
                 FeeType = currentFee,
                 Cost = cost,
                 IsPersonal = isPersonel,
                 IsRegular = isRegular,
-            });
+            };
+
+            this.db.MonthlyFees.Add(fee);
             this.db.SaveChanges();
         }
 

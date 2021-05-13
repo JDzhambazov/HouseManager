@@ -1,4 +1,4 @@
-﻿namespace HouseManager.Data.Seeding
+﻿namespace HouseManager.Data.Seeder
 {
     using System;
     using System.Collections.Generic;
@@ -27,10 +27,10 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
-                              new AddressSeeder(),
-                              new PropertiesTypesSeeder(),
-                              new PropertiesSeeder(),
-                              new FeesSeeder(),
+                              // new AddressSeeder(),
+                              // new PropertiesTypesSeeder(),
+                              // new PropertiesSeeder(),
+                              // new FeesSeeder(),
                           };
 
             foreach (var seeder in seeders)

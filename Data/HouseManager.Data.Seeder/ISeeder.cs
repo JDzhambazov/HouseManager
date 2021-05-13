@@ -1,4 +1,4 @@
-﻿namespace HouseManager.Data.Seeding
+﻿namespace HouseManager.Data.Seeder
 {
     using System;
     using System.Threading.Tasks;

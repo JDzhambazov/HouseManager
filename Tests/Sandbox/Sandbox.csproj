@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\HouseManager.Data.Seeder\HouseManager.Data.Seeder.csproj" />
     <ProjectReference Include="..\..\HouseManager.Common\HouseManager.Common.csproj" />
     <ProjectReference Include="..\..\Data\HouseManager.Data.Common\HouseManager.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\HouseManager.Data.Models\HouseManager.Data.Models.csproj" />

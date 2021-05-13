@@ -10,7 +10,7 @@
     using HouseManager.Data.Common.Repositories;
     using HouseManager.Data.Models;
     using HouseManager.Data.Repositories;
-    using HouseManager.Data.Seeding;
+    using HouseManager.Data.Seeder;
     using HouseManager.Services.Data;
     using HouseManager.Services.Messaging;
 
