@@ -67,14 +67,13 @@
             this.db.SaveChanges();
         }
 
-        public ICollection<string> GetAllResidents(int propertyId)
+        public ICollection<ApplicationUser> GetAllResidents(int propertyId)
         {
             var result = this.db.Properties
                       .Where(x => x.Id == propertyId)
                       .Select(x => new
                       {
-                          user = x.Residents
-                          .Select(u => u.FullName),
+                          user = x.Residents,
                       })
                       .FirstOrDefault();
             return result.user.ToList();

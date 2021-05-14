@@ -31,20 +31,20 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li class="nav-item dropdown">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn dark text-info dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Финанси
                             </button>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="nav-link text-info" asp-controller="DueAmount" asp-action="MonthAmount">Месечни задължения</a>
-                                <a class="dropdown-item" href="https://www.jquery-az.com/html-tutorials/">HTML</a>
-                                <a class="dropdown-item" href="#">CSS</a>
+                                <a class="dropdown-item text-info" asp-controller="DueAmount" asp-action="MonthAmount">Приходи</a>
+                                <a class="dropdown-item" href="#">Разходи</a>
+                                <a class="dropdown-item" href="#">Промяна Такси</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="https://www.jquery-az.com/python-tutorials/">Python</a>
-                                <a class="dropdown-item" href="https://www.jquery-az.com/java-tutorials/">Java</a>
+                                <a class="dropdown-item" href="#">Python</a>
+                                <a class="dropdown-item" href="#">Java</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="https://www.jquery-az.com/php-tutorials/">PHP</a>
+                                <a class="dropdown-item" href="#">PHP</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="https://www.jquery-az.com/vba-excel-tutorials/">Excel</a>
+                                <a class="dropdown-item" href="#">Excel</a>
                             </div>
                         </li>
                     }

@@ -1,5 +1,6 @@
 ﻿namespace HouseManager.Services.Data
 {
+    using HouseManager.Data.Models;
     using System.Collections.Generic;
 
     public interface IPropertyService
@@ -8,7 +9,7 @@
 
         void AddResidentToProperty(string propertyName, string userName, string firstName, string lastName, string email, string password, int addressId);
 
-        ICollection<string> GetAllResidents(int propertyId);
+        ICollection<ApplicationUser> GetAllResidents(int propertyId);
 
         (decimal RegularDueAmount, decimal NotRegularDueAmount) CalculateDueAmount(int propertyId);
 

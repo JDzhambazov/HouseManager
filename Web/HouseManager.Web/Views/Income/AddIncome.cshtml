@@ -1,45 +1,52 @@
-﻿@using HouseManager.Web.ViewModels.DueAmount;
+﻿@using HouseManager.Web.ViewModels.Incomes;
 
-@model MounthAmountViewModel
+@model AddIncomeViewModel
 
 @{
     ViewData["Title"] = "Month Income";
 }
 
-<div class="row">
-    <div class="col-md-4 m-auto">
-        <form method="post">
+<div class="row h-100  d-flex justify-content-center align-items-center">
+    <div class="col-md-4">
+        <form asp-controller="Income" asp-action="AddIncome" method="post">
             <h4 class="text-center">Плащане на задължения</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
-            @if (Model.RegularDueAmount > 0)
+            @if (Model.RegularIncome > 0)
             {
                 <div class="form-group">
-                    <label asp-for="@Model.RegularDueAmount" class="h5"> Задължения за общи части</label>
-                    <input asp-for="@Model.RegularDueAmount" value="@Model.RegularDueAmount" class="form-control" />
+                    <label asp-for="@Model.RegularIncome" class="h5"> Задължения за общи части</label>
+                    <input type="number" step="any" asp-for="@Model.RegularIncome" placeholder="@Model.RegularIncome лв." class="form-control" />
                     @*<span asp-validation-for="Input.UserName" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
-                    <label class="h5">Дата:</label>
-                    <input type="date" class="form-control" />
+                    <label asp-for="@Model.RegularIncomeDate" class="h5">Дата:</label>
+                    <input asp-for="@Model.RegularIncomeDate" type="date" class="form-control" />
                     @*<span asp-validation-for="Input.FirsName" class="text-danger"></span>*@
                 </div>
             }
 
-            @if (Model.NotRegularDueAmount > 0)
+            @if (Model.NotRegularIncome > 0)
             {
                 <div class="form-group">
-                    <label asp-for="@Model.NotRegularDueAmount" class="h5">Задължения за ремонт</label>
-                    <input asp-for="@Model.NotRegularDueAmount" class="form-control" />
+                    <label asp-for="@Model.NotRegularIncome" class="h5">Задължения за ремонт</label>
+                    <input type="number" step="any"  asp-for="@Model.NotRegularIncome" placeholder="@Model.NotRegularIncome лв." class="form-control" />
                     @*<span asp-validation-for="Input.LastName" class="text-danger"></span>*@
                 </div>
-                @*<div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>*@
+                <div class="form-group">
+                <label asp-for="@Model.NotRegularIncomeDate" class="h5">Дата:</label>
+                <input type="date" asp-for="@Model.NotRegularIncomeDate" class="form-control" />
+                @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
+            </div>
             }
-            <button type="submit" class="btn btn-primary">Плащане</button>
+            <div class="form-group">
+                <label asp-for="Resident" class="h5">Платил</label>
+                <select asp-for="Resident" asp-items="@Model.Residents" class="form-control"></select>
+            </div>
+            <hr />
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Плащане</button>
+            </div>
         </form>
     </div>
  </div>

@@ -28,9 +28,9 @@
                               new RolesSeeder(),
                               new SettingsSeeder(),
                               new UserSeeder(),
-                              // new AddressSeeder(),
-                              // new PropertiesTypesSeeder(),
-                              // new PropertiesSeeder(),
+                              new AddressSeeder(),
+                              new PropertiesTypesSeeder(),
+                              new PropertiesSeeder(),
                               // new FeesSeeder(),
                           };
 
