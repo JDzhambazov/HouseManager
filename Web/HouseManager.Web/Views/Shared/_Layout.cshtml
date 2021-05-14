@@ -25,73 +25,57 @@
             </button>
             <div class="collapse navbar-collapse" id="navContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link text-info" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
-                    </li>
-                    @if (SignInManager.IsSignedIn(User))
-                    {
+
+                    @if (this.SignInManager.IsSignedIn(this.User))
+                     {
                         <li class="nav-item dropdown">
                             <button class="btn dark text-info dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Финанси
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item text-info" asp-controller="DueAmount" asp-action="MonthAmount">Приходи</a>
-                                <a class="dropdown-item" href="#">Разходи</a>
-                                <a class="dropdown-item" href="#">Промяна Такси</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Python</a>
-                                <a class="dropdown-item" href="#">Java</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">PHP</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Excel</a>
+                            <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Приходи</a>
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Разходи</a>
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечни Такси</a>
+                                <div class="dropdown-divider border-info"></div>
+                                <a class="dropdown-item text-info" asp-controller="DueAmount" asp-action="MonthAmount">Текущи задължения</a>
+                                <div class="dropdown-divider border-info"></div>
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Годищен Отчет</a>
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечен Отчет</a>
                             </div>
                         </li>
-                    }
+                        <li class="nav-item dropdown">
+                            <button class="btn dark text-info dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Адрес
+                            </button>
+                            <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Добавяне Имот</a>
+                                <a class="dropdown-item text-info" asp-area="Identity" asp-page="/Account/Register">Добавяне Потребител</a>
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Данни за Имот</a>
+                                <div class="dropdown-divider border-info"></div>
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Данни за Адрес</a>
+                                <div class="dropdown-divider border-info"></div>
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Годищен Отчет</a>
+                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечен Отчет</a>
+                            </div>
+                        </li>
+                     }
 
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Go Tutorials</a>
+                        <a class="nav-link disabled" asp-controller="" asp-action="">Go Tutorials</a>
                     </li>
                 </ul>
                 <partial name="_LoginPartial" />
                 @*<form class="form-inline my-2 my-lg-0">
 
-            <input class="form-control mr-sm-2" type="search" placeholder="Search Tutorials" aria-label="Search">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search Tutorials" aria-label="Search">
 
-            <button class="btn btn-primary my-2 my-sm-0" type="submit">Go</button>
+                        <button class="btn btn-primary my-2 my-sm-0" type="submit">Go</button>
 
-        </form>*@
+                    </form>*@
 
             </div>
 
         </nav>
-        @*<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-info" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-info" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-info" asp-controller="DueAmount" asp-action="MonthAmount">Месечни задължения</a>
-                            </li>
-
-                        }
-                    </ul>
-                </div>
-            </div>
-        </nav>*@
     </header>
 
     <div class="container">
