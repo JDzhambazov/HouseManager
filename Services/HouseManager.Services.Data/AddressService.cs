@@ -18,61 +18,12 @@
 
         public void CreateAddress(string cityName, string districtName, string streetName, string number, string entrance, int numberOfProperties)
         {
-            District district = null;
-            Street street = null;
-            var city = this.db.Cities.FirstOrDefault(x => x.Name == cityName);
-            if (districtName != null)
-            {
-                district = this.db.Districts.FirstOrDefault(x => x.Name == districtName)
-                    ?? new District { Name = districtName };
-            }
-
-            if (streetName != null)
-            {
-                street = this.db.Streets.FirstOrDefault(x => x.Name == streetName)
-                    ?? new Street { Name = streetName };
-            }
-
-            this.db.Addresses.Add(new Address
-            {
-                City = city ?? new City { Name = cityName },
-                District = district,
-                Street = street,
-                Number = number,
-                Entrance = entrance,
-                NumberOfProperties = numberOfProperties,
-            });
-            this.db.SaveChanges();
+            NewAddress(cityName, districtName, streetName, number, entrance, numberOfProperties);
         }
 
-        public void CreateAddress(string cityName, string districtName, string streetName, string number, string entrance, int numberOfProperties, ApplicationUser manager)
+        public void CreateAddress(string cityName, string districtName, string streetName, string number, string entrance, int numberOfProperties, ApplicationUser creatоr)
         {
-            District district = null;
-            Street street = null;
-            var city = this.db.Cities.FirstOrDefault(x => x.Name == cityName);
-            if (districtName != null)
-            {
-                district = this.db.Districts.FirstOrDefault(x => x.Name == districtName)
-                    ?? new District { Name = districtName };
-            }
-
-            if (streetName != null)
-            {
-                street = this.db.Streets.FirstOrDefault(x => x.Name == streetName)
-                    ?? new Street { Name = streetName };
-            }
-
-            this.db.Addresses.Add(new Address
-            {
-                City = city ?? new City { Name = cityName },
-                District = district,
-                Street = street,
-                Number = number,
-                Entrance = entrance,
-                NumberOfProperties = numberOfProperties,
-                Manager = manager,
-            });
-            this.db.SaveChanges();
+            NewAddress(cityName, districtName, streetName, number, entrance, numberOfProperties, creatоr);
         }
 
         public ICollection<Property> GetAllProperyies(int addressId)
@@ -93,6 +44,42 @@
             var address = this.db.Addresses.FirstOrDefault(x => x.Id == addressId);
             var payMaster = this.db.Users.FirstOrDefault(x => x.FullName == userFullName);
             address.Paymaster = payMaster;
+            this.db.SaveChanges();
+        }
+
+        private void NewAddress(string cityName, string districtName, string streetName, string number, string entrance, int numberOfProperties, ApplicationUser creatоr = null)
+        {
+            District district = null;
+            Street street = null;
+            var city = this.db.Cities.FirstOrDefault(x => x.Name == cityName);
+            if (districtName != null)
+            {
+                district = this.db.Districts.FirstOrDefault(x => x.Name == districtName)
+                    ?? new District { Name = districtName };
+            }
+
+            if (streetName != null)
+            {
+                street = this.db.Streets.FirstOrDefault(x => x.Name == streetName)
+                    ?? new Street { Name = streetName };
+            }
+
+            var address = new Address
+            {
+                City = city ?? new City { Name = cityName },
+                District = district,
+                Street = street,
+                Number = number,
+                Entrance = entrance,
+                NumberOfProperties = numberOfProperties,
+            };
+
+            if(creatоr != null)
+            {
+                address.Manager = creatоr;
+            }
+
+            this.db.Addresses.Add(address);
             this.db.SaveChanges();
         }
     }

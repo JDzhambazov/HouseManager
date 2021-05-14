@@ -48,16 +48,16 @@
         public class InputModel
         {
             [Required]
-            [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+            [StringLength(30, ErrorMessage = "{0} - минимум {2} и максимум {1} символа.", MinimumLength = 4)]
             [Display(Name = "Потребителско Име")]
             public string UserName { get; set; }
 
-            [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [StringLength(30, ErrorMessage = "{0} - минимум {2} и максимум {1} символа.", MinimumLength = 2)]
             [Display(Name = "Име")]
             public string FirsName { get; set; }
 
             [Required]
-            [StringLength(40, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [StringLength(40, ErrorMessage = "{0} - минимум {2} и максимум {1} символа.", MinimumLength = 3)]
             [Display(Name = "Фамилия")]
             public string LastName { get; set; }
 
@@ -65,17 +65,6 @@
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Парола")]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Потвърдете паролата")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -92,10 +81,10 @@
             {
                 var user = new ApplicationUser {
                     UserName = Input.UserName,
-                    FullName = $"{Input.FirsName} {Input.LastName}",
+                    FullName = string.Join(' ', Input.FirsName, Input.LastName).Trim(),
                     Email = Input.Email,
                 };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, "123456");
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -117,7 +106,7 @@
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        // await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }

@@ -53,11 +53,6 @@
             this.db.SaveChanges();
         }
 
-        /// <summary>
-        /// For Console Application Only.
-        /// </summary>
-        /// <param name="propertyName">Property Name.</param>
-        /// <param name="userName">User full name.</param>
         public void AddResidentToProperty(string propertyName, string userName)
         {
             var currentProperty = this.db.Properties
