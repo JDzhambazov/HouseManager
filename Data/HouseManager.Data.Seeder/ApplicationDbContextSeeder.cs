@@ -30,7 +30,7 @@
                               new UserSeeder(),
                               new AddressSeeder(),
                               new PropertiesTypesSeeder(),
-                              new PropertiesSeeder(),
+                              // new PropertiesSeeder(),
                               // new FeesSeeder(),
                           };
 

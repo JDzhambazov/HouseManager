@@ -17,23 +17,23 @@
             }
 
             var properties = new List<Property>();
-
-            properties.Add(new Property { Name = "Aп.17", PropertyTypeId = 1, ResidentsCount = 3, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.18", PropertyTypeId = 1, ResidentsCount = 3, AddressId = 1, });
-            properties.Add(new Property { Name = "Aп.19", PropertyTypeId = 1, ResidentsCount = 1, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.20", PropertyTypeId = 1, ResidentsCount = 1, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.21", PropertyTypeId = 1, ResidentsCount = 1, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.22", PropertyTypeId = 1, ResidentsCount = 2, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.23", PropertyTypeId = 1, ResidentsCount = 1, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.24", PropertyTypeId = 1, ResidentsCount = 3, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.25", PropertyTypeId = 1, ResidentsCount = 2, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.26", PropertyTypeId = 1, ResidentsCount = 0, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.27", PropertyTypeId = 1, ResidentsCount = 0, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.28", PropertyTypeId = 1, ResidentsCount = 3, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.29", PropertyTypeId = 1, ResidentsCount = 2, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.30", PropertyTypeId = 1, ResidentsCount = 2, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.31", PropertyTypeId = 1, ResidentsCount = 2, AddressId = 1 });
-            properties.Add(new Property { Name = "Aп.32", PropertyTypeId = 1, ResidentsCount = 2, AddressId = 1 });
+            var PropertyTypeId = dbContext.PropertiesTypes.FirstOrDefault(x => x.Name == "Апартамент").Id;
+            properties.Add(new Property { Name = "Aп.17", PropertyTypeId = PropertyTypeId, ResidentsCount = 3, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.18", PropertyTypeId = PropertyTypeId, ResidentsCount = 3, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.19", PropertyTypeId = PropertyTypeId, ResidentsCount = 1, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.20", PropertyTypeId = PropertyTypeId, ResidentsCount = 1, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.21", PropertyTypeId = PropertyTypeId, ResidentsCount = 1, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.22", PropertyTypeId = PropertyTypeId, ResidentsCount = 2, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.23", PropertyTypeId = PropertyTypeId, ResidentsCount = 1, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.24", PropertyTypeId = PropertyTypeId, ResidentsCount = 3, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.25", PropertyTypeId = PropertyTypeId, ResidentsCount = 2, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.26", PropertyTypeId = PropertyTypeId, ResidentsCount = 0, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.27", PropertyTypeId = PropertyTypeId, ResidentsCount = 0, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.28", PropertyTypeId = PropertyTypeId, ResidentsCount = 3, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.29", PropertyTypeId = PropertyTypeId, ResidentsCount = 2, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.30", PropertyTypeId = PropertyTypeId, ResidentsCount = 2, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.31", PropertyTypeId = PropertyTypeId, ResidentsCount = 2, AddressId = 1 });
+            properties.Add(new Property { Name = "Aп.32", PropertyTypeId = PropertyTypeId, ResidentsCount = 2, AddressId = 1 });
 
             await dbContext.Properties.AddRangeAsync(properties);
         }
