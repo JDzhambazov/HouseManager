@@ -8,10 +8,12 @@
     using HouseManager.Services.Data;
     using HouseManager.Web.ViewModels.DueAmount;
     using HouseManager.Web.ViewModels.Incomes;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
+    [Authorize]
     public class IncomeController : Controller
     {
         private readonly IPropertyService propertyService;
