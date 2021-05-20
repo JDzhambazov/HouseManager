@@ -65,13 +65,14 @@
             {
                 var resident = dbContext.Users.FirstOrDefault(x => x.Id == income.Resident);
                 var style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.Number;
+                var addressId = dbContext.Properties.FirstOrDefault(x => x.Id == income.PropertyId).AddressId;
 
-                if(income.RegularIncome != null)
+                if (income.RegularIncome != null)
                 {
                     var regularIncome = decimal.Parse(income.RegularIncome, style, CultureInfo.InvariantCulture);
                     if (regularIncome > 0)
                     {
-                        incomeService.AddIncome(income.PropertyId, regularIncome, income.RegularIncomeDate, resident, 1, true);
+                        incomeService.AddIncome(income.PropertyId, regularIncome, income.RegularIncomeDate, resident, addressId, true);
                     }
                 }
 
@@ -81,7 +82,7 @@
                     var notRegularIncome = decimal.Parse(income.NotRegularIncome, style, CultureInfo.InvariantCulture);
                     if(notRegularIncome > 0)
                     {
-                        incomeService.AddIncome(income.PropertyId, notRegularIncome, income.NotRegularIncomeDate, resident, 1, false);
+                        incomeService.AddIncome(income.PropertyId, notRegularIncome, income.NotRegularIncomeDate, resident, addressId, false);
                     }
                 }
                 return Redirect("/DueAmount/MonthAmount");

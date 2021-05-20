@@ -59,6 +59,7 @@
                 .Where(x => x.Residents.Contains(user))
                 .Select(x => new AddressViewModel
                 {
+                    AddressId = x.AddressId,
                     CityName = x.Address.City.Name,
                     DistrictName = x.Address.District.Name,
                     StreetName = x.Address.Street.Name,
@@ -69,6 +70,7 @@
                 .Where(x => x.Manager.Equals(user))
                 .Select(x => new AddressViewModel
                 {
+                    AddressId = x.Id,
                     CityName = x.City.Name,
                     DistrictName = x.District.Name,
                     StreetName = x.Street.Name,

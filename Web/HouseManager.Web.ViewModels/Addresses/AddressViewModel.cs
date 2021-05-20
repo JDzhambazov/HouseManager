@@ -2,6 +2,8 @@
 {
     public class AddressViewModel
     {
+        public int AddressId { get; set; }
+
         public string CityName { get; set; }
 
         public string DistrictName { get; set; }

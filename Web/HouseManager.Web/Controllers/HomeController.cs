@@ -1,6 +1,7 @@
 ﻿namespace HouseManager.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Linq;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Web.ViewModels;
@@ -11,16 +12,19 @@
     {
         private readonly IUserService userService;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IAddressService addressService;
 
-        public HomeController(IUserService userService, SignInManager<ApplicationUser> signInManager)
+        public HomeController(IUserService userService, SignInManager<ApplicationUser> signInManager, IAddressService addressService)
         {
             this.userService = userService;
             this.signInManager = signInManager;
+            this.addressService = addressService;
         }
 
         public IActionResult Index()
         {
-            return this.View(userService.GetUserAddresses(User.Identity.Name));
+            var addresses = userService.GetUserAddresses(User.Identity.Name);
+            return this.View(addresses);
         }
 
         public IActionResult Privacy()
