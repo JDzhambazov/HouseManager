@@ -37,7 +37,7 @@
                             </button>
                             <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Приходи</a>
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Разходи</a>
+                                <a class="dropdown-item text-info" asp-controller="Expense" asp-action="AddExpense">Разходи</a>
                                 <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечни Такси</a>
                                 <div class="dropdown-divider border-info"></div>
                                 <a class="dropdown-item text-info" asp-controller="DueAmount" asp-action="MonthAmount" asp-route-id="@userService.GetUserAddresses(this.User.Identity.Name).FirstOrDefault().AddressId" >Текущи задължения</a>

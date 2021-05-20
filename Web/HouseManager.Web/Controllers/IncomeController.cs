@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using HouseManager.Data;
+    using HouseManager.Common;
     using HouseManager.Services.Data;
     using HouseManager.Web.ViewModels.DueAmount;
     using HouseManager.Web.ViewModels.Incomes;
@@ -64,12 +65,11 @@
             if (ModelState.IsValid)
             {
                 var resident = dbContext.Users.FirstOrDefault(x => x.Id == income.Resident);
-                var style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.Number;
                 var addressId = dbContext.Properties.FirstOrDefault(x => x.Id == income.PropertyId).AddressId;
 
                 if (income.RegularIncome != null)
                 {
-                    var regularIncome = decimal.Parse(income.RegularIncome, style, CultureInfo.InvariantCulture);
+                    var regularIncome = decimal.Parse(income.RegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture);
                     if (regularIncome > 0)
                     {
                         incomeService.AddIncome(income.PropertyId, regularIncome, income.RegularIncomeDate, resident, addressId, true);
@@ -79,7 +79,7 @@
 
                 if (income.NotRegularIncome != null)
                 {
-                    var notRegularIncome = decimal.Parse(income.NotRegularIncome, style, CultureInfo.InvariantCulture);
+                    var notRegularIncome = decimal.Parse(income.NotRegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture);
                     if(notRegularIncome > 0)
                     {
                         incomeService.AddIncome(income.PropertyId, notRegularIncome, income.NotRegularIncomeDate, resident, addressId, false);

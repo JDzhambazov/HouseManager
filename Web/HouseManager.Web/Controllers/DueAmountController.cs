@@ -20,6 +20,7 @@
             this.dueAmountService = dueAmountService;
             this.addressService = addressService;
         }
+
         public ActionResult MonthAmount(int id)
         {
             var result = dueAmountService.GetAddressDueAmount(addressService.GetAllProperyies(id));
