@@ -12,11 +12,12 @@
             <h4 class="text-center">Плащане на задължения</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
-            @if (Model.RegularIncome > 0)
+            <input type="number" asp-for="PropertyId" value="@Model.PropertyId" hidden />
+            @if (decimal.Parse(Model.RegularIncome) > 0)
             {
                 <div class="form-group">
-                    <label asp-for="@Model.RegularIncome" class="h5"> Задължения за общи части</label>
-                    <input type="number" step="any" asp-for="@Model.RegularIncome" placeholder="@Model.RegularIncome лв." class="form-control" />
+                    <label asp-for="RegularIncome" class="h5"> Задължения за общи части</label>
+                    <input type="text" step="any" asp-for="RegularIncome" value="@Model.RegularIncome" class="form-control" />
                     @*<span asp-validation-for="Input.UserName" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
@@ -26,16 +27,16 @@
                 </div>
             }
 
-            @if (Model.NotRegularIncome > 0)
+            @if (decimal.Parse(Model.NotRegularIncome) > 0)
             {
                 <div class="form-group">
-                    <label asp-for="@Model.NotRegularIncome" class="h5">Задължения за ремонт</label>
-                    <input type="number" step="any"  asp-for="@Model.NotRegularIncome" placeholder="@Model.NotRegularIncome лв." class="form-control" />
+                    <label asp-for="NotRegularIncome" class="h5">Задължения за ремонт</label>
+                    <input type="text" step="any"  asp-for="NotRegularIncome"  value="@Model.NotRegularIncome" class="form-control" />
                     @*<span asp-validation-for="Input.LastName" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
                 <label asp-for="@Model.NotRegularIncomeDate" class="h5">Дата:</label>
-                <input type="date" asp-for="@Model.NotRegularIncomeDate" class="form-control" />
+                <input type="date" asp-for="@Model.NotRegularIncomeDate"class="form-control" />
                 @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
             </div>
             }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using HouseManager.Data;
@@ -47,8 +48,8 @@
             var result = new AddIncomeViewModel
             {
                 PropertyId = id,
-                NotRegularIncome = currentAmount.NotRegularDueAmount,
-                RegularIncome = currentAmount.RegularDueAmount,
+                NotRegularIncome = currentAmount.NotRegularDueAmount.ToString(),
+                RegularIncome = currentAmount.RegularDueAmount.ToString(),
                 RegularIncomeDate = DateTime.Now,
                 NotRegularIncomeDate = DateTime.Now,
                 Residents = residentSelectItems,
@@ -63,15 +64,25 @@
             if (ModelState.IsValid)
             {
                 var resident = dbContext.Users.FirstOrDefault(x => x.Id == income.Resident);
+                var style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.Number;
 
-                if (income.RegularIncome > 0)
+                if(income.RegularIncome != null)
                 {
-                    // incomeService.AddIncome(income.PropertyId, income.RegularIncome, income.RegularIncomeDate, resident, 1, true);
+                    var regularIncome = decimal.Parse(income.RegularIncome, style, CultureInfo.InvariantCulture);
+                    if (regularIncome > 0)
+                    {
+                        incomeService.AddIncome(income.PropertyId, regularIncome, income.RegularIncomeDate, resident, 1, true);
+                    }
                 }
 
-                if (income.NotRegularIncome > 0)
+
+                if (income.NotRegularIncome != null)
                 {
-                    // incomeService.AddIncome(income.PropertyId, income.NotRegularIncome, income.NotRegularIncomeDate, resident, 1, false);
+                    var notRegularIncome = decimal.Parse(income.NotRegularIncome, style, CultureInfo.InvariantCulture);
+                    if(notRegularIncome > 0)
+                    {
+                        incomeService.AddIncome(income.PropertyId, notRegularIncome, income.NotRegularIncomeDate, resident, 1, false);
+                    }
                 }
                 return Redirect("/DueAmount/MonthAmount");
             }

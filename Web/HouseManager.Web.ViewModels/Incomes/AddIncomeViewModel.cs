@@ -9,11 +9,11 @@
     {
         public int PropertyId { get; set; }
 
-        public decimal RegularIncome { get; set; }
+        public string RegularIncome { get; set; }
 
         public DateTime RegularIncomeDate { get; set; }
 
-        public decimal NotRegularIncome { get; set; }
+        public string NotRegularIncome { get; set; }
 
         public DateTime NotRegularIncomeDate { get; set; }
 
