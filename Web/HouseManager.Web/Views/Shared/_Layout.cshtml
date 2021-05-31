@@ -17,7 +17,7 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" asp-append-version="true" />
 </head>
 <body>
     <header class="dark">
@@ -64,9 +64,9 @@
                         </li>
                     }
 
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <a class="nav-link disabled" asp-controller="" asp-action="">Go Tutorials</a>
-                    </li>
+                    </li>*@
                 </ul>
                 <partial name="_LoginPartial" />
                 @*<form class="form-inline my-2 my-lg-0">

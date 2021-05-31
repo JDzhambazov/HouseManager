@@ -77,7 +77,8 @@
 
                 if (income.RegularIncome != null)
                 {
-                    var regularIncome = decimal.Parse(income.RegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture);
+                    income.RegularIncome = income.RegularIncome.Replace(',', '.');
+                    decimal.TryParse(income.RegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture, out decimal regularIncome);
                     if (regularIncome > 0)
                     {
                         await Task.Run(() =>
@@ -87,10 +88,10 @@
                     }
                 }
 
-
                 if (income.NotRegularIncome != null)
                 {
-                    var notRegularIncome = decimal.Parse(income.NotRegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture);
+                    income.NotRegularIncome = income.NotRegularIncome.Replace(',', '.');
+                    decimal.TryParse(income.NotRegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture, out decimal notRegularIncome);
                     if(notRegularIncome > 0)
                     {
                         await Task.Run(() =>
