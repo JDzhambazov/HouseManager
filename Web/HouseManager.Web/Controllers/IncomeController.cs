@@ -60,19 +60,30 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddIncome(AddIncomeViewModel income)
+        public async Task<ActionResult> AddIncome(AddIncomeViewModel income)
         {
             if (ModelState.IsValid)
             {
-                var resident = dbContext.Users.FirstOrDefault(x => x.Id == income.Resident);
-                var addressId = dbContext.Properties.FirstOrDefault(x => x.Id == income.PropertyId).AddressId;
+                var resident = await Task.Run(() => 
+                {
+                    return dbContext.Users.FirstOrDefault(x => x.Id == income.Resident);
+                });
+
+                //TODO да го направя да се взема от бисквитка
+                var addressId = await Task.Run(() =>
+                {
+                    return dbContext.Properties.FirstOrDefault(x => x.Id == income.PropertyId).AddressId;
+                });
 
                 if (income.RegularIncome != null)
                 {
                     var regularIncome = decimal.Parse(income.RegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture);
                     if (regularIncome > 0)
                     {
-                        incomeService.AddIncome(income.PropertyId, regularIncome, income.RegularIncomeDate, resident, addressId, true);
+                        await Task.Run(() =>
+                        {
+                            incomeService.AddIncome(income.PropertyId, regularIncome, income.RegularIncomeDate, resident, addressId, true);
+                        });
                     }
                 }
 
@@ -82,10 +93,13 @@
                     var notRegularIncome = decimal.Parse(income.NotRegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture);
                     if(notRegularIncome > 0)
                     {
-                        incomeService.AddIncome(income.PropertyId, notRegularIncome, income.NotRegularIncomeDate, resident, addressId, false);
+                        await Task.Run(() =>
+                        {
+                            incomeService.AddIncome(income.PropertyId, notRegularIncome, income.NotRegularIncomeDate, resident, addressId, false);
+                        });         
                     }
                 }
-                return Redirect("/DueAmount/MonthAmount");
+                return Redirect($"/DueAmount/MonthAmount/{addressId}");
             }
             return View(income);
         }

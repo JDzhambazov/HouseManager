@@ -38,5 +38,23 @@
             return this.View(
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Test()
+        {
+            var request = this.Request.Cookies.ContainsKey("CurrentAddressId");
+            //
+            if (!request)
+            {
+                this.Response.Cookies.Append(
+                    "CurrentAddressId",
+                    $"{1}");
+            }
+            else
+            {
+                var es = int.Parse(this.Request.Cookies["CurrentAddressId"]);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -14,15 +14,17 @@
 
 <div>
     <div>@User.Identity.Name</div>
-    @foreach (var item in Model)
+    @if (Context.Request.Cookies.ContainsKey("CurrentAddressId"))
     {
-        <h3>@item.CityName @item.DistrictName @item.StreetName @item.Number @item.Entrance</h3>
+        var addres = Model.FirstOrDefault(x => x.AddressId == int.Parse(Context.Request.Cookies["CurrentAddressId"]));
+
+        <h3>@addres.CityName @addres.DistrictName @addres.StreetName @addres.Number @addres.Entrance </h3>
+
+
     }
 
-    @*<select>
-            @foreach (var item in Model)
-            {
-                <option value="@item.FullName">@item.FullName</option>
-            }
-        </select>*@
+
 </div>
+
+<a asp-controller="Home" asp-action="Test" >Test44</a>
+
