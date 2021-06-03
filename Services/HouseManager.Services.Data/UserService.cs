@@ -66,20 +66,22 @@
                     Number = x.Address.Number,
                     Entrance = x.Address.Entrance,
                 })
-                .ToList() ?? this.db.Addresses
-                .Where(x => x.Manager.Equals(user))
-                .Select(x => new AddressViewModel
-                {
-                    AddressId = x.Id,
-                    CityName = x.City.Name,
-                    DistrictName = x.District.Name,
-                    StreetName = x.Street.Name,
-                    Number = x.Number,
-                    Entrance = x.Entrance,
-                })
                 .ToList();
+                
+                var addressList = addresses.Count > 0 ? addresses : this.db.Addresses
+                    .Where(x => x.Manager == user)
+                    .Select(x => new AddressViewModel
+                    {
+                        AddressId = x.Id,
+                        CityName = x.City.Name,
+                        DistrictName = x.District.Name,
+                        StreetName = x.Street.Name,
+                        Number = x.Number,
+                        Entrance = x.Entrance,
+                    })
+                    .ToList();
 
-            return addresses;
+            return addressList;
          }
 
         private static IEnumerable<UserListViewModel> GetUsers(IEnumerable<Property> properties)

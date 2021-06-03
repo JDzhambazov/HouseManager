@@ -1,10 +1,11 @@
 ﻿namespace HouseManager.Data.Models
 {
+    using HouseManager.Data.Common.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class Address
+    public class Address : BaseDeletableModel<int>
     {
         public Address()
         {
@@ -14,8 +15,6 @@
             this.NotRegularIncomes = new HashSet<NotRegularIncome>();
             this.MonthlyFees = new HashSet<MonthFee>();
         }
-
-        public int Id { get; set; }
 
         public int CityId { get; set; }
 
@@ -42,12 +41,12 @@
         public string ManagerId { get; set; }
 
         [InverseProperty(nameof(ApplicationUser.Managers))]
-        public ApplicationUser Manager { get; set; }
+        public virtual ApplicationUser Manager { get; set; }
 
         public string PaymasterId { get; set; }
 
         [InverseProperty(nameof(ApplicationUser.Paymasters))]
-        public ApplicationUser Paymaster { get; set; }
+        public virtual ApplicationUser Paymaster { get; set; }
 
         public virtual ICollection<Property> Properties { get; set; }
 

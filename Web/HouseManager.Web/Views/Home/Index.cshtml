@@ -13,18 +13,17 @@
 </div>
 
 <div>
-    <div>@User.Identity.Name</div>
-    @if (Context.Request.Cookies.ContainsKey("CurrentAddressId"))
-    {
-        var addres = Model.FirstOrDefault(x => x.AddressId == int.Parse(Context.Request.Cookies["CurrentAddressId"]));
+     <div>@User.Identity.Name</div>
+     @if (User.Identity.Name != null)
+     {
+         //var addres = Model.FirstOrDefault(x => x.AddressId == int.Parse(Context.Request.Cookies["CurrentAddressId"]));
+         var addres = Model.FirstOrDefault();
 
-        <h3>@addres.CityName @addres.DistrictName @addres.StreetName @addres.Number @addres.Entrance </h3>
+     <h3>@addres.CityName @addres.DistrictName @addres.StreetName @addres.Number @addres?.Entrance </h3>
 
-
-    }
-
+     }
 
 </div>
 
-<a asp-controller="Home" asp-action="Test" >Test44</a>
+<a asp-controller="Home" asp-action="Test" asp-route-id="1" >Test44</a>
 

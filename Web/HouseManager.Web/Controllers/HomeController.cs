@@ -39,15 +39,16 @@
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Test()
+        public IActionResult Test(int id)
         {
             var request = this.Request.Cookies.ContainsKey("CurrentAddressId");
             //
             if (!request)
             {
+
                 this.Response.Cookies.Append(
                     "CurrentAddressId",
-                    $"{1}");
+                    $"{id}");
             }
             else
             {

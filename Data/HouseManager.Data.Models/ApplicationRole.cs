@@ -20,7 +20,7 @@ namespace HouseManager.Data.Models
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
 
