@@ -5,15 +5,16 @@
     using HouseManager.Web.ViewModels.Users;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IUserService
     {
-        void AddNewUser(string userName, string firstName, string lastName, string email, string password);
+        Task AddNewUser(string userName, string firstName, string lastName, string email, string password);
 
         IEnumerable<UserListViewModel> GetAllUsersInAddress(Address address);
 
         IEnumerable<UserListViewModel> GetAllUsersInAddress(int addressId);
 
-        IEnumerable<AddressViewModel> GetUserAddresses(string user);
+        Task<IEnumerable<AddressViewModel>> GetUserAddresses(string user);
     }
 }

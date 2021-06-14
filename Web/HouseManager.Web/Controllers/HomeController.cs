@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Web.ViewModels;
@@ -21,9 +22,9 @@
             this.addressService = addressService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var addresses = userService.GetUserAddresses(User.Identity.Name);
+            var addresses = await userService.GetUserAddresses(User.Identity.Name);
             return this.View(addresses);
         }
 

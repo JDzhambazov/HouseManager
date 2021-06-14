@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using HouseManager.Data;
     using HouseManager.Data.Models;
     using HouseManager.Web.ViewModels.Addresses;
@@ -18,11 +19,11 @@
             this.db = db;
         }
 
-        public void AddNewUser(string userName, string firstName, string lastName, string email, string password)
+        public async Task AddNewUser(string userName, string firstName, string lastName, string email, string password)
         {
             var fullname = string.Join(' ', firstName, lastName).Trim();
 
-            this.db.Users.Add(new ApplicationUser
+            await this.db.Users.AddAsync(new ApplicationUser
             {
                 UserName = userName,
                 FullName = fullname,
@@ -33,7 +34,7 @@
                 PasswordHash = password,
                 EmailConfirmed = true,
             });
-            this.db.SaveChanges();
+            await this.db.SaveChangesAsync();
         }
 
         public IEnumerable<UserListViewModel> GetAllUsersInAddress(Address address)
@@ -50,7 +51,7 @@
         }
 
 
-        public IEnumerable<AddressViewModel> GetUserAddresses(string userName)
+        public async Task<IEnumerable<AddressViewModel>> GetUserAddresses(string userName)
         {
             var user = this.db.Users.FirstOrDefault(x => x.UserName == userName);
 
