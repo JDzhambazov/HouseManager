@@ -38,7 +38,7 @@ namespace HouseManager.Web.Controllers
             {
                 AddressId = 1,
                 ExpensTypeList = expenseTypeSelectItems,
-                Date = DateTime.Now,
+                Date = DateTime.UtcNow,
             };
 
             return View(result);
