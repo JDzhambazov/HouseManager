@@ -54,8 +54,9 @@
         public async Task<IEnumerable<AddressViewModel>> GetUserAddresses(string userName)
         {
             var user = this.db.Users.FirstOrDefault(x => x.UserName == userName);
+            var result = new List<AddressViewModel>();
 
-            var addresses =
+            var properties =
                 this.db.Properties
                 .Where(x => x.Residents.Contains(user))
                 .Select(x => new AddressViewModel
@@ -67,9 +68,9 @@
                     Number = x.Address.Number,
                     Entrance = x.Address.Entrance,
                 })
-                .ToList();
+                .ToList<AddressViewModel>();
                 
-                var addressList = addresses.Count > 0 ? addresses : this.db.Addresses
+                var addressList = this.db.Addresses
                     .Where(x => x.Manager == user)
                     .Select(x => new AddressViewModel
                     {
@@ -80,9 +81,11 @@
                         Number = x.Number,
                         Entrance = x.Entrance,
                     })
-                    .ToList();
+                    .ToList<AddressViewModel>();
+            result.AddRange(addressList);
+            result.AddRange(properties);
 
-            return addressList;
+            return result = result.Distinct().ToList();
          }
 
         private static IEnumerable<UserListViewModel> GetUsers(IEnumerable<Property> properties)

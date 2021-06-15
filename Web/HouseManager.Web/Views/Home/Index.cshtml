@@ -7,23 +7,34 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
 <div>
-     <div>@User.Identity.Name</div>
-     @if (User.Identity.Name != null)
-     {
-         //var addres = Model.FirstOrDefault(x => x.AddressId == int.Parse(Context.Request.Cookies["CurrentAddressId"]));
-         var addres = Model.FirstOrDefault();
 
-     <h3>@addres.CityName @addres.DistrictName @addres.StreetName @addres.Number @addres?.Entrance </h3>
+    @if (User.Identity.Name != null)
+    {
+    <div>
+        <div>@User.Identity.Name</div>
 
-     }
+        @foreach (var address in Model)
+        {
+            <div class="col-md-3">
+                <a asp-route-id="@address.AddressId" class="btn btn-outline-primary mb-2">
+                    @address.CityName @address?.DistrictName
+                    @address?.StreetName @address.Number @address?.Entrance
+                </a>
+            </div>
+        }
+
+    </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        </div>
+    }
 
 </div>
 
-<a asp-controller="Home" asp-action="Test" asp-route-id="1" >Test44</a>
+<a asp-controller="Home" asp-action="Test" asp-route-id="1" class="btn" >Test44</a>
 
