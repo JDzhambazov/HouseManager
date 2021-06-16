@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using HouseManager.Data;
     using HouseManager.Data.Common.Repositories;
     using HouseManager.Data.Models;
@@ -13,16 +14,18 @@
 
     public class UserService : IUserService
     {
-        private readonly ApplicationDbContext db;
-        private readonly IRepository<Property> propertyRpository;
+        private readonly IDeletableEntityRepository<Address> addressRepository;
+        private readonly IRepository<Property> propertyRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
 
-        public UserService(ApplicationDbContext db,
-            IRepository<Property> propertyRpository,
-            IDeletableEntityRepository<ApplicationUser> userRepository)
+        public UserService(
+            IDeletableEntityRepository<Address> addressRepository,
+            IRepository<Property> propertyRepository,
+            IDeletableEntityRepository<ApplicationUser> userRepository
+            )
         {
-            this.db = db;
-            this.propertyRpository = propertyRpository;
+            this.addressRepository = addressRepository;
+            this.propertyRepository = propertyRepository;
             this.userRepository = userRepository;
         }
 
@@ -46,26 +49,24 @@
 
         public IEnumerable<UserListViewModel> GetAllUsersInAddress(Address address)
         {
-            var properties = propertyRpository.All().Where(x => x.Address == address).ToList();
-            //var properties = db.Properties.Where(x => x.Address == address).ToList();
+            var properties = propertyRepository.All().Where(x => x.Address == address).ToList();
             return GetUsers(properties);
         }
 
         public IEnumerable<UserListViewModel> GetAllUsersInAddress(int addressId)
         {
-            var properties = propertyRpository.All().Where(x => x.AddressId == addressId).ToList();
-            //var properties = db.Properties.Where(x => x.AddressId == addressId).ToList();
+            var properties = propertyRepository.All().Where(x => x.AddressId == addressId).ToList();
             return GetUsers(properties);
         }
 
 
         public async Task<IEnumerable<AddressViewModel>> GetUserAddresses(string userName)
         {
-            var user = this.db.Users.FirstOrDefault(x => x.UserName == userName);
+            var user = this.userRepository.All().FirstOrDefault(x => x.UserName == userName);
             var result = new List<AddressViewModel>();
 
             var properties =
-                this.propertyRpository.All()
+                this.propertyRepository.All()
                 .Where(x => x.Residents.Contains(user))
                 .Select(x => new AddressViewModel
                 {
@@ -78,7 +79,8 @@
                 })
                 .ToList<AddressViewModel>();
                 
-                var addressList = this.db.Addresses
+                var addressList = this.addressRepository
+                    .All()
                     .Where(x => x.Manager == user)
                     .Select(x => new AddressViewModel
                     {

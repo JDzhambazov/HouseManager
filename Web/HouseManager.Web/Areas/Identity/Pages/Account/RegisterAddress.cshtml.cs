@@ -133,7 +133,7 @@
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    _addressService.CreateAddress(Input.City, Input.District, Input.Street, Input.Number, Input.Entrance, Input.NumberOfProperties, user);
+                    await _addressService.CreateAddress(Input.City, Input.District, Input.Street, Input.Number, Input.Entrance, Input.NumberOfProperties, user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
