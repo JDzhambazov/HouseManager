@@ -9,6 +9,8 @@
     using HouseManager.Data;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     public class PropertyService : IPropertyService
     {
@@ -109,6 +111,42 @@
             var currentProperty = this.db.Properties.FirstOrDefault(x => x.Id == propertyId);
             currentProperty.ResidentsCount = newResidentsCount;
             this.db.SaveChanges();
+        }
+
+        public async Task<List<Property>> GetAllPropertiesInAddress(int addressId)
+        {
+            var result = db.Properties
+                .Include(x => x.PropertyType)
+                .Include(x => x.Residents)
+                .Where(x => x.AddressId == addressId)
+                .ToList();
+
+            return result;
+        }
+
+        public async Task<Property> GetPropetyById(int id)
+        {
+            var propery = await db.Properties
+                .Include(x => x.PropertyType)
+                .Include(x => x.Residents)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return propery;
+        }
+
+        public async Task<bool> Edit(int id ,int residentsCount)
+        {
+            if (id == 0)
+            {
+                return false;
+            }
+
+            var currentProperty = await db.Properties.FirstOrDefaultAsync(x => x.Id == id);
+            currentProperty.ResidentsCount = residentsCount;
+
+            db.Entry(currentProperty).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return true;
         }
     }
 }

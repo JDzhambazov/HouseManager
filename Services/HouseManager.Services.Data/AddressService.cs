@@ -7,6 +7,7 @@
     using HouseManager.Data.Common.Repositories;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
+    using HouseManager.Web.ViewModels.Addresses;
 
     public class AddressService : IAddressService
     {

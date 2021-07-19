@@ -28,7 +28,6 @@
 
         public void AddMounthDueAmountInAllProperies(int addressId)
         {
-            var propertyService = new PropertyService(this.db);
             var properties = this.db.Properties.Where(x => x.AddressId == addressId).ToList();
             var year = DateTime.Now.Year;
             var month = DateTime.Now.Month;

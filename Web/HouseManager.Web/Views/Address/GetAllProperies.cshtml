@@ -1,0 +1,23 @@
+﻿@model List<Property>
+
+<h2>Данни за имотите</h2>
+
+<table class="table table-striped table-bordered text-center">
+    <tr>
+        <th>Идентификатор</th>
+        <th>Тип на имота</th>
+        <th>Брой Обитатели</th>
+        <th>Собственик</th>
+        <th></th>
+    </tr>
+    @foreach (var property in Model)
+    {
+        <tr>
+            <td>@property.Name</td>
+            <td>@property.PropertyType.Name</td>
+            <td>@property.ResidentsCount</td>
+            <td>@property.Residents.FirstOrDefault().FullName</td>
+            <td><a asp-controller="Address" asp-action="EditProperty" asp-route-id="@property.Id" class="btn btn-outline-info">Промяна</a></td>
+        </tr>
+    }
+</table>

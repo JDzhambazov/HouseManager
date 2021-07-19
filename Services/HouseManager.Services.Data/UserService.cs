@@ -95,6 +95,11 @@
             result.AddRange(addressList);
             result.AddRange(properties);
 
+            foreach (var address in result)
+            {
+                ReplaseNames(address);
+            }
+
             return result = result.Distinct().ToList();
          }
 
@@ -113,6 +118,41 @@
             }
 
             return userList;
+        }
+
+        private static void ReplaseNames(AddressViewModel address)
+        {
+            if (address.CityName != null)
+            {
+                address.CityName = string.Concat("гр. " + address.CityName);
+            }
+
+            if (address.StreetName != null)
+            {
+                address.StreetName = string.Concat("ул. " + address.StreetName);
+            }
+
+            if (address.DistrictName != null)
+            {
+                address.DistrictName = string.Concat("ж.к. " + address.DistrictName);
+            }
+
+            if (address.Entrance != null)
+            {
+                address.Entrance = string.Concat("вх. " + address.Entrance);
+            }
+
+            if (address.Number != null)
+            {
+                if (address.DistrictName != null)
+                {
+                    address.Number = string.Concat("бл.№ " + address.Number);
+                }
+                else
+                {
+                    address.Number = string.Concat("№ " + address.Number);
+                }
+            }
         }
     }
 }

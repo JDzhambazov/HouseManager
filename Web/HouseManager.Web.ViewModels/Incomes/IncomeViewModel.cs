@@ -1,7 +1,7 @@
 ﻿namespace HouseManager.Web.ViewModels.Incomes
 {
     using System;
-
+    using System.ComponentModel.DataAnnotations;
     using HouseManager.Data.Models;
 
     public class IncomeViewModel

@@ -1,0 +1,19 @@
+﻿@model EditPropertyViewModel
+
+<form method="post" class="col-lg-8 offset-2">
+    <input asp-for="Id" class="form-control d-none" />
+
+    <label asp-for="Name"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name"></span>
+
+    <label asp-for="PropertyType.Name"></label>
+    <input asp-for="PropertyType.Name" class="form-control" />
+    <span asp-validation-for="PropertyType.Name"></span>
+
+    <label asp-for="ResidentsCount"></label>
+    <input asp-for="ResidentsCount" class="form-control" />
+    <span asp-validation-for="ResidentsCount"></span>
+
+    <input type="submit" class="btn btn-outline-primary mt-5" />
+</form>
