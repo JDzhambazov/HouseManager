@@ -22,8 +22,6 @@
         public DateTime NotRegularIncomeDate { get; set; }
 
         [Required]
-        [MinLength(2)]
-        [MaxLength(20)]
         public string Resident { get; set; }
 
         public ICollection<SelectListItem> Residents { get; set; }

@@ -32,13 +32,13 @@
                 <div class="form-group">
                     <label asp-for="NotRegularIncome" class="h5">Задължения за ремонт</label>
                     <input type="text" step="any"  asp-for="NotRegularIncome"  value="@Model.NotRegularIncome" class="form-control" />
-                    @*<span asp-validation-for="Input.LastName" class="text-danger"></span>*@
+                    <span asp-validation-for="NotRegularIncome" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                <label asp-for="@Model.NotRegularIncomeDate" class="h5">Дата:</label>
-                <input type="date" asp-for="@Model.NotRegularIncomeDate"class="form-control" />
-                @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
-            </div>
+                    <label asp-for="NotRegularIncomeDate" class="h5">Дата:</label>
+                    <input type="date" asp-for="NotRegularIncomeDate"class="form-control" />
+                    <span asp-validation-for="NotRegularIncomeDate" class="text-danger"></span>
+                </div>
             }
             <div class="form-group">
                 <label asp-for="Resident" class="h5">Платил</label>
@@ -47,12 +47,8 @@
             <hr />
             <div class="text-center d-flex justify-content-around">
                 <button type="submit" class="btn btn-primary">Плащане</button>
-                <a class="btn btn-danger" asp-area="" asp-controller="DueAmount" asp-action="MonthAmount" asp-route-id="1">Отказ</a>
+                <a class="btn btn-danger" asp-area="" asp-controller="DueAmount" asp-action="MonthAmount" asp-route-id=@Context.Request.Cookies["CurrentAddressId"]>Отказ</a>
             </div>
         </form>
     </div>
  </div>
-
-@*@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}*@
