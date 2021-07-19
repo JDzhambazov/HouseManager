@@ -36,7 +36,7 @@ namespace HouseManager.Web.Controllers
 
             var result = new ExpenseViewModel
             {
-                AddressId = 1,
+                AddressId = int.Parse(this.Request.Cookies["CurrentAddressId"]),
                 ExpensTypeList = expenseTypeSelectItems,
                 Date = DateTime.UtcNow,
             };
@@ -50,7 +50,7 @@ namespace HouseManager.Web.Controllers
         {
             var price = decimal.Parse(expense.Price, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture);
             expensService.AddExpens(expense.ExpensType, price, expense.Date, expense.IsRegular, expense.AddressId);
-            return Redirect("/Expense/AddExpense");
+            return RedirectToAction(nameof(AddExpense));
         }
     }
 }

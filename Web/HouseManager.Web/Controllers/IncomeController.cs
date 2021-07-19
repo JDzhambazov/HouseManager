@@ -69,11 +69,7 @@
                     return dbContext.Users.FirstOrDefault(x => x.Id == income.Resident);
                 });
 
-                //TODO да го направя да се взема от бисквитка
-                var addressId = await Task.Run(() =>
-                {
-                    return dbContext.Properties.FirstOrDefault(x => x.Id == income.PropertyId).AddressId;
-                });
+                var addressId = int.Parse(this.Request.Cookies["CurrentAddressId"]);
 
                 if (income.RegularIncome != null)
                 {
