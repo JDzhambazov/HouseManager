@@ -12,7 +12,6 @@
     [Authorize]
     public class AddressController : Controller
     {
-        private readonly int currentAddres = 1;
         private readonly IPropertyService propertyService;
 
         public AddressController(IPropertyService propertyService)
@@ -22,7 +21,8 @@
 
         public async Task<IActionResult> GetAllProperies()
         {
-            var properies = await propertyService.GetAllPropertiesInAddress(currentAddres);
+            var currentAddress =int.Parse(this.Request.Cookies["CurrentAddressId"]);
+            var properies = await propertyService.GetAllPropertiesInAddress(currentAddress);
 
             return View(properies);
         }

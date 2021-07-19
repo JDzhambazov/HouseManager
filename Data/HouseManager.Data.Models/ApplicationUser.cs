@@ -24,6 +24,8 @@ namespace HouseManager.Data.Models
         [MaxLength(100)]
         public string FullName { get; set; }
 
+        public int? CurrentAddressId { get; set; }
+
         // Audit info
         public DateTime? CreatedOn { get; set; }
 

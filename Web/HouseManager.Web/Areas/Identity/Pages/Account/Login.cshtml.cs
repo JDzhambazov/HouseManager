@@ -14,19 +14,23 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
+    using HouseManager.Data;
 
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext dbContext;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
+            this.dbContext = dbContext;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -83,9 +87,11 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+
                 var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    SetCurrentAddressId();
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
@@ -105,8 +111,18 @@
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private void SetCurrentAddressId()
+        {
+             var currentAddressId = this.dbContext
+             .Users
+             .Where(u => u.UserName == Input.UserName)
+             .Select(x => x.CurrentAddressId)
+             .FirstOrDefault();
+
+             this.Response.Cookies.Append("CurrentAddressId", $"{currentAddressId}");
         }
     }
 }

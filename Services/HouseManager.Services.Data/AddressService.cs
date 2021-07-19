@@ -95,6 +95,25 @@
             await this.addressRepository.SaveChangesAsync();
         }
 
+        public async Task<bool> SetCurrentAddressId(int currentAddressId, ApplicationUser user)
+        {
+
+            var address = addressRepository.All()
+                .Where(x => x.Manager == user || x.Paymaster == user
+                || x.Properties.Any(p => p.Residents.Contains(user)))
+                .ToList();
+
+            if (address == null)
+            {
+                return false;
+            }
+
+            user.CurrentAddressId = currentAddressId;
+            userRepository.Update(user);
+            await userRepository.SaveChangesAsync();
+            return true;
+        }
+
         public async Task Delete(Address address)
         {
             this.addressRepository.Delete(address);

@@ -13,20 +13,21 @@
     public class HomeController : BaseController
     {
         private readonly IUserService userService;
-        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IAddressService addressService;
 
-        public HomeController(IUserService userService, SignInManager<ApplicationUser> signInManager, IAddressService addressService)
+        public HomeController(IUserService userService, 
+            UserManager<ApplicationUser> userManager, 
+            IAddressService addressService)
         {
             this.userService = userService;
-            this.signInManager = signInManager;
+            this.userManager = userManager;
             this.addressService = addressService;
         }
 
         public async Task<IActionResult> Index()
         {
-            //var user = await signInManager.UserManager.GetUserAsync(User);
-            //var name = user.Properties;
+
             var addresses = await userService.GetUserAddresses(User.Identity.Name);
 
             return this.View(addresses);
@@ -44,20 +45,13 @@
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Test(int id)
+        public async Task<IActionResult> SetCurrentAddress(int id)
         {
-            var request = this.Request.Cookies.ContainsKey("CurrentAddressId");
-            //
-            if (!request)
-            {
+            var user = await userManager.GetUserAsync(this.User);
 
-                this.Response.Cookies.Append(
-                    "CurrentAddressId",
-                    $"{id}");
-            }
-            else
+            if (await addressService.SetCurrentAddressId(id, user))
             {
-                var es = int.Parse(this.Request.Cookies["CurrentAddressId"]);
+                this.Response.Cookies.Append("CurrentAddressId", $"{id}");
             }
 
             return RedirectToAction(nameof(Index));

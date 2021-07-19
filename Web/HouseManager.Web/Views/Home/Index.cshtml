@@ -1,6 +1,4 @@
 ﻿@using HouseManager.Common
-@using HouseManager.Web.ViewModels.Addresses
-@using HouseManager.Web.ViewModels.Users
 
 @model IEnumerable<AddressViewModel>;
 @{
@@ -17,7 +15,7 @@
         @foreach (var address in Model)
         {
             <div class="col-md-3">
-                <a asp-route-id="@address.AddressId" class="btn btn-outline-primary mb-2">
+                <a asp-controller="Home" asp-action="SetCurrentAddress" asp-route-id="@address.AddressId" class="btn btn-outline-primary mb-2">
                     @address.CityName @address?.DistrictName
                     @address?.StreetName @address.Number @address?.Entrance
                 </a>
@@ -35,6 +33,3 @@
     }
 
 </div>
-
-<a asp-controller="Home" asp-action="Test" asp-route-id="1" class="btn" >Test44</a>
-

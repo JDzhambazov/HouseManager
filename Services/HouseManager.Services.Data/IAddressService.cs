@@ -17,5 +17,7 @@
         ICollection<Property> GetAllProperyies(int addressId);
 
         Task Delete(Address address);
+
+        Task<bool> SetCurrentAddressId(int id , ApplicationUser user);
     }
 }

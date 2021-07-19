@@ -134,14 +134,16 @@
             return propery;
         }
 
-        public async Task<bool> Edit(int id ,int residentsCount)
+        public async Task<bool> Edit(int propertId ,int residentsCount)
         {
-            if (id == 0)
+            if (propertId == 0)
             {
                 return false;
             }
 
-            var currentProperty = await db.Properties.FirstOrDefaultAsync(x => x.Id == id);
+
+            var currentProperty = await db.Properties.FirstOrDefaultAsync(x => x.Id == propertId);
+            
             currentProperty.ResidentsCount = residentsCount;
 
             db.Entry(currentProperty).State = EntityState.Modified;
