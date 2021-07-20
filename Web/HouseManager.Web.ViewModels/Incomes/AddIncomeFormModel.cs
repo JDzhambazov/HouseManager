@@ -7,7 +7,7 @@
     using HouseManager.Data.Models;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class AddIncomeViewModel
+    public class AddIncomeFormModel
     {
         public int PropertyId { get; set; }
 

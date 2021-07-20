@@ -1,5 +1,4 @@
 ﻿@using HouseManager.Common
-@using HouseManager.Data
 @using HouseManager.Data.Models
 @using HouseManager.Services.Data
 @using Microsoft.AspNetCore.Identity
@@ -41,7 +40,7 @@
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="Expense" asp-action="AddExpense">Разходи</a>
                                 <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечни Такси</a>
                                 <div class="dropdown-divider border-info"></div>
-                                <a class="dropdown-item text-info" asp-area="" asp-controller="DueAmount" asp-action="MonthAmount" asp-route-id="1">Текущи задължения</a>
+                                <a class="dropdown-item text-info" asp-area="" asp-controller="DueAmount" asp-action="MonthAmount" asp-route-id=@Context.Request.Cookies["CurrentAddressId"]>Текущи задължения</a>
                                 <div class="dropdown-divider border-info"></div>
                                 <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Годищен Отчет</a>
                                 <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечен Отчет</a>
@@ -54,7 +53,7 @@
                             <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Добавяне Имот</a>
                                 <a class="dropdown-item text-info" asp-area="Identity" asp-page="/Account/Register">Добавяне Потребител</a>
-                                <a class="dropdown-item text-info" asp-controller="Address" asp-action="GetAllProperies">Данни за Имоти</a>
+                                <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="GetAllProperies">Данни за Имоти</a>
                                 <div class="dropdown-divider border-info"></div>
                                 <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Данни за Адрес</a>
                                 <div class="dropdown-divider border-info"></div>
@@ -64,19 +63,8 @@
                         </li>
                     }
 
-                    @*<li class="nav-item">
-                        <a class="nav-link disabled" asp-controller="" asp-action="">Go Tutorials</a>
-                    </li>*@
                 </ul>
                 <partial name="_LoginPartial" />
-                @*<form class="form-inline my-2 my-lg-0">
-
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search Tutorials" aria-label="Search">
-
-                        <button class="btn btn-primary my-2 my-sm-0" type="submit">Go</button>
-
-                    </form>*@
-
             </div>
 
         </nav>

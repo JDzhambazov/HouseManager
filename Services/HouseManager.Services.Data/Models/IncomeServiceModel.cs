@@ -1,10 +1,11 @@
-﻿namespace HouseManager.Web.ViewModels.Incomes
+﻿namespace HouseManager.Services.Data.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using HouseManager.Data.Models;
+    using HouseManager.Services.Mapping;
 
-    public class IncomeViewModel
+    public class IncomeServiceModel : IMapFrom<RegularIncome>, IMapFrom<NotRegularIncome>
     {
         public int Id { get; set; }
 

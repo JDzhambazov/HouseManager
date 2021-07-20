@@ -46,7 +46,7 @@
             }
 
             var currentAmount = dueAmountService.GetPropertyMountDueAmount(id);
-            var result = new AddIncomeViewModel
+            var result = new AddIncomeFormModel
             {
                 PropertyId = id,
                 NotRegularIncome = currentAmount.NotRegularDueAmount.ToString(),
@@ -60,7 +60,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddIncome(AddIncomeViewModel income)
+        public async Task<ActionResult> AddIncome(AddIncomeFormModel income)
         {
             if (ModelState.IsValid)
             {

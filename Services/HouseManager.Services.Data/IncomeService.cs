@@ -9,6 +9,8 @@
     using HouseManager.Data;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
+    using HouseManager.Services.Data.Models;
+    using HouseManager.Services.Mapping;
     using HouseManager.Web.ViewModels.Incomes;
 
     public class IncomeService : IIncomeService
@@ -66,36 +68,38 @@
             }
         }
 
-        public ICollection<IncomeViewModel> GetAllIncomeForPropery(int propertyId, bool isRegular)
+        public ICollection<IncomeServiceModel> GetAllIncomeForPropery(int propertyId, bool isRegular)
         {
             if (isRegular)
             {
                 return this.db.RegularIncomes
                     .Where(x => x.PropertyId == propertyId)
-                    .Select(x => new IncomeViewModel
-                    {
-                        PropertyId = x.PropertyId,
-                        Property = x.Property,
-                        Date = x.Date,
-                        Price = x.Price,
-                        Resident = x.Resident,
-                        ResidentId = x.ResidentId,
-                    })
+                    .To<IncomeServiceModel>()
+                    //.Select(x => new IncomeViewModel
+                    //{
+                    //    PropertyId = x.PropertyId,
+                    //    Property = x.Property,
+                    //    Date = x.Date,
+                    //    Price = x.Price,
+                    //    Resident = x.Resident,
+                    //    ResidentId = x.ResidentId,
+                    //})
                     .ToList();
             }
             else
             {
                 return this.db.NotRegularIncomes
                     .Where(x => x.PropertyId == propertyId)
-                    .Select(x => new IncomeViewModel
-                    {
-                        PropertyId = x.PropertyId,
-                        Property = x.Property,
-                        Date = x.Date,
-                        Price = x.Price,
-                        Resident = x.Resident,
-                        ResidentId = x.ResidentId,
-                    })
+                    .To<IncomeServiceModel>()
+                    //.Select(x => new IncomeViewModel
+                    //{
+                    //    PropertyId = x.PropertyId,
+                    //    Property = x.Property,
+                    //    Date = x.Date,
+                    //    Price = x.Price,
+                    //    Resident = x.Resident,
+                    //    ResidentId = x.ResidentId,
+                    //})
                     .ToList();
             }
         }
