@@ -10,6 +10,7 @@
     using HouseManager.Data.Models;
     using HouseManager.Web.ViewModels.Addresses;
     using HouseManager.Web.ViewModels.Users;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     public class UserService : IUserService
@@ -17,45 +18,67 @@
         private readonly IDeletableEntityRepository<Address> addressRepository;
         private readonly IRepository<Property> propertyRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public UserService(
             IDeletableEntityRepository<Address> addressRepository,
             IRepository<Property> propertyRepository,
-            IDeletableEntityRepository<ApplicationUser> userRepository
+            IDeletableEntityRepository<ApplicationUser> userRepository,
+            UserManager<ApplicationUser> userManager
             )
         {
             this.addressRepository = addressRepository;
             this.propertyRepository = propertyRepository;
             this.userRepository = userRepository;
+            this.userManager = userManager;
         }
 
-        public async Task AddNewUser(string userName, string firstName, string lastName, string email, string password)
+        public async Task<IdentityResult> AddNewUser(string userName, string firstName, string lastName, string email, string password)
         {
             var fullname = string.Join(' ', firstName, lastName).Trim();
-
-            await this.userRepository.AddAsync(new ApplicationUser
+            var user = new ApplicationUser
             {
                 UserName = userName,
                 FullName = fullname,
-                NormalizedUserName = userName.ToUpper(),
-                Email = email != null ? email : null,
-                NormalizedEmail = email != null ? email.ToUpper() : null,
-                CreatedOn = DateTime.UtcNow,
-                PasswordHash = password,
-                EmailConfirmed = true,
-            });
-            await this.userRepository.SaveChangesAsync();
+                Email = email,
+            };
+
+            var isEmailExist = userRepository
+                .All()
+                .Any(x => x.Email == email);
+
+            if (isEmailExist)
+            {
+                var error = new IdentityError
+                {
+                    Code = "DuplicateEmailAddress",
+                    Description = $"Има регистриран потребител с Email {email}",
+                };
+
+                return IdentityResult.Failed(error);
+            }
+
+            return await userManager.CreateAsync(user, password);
+
         }
 
         public IEnumerable<UserListViewModel> GetAllUsersInAddress(Address address)
         {
-            var properties = propertyRepository.All().Where(x => x.Address == address).ToList();
+            var properties = propertyRepository
+                .All()
+                .Where(x => x.Address == address)
+                .ToList();
+
             return GetUsers(properties);
         }
 
         public IEnumerable<UserListViewModel> GetAllUsersInAddress(int addressId)
         {
-            var properties = propertyRepository.All().Where(x => x.AddressId == addressId).ToList();
+            var properties = propertyRepository
+                .All()
+                .Where(x => x.AddressId == addressId)
+                .ToList();
+
             return GetUsers(properties);
         }
 

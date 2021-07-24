@@ -3,13 +3,14 @@
     using HouseManager.Data.Models;
     using HouseManager.Web.ViewModels.Addresses;
     using HouseManager.Web.ViewModels.Users;
+    using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface IUserService
     {
-        Task AddNewUser(string userName, string firstName, string lastName, string email, string password);
+        Task<IdentityResult> AddNewUser(string userName, string firstName, string lastName, string email, string password);
 
         IEnumerable<UserListViewModel> GetAllUsersInAddress(Address address);
 
