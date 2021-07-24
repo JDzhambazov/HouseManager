@@ -17,7 +17,7 @@
             <td>@property.PropertyType.Name</td>
             <td>@property.ResidentsCount</td>
             <td>@property.Residents.FirstOrDefault().FullName</td>
-            <td><a asp-controller="Address" asp-action="EditProperty" asp-route-id="@property.Id" class="btn btn-outline-info">Промяна</a></td>
+            <td><a asp-controller="Property" asp-action="EditProperty" asp-route-id="@property.Id" class="btn btn-outline-info">Промяна</a></td>
         </tr>
     }
 </table>
