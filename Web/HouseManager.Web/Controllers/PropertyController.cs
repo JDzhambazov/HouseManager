@@ -6,9 +6,11 @@
     using System.Threading.Tasks;
 
     using HouseManager.Services.Data;
-    using HouseManager.Web.ViewModels.Addresses;
+    using HouseManager.Web.ViewModels.Property;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class PropertyController : Controller
     {
         private readonly IPropertyService propertyService;

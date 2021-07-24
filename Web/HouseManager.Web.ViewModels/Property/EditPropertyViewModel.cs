@@ -1,10 +1,11 @@
-﻿namespace HouseManager.Web.ViewModels.Addresses
+﻿namespace HouseManager.Web.ViewModels.Property
 {
-    using HouseManager.Data.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Text;
+
+    using HouseManager.Data.Models;
 
     public class EditPropertyViewModel
     {

@@ -1,8 +1,8 @@
-﻿using HouseManager.Data.Models;
-using System.ComponentModel.DataAnnotations;
-
-namespace HouseManager.Web.ViewModels.Addresses
+﻿namespace HouseManager.Web.ViewModels.Property
 {
+    using HouseManager.Data.Models;
+    using System.ComponentModel.DataAnnotations;
+
     public class EditPropertyInputModel
     {
         [Range(1, int.MaxValue)]
