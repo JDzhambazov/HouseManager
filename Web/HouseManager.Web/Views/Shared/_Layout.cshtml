@@ -36,14 +36,14 @@
                                 Финанси
                             </button>
                             <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Приходи</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Приходи</a>
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="Expense" asp-action="AddExpense">Разходи</a>
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечни Такси</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Месечни Такси</a>
                                 <div class="dropdown-divider border-info"></div>
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="DueAmount" asp-action="MonthAmount" asp-route-id=@Context.Request.Cookies["CurrentAddressId"]>Текущи задължения</a>
                                 <div class="dropdown-divider border-info"></div>
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Годищен Отчет</a>
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечен Отчет</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Годищен Отчет</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Месечен Отчет</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -51,14 +51,15 @@
                                 Адрес
                             </button>
                             <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Добавяне Имот</a>
-                                <a class="dropdown-item text-info" asp-area="Identity" asp-page="/Account/Register">Добавяне Потребител</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Добави Адрес</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Добавяне Имот</a>
+                                <a class="dropdown-item text-info" asp-area="Identity" asp-page="/Account/Register">Добавяне на Потребител</a>
+                                <div class="dropdown-divider border-info"></div>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Данни за Адрес</a>
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="GetAllProperies">Данни за Имоти</a>
                                 <div class="dropdown-divider border-info"></div>
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Данни за Адрес</a>
-                                <div class="dropdown-divider border-info"></div>
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Годищен Отчет</a>
-                                <a class="dropdown-item text-info disabled" asp-controller="" asp-action="">Месечен Отчет</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Годищен Отчет</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Месечен Отчет</a>
                             </div>
                         </li>
                     }
@@ -88,7 +89,8 @@
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
-    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script src="~/js/select2.js"></script>
+    <script src="~/lib/select2/js/select2.full.min.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
