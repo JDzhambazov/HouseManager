@@ -14,10 +14,12 @@
     public class AddressController : BaseController
     {
         private readonly IAddressService addressService;
+        private readonly IFeeService feeService;
 
-        public AddressController(IAddressService addressService)
+        public AddressController(IAddressService addressService, IFeeService feeService)
         {
             this.addressService = addressService;
+            this.feeService = feeService;
         }
 
         public IActionResult Create()
@@ -73,7 +75,35 @@
 
         public IActionResult MounthFee()
         {
-            return this.View();
+            return this.View(this.NewFee());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MounthFee(FeeServiseModel fee)
+        {
+            if (!ModelState.IsValid)
+            {
+                fee.FeeTypes = this.feeService.GetAllFees();
+                return this.View(fee);
+            }
+
+            this.feeService
+                .AddFeeToAddress(
+                this.GetAddressId(),
+                fee.FeeType,
+                this.DecimalValue(fee.Cost),
+                fee.IsPersonal,
+                fee.IsRegular);
+
+            return this.View(this.NewFee());
+        }
+
+        private FeeServiseModel NewFee()
+        {
+            var newFee = new FeeServiseModel();
+            newFee.FeeTypes = this.feeService.GetAllFees();
+            return newFee;
         }
     }
 }

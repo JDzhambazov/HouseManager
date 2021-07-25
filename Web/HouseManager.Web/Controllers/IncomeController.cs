@@ -68,21 +68,21 @@
 
                 if (income.RegularIncome != null)
                 {
-                    income.RegularIncome = income.RegularIncome.Replace(',', '.');
-                    decimal.TryParse(income.RegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture, out decimal regularIncome);
-                    if (regularIncome > 0)
+                    var result = this.DecimalValue(income.RegularIncome);
+                    
+                    if (result > 0)
                     {
-                        incomeService.AddIncome(income.PropertyId, regularIncome, income.RegularIncomeDate, resident, this.GetAddressId(), true);
+                        incomeService.AddIncome(income.PropertyId, result, income.RegularIncomeDate, resident, this.GetAddressId(), true);
                     }
                 }
 
                 if (income.NotRegularIncome != null)
                 {
-                    income.NotRegularIncome = income.NotRegularIncome.Replace(',', '.');
-                    decimal.TryParse(income.NotRegularIncome, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture, out decimal notRegularIncome);
-                    if(notRegularIncome > 0)
+                    var result = this.DecimalValue(income.NotRegularIncome);
+
+                    if (result > 0)
                     {
-                            incomeService.AddIncome(income.PropertyId, notRegularIncome, income.NotRegularIncomeDate, resident, this.GetAddressId(), false);     
+                            incomeService.AddIncome(income.PropertyId, result, income.NotRegularIncomeDate, resident, this.GetAddressId(), false);     
                     }
                 }
                 return Redirect($"/DueAmount/MonthAmount/{this.GetAddressId()}");

@@ -93,6 +93,7 @@
                 {
                     SetCurrentAddressId();
                     _logger.LogInformation("User logged in.");
+                    SetCurrentAddressId();
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

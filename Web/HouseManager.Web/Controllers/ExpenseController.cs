@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace HouseManager.Web.Controllers
 {
     [Authorize]
-    public class ExpenseController : Controller
+    public class ExpenseController : BaseController
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IExpensService expensService;
@@ -36,8 +36,8 @@ namespace HouseManager.Web.Controllers
 
             var result = new ExpenseViewModel
             {
-                AddressId = int.Parse(this.Request.Cookies["CurrentAddressId"]),
-                ExpensTypeList = expenseTypeSelectItems,
+                AddressId = this.GetAddressId() ,
+                ExpensTypeList = expenseTypeSelectItems ?? new List<SelectListItem>(),
                 Date = DateTime.UtcNow,
             };
 

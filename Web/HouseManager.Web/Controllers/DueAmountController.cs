@@ -10,7 +10,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize]
-    public class DueAmountController : Controller
+    public class DueAmountController : BaseController
     {
         private readonly IDueAmountService dueAmountService;
         private readonly IAddressService addressService;
@@ -21,9 +21,10 @@
             this.addressService = addressService;
         }
 
-        public ActionResult MonthAmount(int id)
+        public ActionResult MonthAmount()
         {
-            var result = dueAmountService.GetAddressDueAmount(addressService.GetAllProperyies(id));
+            var result = dueAmountService
+                .GetAddressDueAmount(addressService.GetAllProperyies(this.GetAddressId()));
 
             return View(result);
         }
