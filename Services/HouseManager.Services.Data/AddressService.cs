@@ -7,7 +7,9 @@
     using HouseManager.Data.Common.Repositories;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
+    using HouseManager.Services.Data.Models;
     using HouseManager.Web.ViewModels.Addresses;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class AddressService : IAddressService
     {
@@ -34,9 +36,9 @@
             this.streetRepository = streetRepository;
         }
 
-        public async Task CreateAddress(string cityName, string districtName,
+        public async Task<int> CreateAddress(string cityName, string districtName,
             string streetName, string number, string entrance,
-            int numberOfProperties, ApplicationUser creatоr = null)
+            int numberOfProperties, string creatоrId)
         {
             District district = null;
             Street street = null;
@@ -62,15 +64,63 @@
                 Number = number,
                 Entrance = entrance,
                 NumberOfProperties = numberOfProperties,
+                CreatorId = creatоrId,
             };
-
-            if (creatоr != null)
-            {
-                address.Manager = creatоr;
-            }
-
+           
             await this.addressRepository.AddAsync(address);
             await this.addressRepository.SaveChangesAsync();
+            return address.Id;
+        }
+
+        public AdressServiseInputModel GetSelectItems(AdressServiseInputModel adrress)
+        {
+            var allCities = cityRepository.All()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Name,
+                    Text = x.Name,
+                })
+                .ToList();
+            allCities.Add(new SelectListItem
+            {
+                Value = "",
+                Text = "",
+                Selected = true,
+            });
+
+            var allDistricts = districtRepository.All()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Name,
+                    Text = x.Name,
+                })
+                .ToList();
+            allDistricts.Add(new SelectListItem
+            {
+                Value = "",
+                Text = "",
+                Selected = true,
+            });
+
+            var allStreets = streetRepository.All()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Name,
+                    Text = x.Name,
+                })
+                .ToList();
+            allStreets.Add(new SelectListItem
+            {
+                Value = "",
+                Text = "",
+                Selected = true,
+            });
+
+            adrress.AllCities = allCities;
+            adrress.AllDistricts = allDistricts;
+            adrress.AllStreets = allStreets;
+
+            return adrress;
         }
 
         public ICollection<Property> GetAllProperyies(int addressId)
@@ -116,7 +166,7 @@
 
         public async Task Delete(Address address)
         {
-            this.addressRepository.Delete(address);
+           this.addressRepository.Delete(address);
         }
 
         private Address GetAddressById(int addressId)

@@ -42,6 +42,8 @@ namespace HouseManager.Data.Models
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
+        public virtual ICollection<Address> Creators { get; set; }
+
         public virtual ICollection<Address> Managers { get; set; }
 
         public virtual ICollection<Address> Paymasters { get; set; }

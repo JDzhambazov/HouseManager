@@ -52,8 +52,4 @@
     <ProjectReference Include="..\HouseManager.Web.Infrastructure\HouseManager.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\HouseManager.Web.ViewModels\HouseManager.Web.ViewModels.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Address\" />
-  </ItemGroup>
 </Project>

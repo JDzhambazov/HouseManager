@@ -37,6 +37,11 @@
 
         [MaxLength(2)]
         public int NumberOfProperties { get; set; }
+        
+        public string CreatorId { get; set; }
+
+        [InverseProperty(nameof(ApplicationUser.Creators))]
+        public virtual ApplicationUser Creator { get; set; }
 
         public string ManagerId { get; set; }
 

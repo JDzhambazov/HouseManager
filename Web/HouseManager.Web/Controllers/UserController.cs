@@ -4,17 +4,17 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
+
 
     public class UserController : Controller
     {
         private readonly IUserService userService;
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly UserManager<ApplicationUser> userManager;
 
         public UserController(IUserService userService,
             SignInManager<ApplicationUser> signInManager,
@@ -22,7 +22,6 @@
         {
             this.userService = userService;
             this.signInManager = signInManager;
-            this.userManager = userManager;
         }
         public IActionResult Create() => View();
 
@@ -52,7 +51,7 @@
             if (result.Succeeded)
             {
                 await this.signInManager.SignInAsync(newUser, isPersistent: false);
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(AddressController.Create), "Address");
             }
 
             foreach (var error in result.Errors)
