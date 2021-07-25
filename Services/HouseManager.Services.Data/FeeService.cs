@@ -9,6 +9,7 @@
     using HouseManager.Data;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     public class FeeService : IFeeService
@@ -61,6 +62,15 @@
 
             fee.Cost = cost;
             this.db.SaveChanges();
+        }
+
+        public ICollection<SelectListItem> GetAllFees()
+        {
+            return this.db.FeeTypes.Select(f => new SelectListItem
+            {
+                Value = f.Name,
+                Text = f.Name,
+            }).ToList();
         }
 
         public ICollection<MonthFee> GetAllFeesInAddress(int addressId)

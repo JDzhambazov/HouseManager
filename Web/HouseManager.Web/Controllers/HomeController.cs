@@ -55,7 +55,7 @@
 
             if (await addressService.SetCurrentAddressId(id, user))
             {
-                this.Response.Cookies.Append("CurrentAddressId", $"{id}");
+                this.SetAddressId(id);
             }
 
             return RedirectToAction(nameof(Index));

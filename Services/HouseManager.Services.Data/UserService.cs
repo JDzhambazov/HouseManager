@@ -111,7 +111,13 @@
             }
 
             return result = result.Distinct().ToList();
-         }
+        }
+
+
+        public bool IsUserMakeChanges(string userId)
+            => this.addressRepository
+                    .All()
+                    .Any(x => x.ManagerId == userId || x.PaymasterId == userId || x.CreatorId == userId);
 
         private static IEnumerable<UserListViewModel> GetUsers(IEnumerable<Property> properties)
         {

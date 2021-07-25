@@ -3,6 +3,7 @@
     using System.Collections.Generic;
 
     using HouseManager.Data.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface IFeeService
     {
@@ -11,6 +12,8 @@
         void AddFeeToProperty(ICollection<int> propertiesId, string feeName);
 
         void EditAddresFee(int addressId, string feeName, decimal cost);
+
+        ICollection<SelectListItem> GetAllFees();
 
         ICollection<MonthFee> GetAllFeesInAddress(int addressId);
 

@@ -1,10 +1,15 @@
-﻿@using HouseManager.Web.ViewModels.DueAmount;
+﻿@using HouseManager.Web.ViewModels.DueAmount
+
+@inject IUserService userService  
 
 @model IEnumerable<MounthAmountViewModel>
 @{
     ViewData["Title"] = "Month DueAmount";
 }
 
+@{ 
+    var isUserMakeChanges = userService.IsUserMakeChanges(this.User.Id());
+}
 <div class="text-center">
     <p>Задължения за месец: @DateTime.Now.ToString("MMM yyyy").ToUpper()</p>
 </div>
@@ -13,24 +18,32 @@
         <div class="table-responsive mdi-margin">
             <table class="table table-striped table-bordered table-hover">
                 <thead class="text-center text-info border-top">
-                    <th class="text-warning">Имот</th>
-                    <th class="text-warning">Собственик</th>
-                    <th class="text-warning">Бр.Обитатели</th>
-                    <th class="text-warning">Задължения Общи части</th>
-                    <th class="text-warning">Задължения Ремонт</th>
+                <th class="text-warning">Имот</th>
+                <th class="text-warning">Собственик</th>
+                <th class="text-warning">Бр.Обитатели</th>
+                <th class="text-warning">Задължения Общи части</th>
+                <th class="text-warning">Задължения Ремонт</th>
+                @if (isUserMakeChanges)
+                {
                     <th class="text-warning">Плащане</th>
+                }
+
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr class="text-center">
-                            <td class="text-primary h5">@item.PropertyName</td>
-                            <td class="text-primary h5">@item.ResidentName</td>
-                            <td class="text-primary h5">@item.ResidentsCount</td>
-                            <td class="text-primary h5">@item.RegularDueAmount лв.</td>
-                            <td class="text-primary h5">@item.NotRegularDueAmount лв.</td>
+                    <tr class="text-center">
+                        <td class="text-primary h5">@item.PropertyName</td>
+                        <td class="text-primary h5">@item.ResidentName</td>
+                        <td class="text-primary h5">@item.ResidentsCount</td>
+                        <td class="text-primary h5">@item.RegularDueAmount лв.</td>
+                        <td class="text-primary h5">@item.NotRegularDueAmount лв.</td>
+                        @if (isUserMakeChanges)
+                        {
                             <td class="text-primary h5"><a asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a></td>
-                        </tr>
+
+                        }
+                    </tr>
                     }
                 </tbody>
             </table>

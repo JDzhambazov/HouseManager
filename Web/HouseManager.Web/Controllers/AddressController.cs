@@ -1,16 +1,17 @@
 ﻿namespace HouseManager.Web.Controllers
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Web.Infrastructure;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using System.Collections.Generic;
-    using System.Security.Claims;
-    using System.Threading.Tasks;
+
 
     [Authorize]
-    public class AddressController : Controller
+    public class AddressController : BaseController
     {
         private readonly IAddressService addressService;
 
@@ -55,9 +56,6 @@
                 return View(address);
             }
 
-            
-
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var currentAddressId = await this.addressService
                 .CreateAddress(
                 address.City,
@@ -66,11 +64,16 @@
                 address.Number,
                 address.Entrance,
                 address.NumberOfProperties,
-                userId);
+                this.User.Id());
 
-            this.Response.Cookies.Append("CurrentAddressId", $"{currentAddressId}");
+            this.SetAddressId(currentAddressId);
 
             return RedirectToAction();
+        }
+
+        public IActionResult MounthFee()
+        {
+            return this.View();
         }
     }
 }

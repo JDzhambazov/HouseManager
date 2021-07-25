@@ -17,5 +17,7 @@
         IEnumerable<UserListViewModel> GetAllUsersInAddress(int addressId);
 
         Task<IEnumerable<AddressViewModel>> GetUserAddresses(string user);
+
+        bool IsUserMakeChanges(string userId);
     }
 }

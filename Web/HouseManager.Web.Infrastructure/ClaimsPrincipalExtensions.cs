@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
-
-namespace HouseManager.Web.Infrastructure
+﻿namespace HouseManager.Web.Infrastructure
 {
+    using System.Security.Claims;
 
     public static class ClaimsPrincipalExtensions
     {
-        public static int CurrentAddresId(this ClaimsPrincipal user , HttpContext context)
-        => int.Parse(context.Request.Cookies["CurrentAddressId"]);
+        public static string Id(this ClaimsPrincipal user)
+            => user.FindFirst(ClaimTypes.NameIdentifier).Value;
     }
 }
