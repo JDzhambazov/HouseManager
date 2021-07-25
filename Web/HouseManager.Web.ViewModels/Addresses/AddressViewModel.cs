@@ -1,8 +1,10 @@
-﻿using System;
-
-namespace HouseManager.Web.ViewModels.Addresses
+﻿namespace HouseManager.Web.ViewModels.Addresses
 {
-    public class AddressViewModel :IEquatable<AddressViewModel>
+    using System;
+    using HouseManager.Data.Models;
+    using HouseManager.Services.Mapping;
+
+    public class AddressViewModel :IEquatable<AddressViewModel>, IMapFrom<Address>, IMapFrom<Property>
     {
         public int AddressId { get; set; }
 

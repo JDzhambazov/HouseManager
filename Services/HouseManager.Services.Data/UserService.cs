@@ -8,6 +8,7 @@
     using HouseManager.Data;
     using HouseManager.Data.Common.Repositories;
     using HouseManager.Data.Models;
+    using HouseManager.Services.Mapping;
     using HouseManager.Web.ViewModels.Addresses;
     using HouseManager.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Identity;
@@ -91,30 +92,15 @@
             var properties =
                 this.propertyRepository.All()
                 .Where(x => x.Residents.Contains(user))
-                .Select(x => new AddressViewModel
-                {
-                    AddressId = x.AddressId,
-                    CityName = x.Address.City.Name,
-                    DistrictName = x.Address.District.Name,
-                    StreetName = x.Address.Street.Name,
-                    Number = x.Address.Number,
-                    Entrance = x.Address.Entrance,
-                })
+                .To<AddressViewModel>()
                 .ToList<AddressViewModel>();
                 
                 var addressList = this.addressRepository
                     .All()
-                    .Where(x => x.Manager == user)
-                    .Select(x => new AddressViewModel
-                    {
-                        AddressId = x.Id,
-                        CityName = x.City.Name,
-                        DistrictName = x.District.Name,
-                        StreetName = x.Street.Name,
-                        Number = x.Number,
-                        Entrance = x.Entrance,
-                    })
+                    .Where(x => x.Manager == user || x.Paymaster == user || x.Creator == user)
+                    .To<AddressViewModel>()
                     .ToList<AddressViewModel>();
+
             result.AddRange(addressList);
             result.AddRange(properties);
 

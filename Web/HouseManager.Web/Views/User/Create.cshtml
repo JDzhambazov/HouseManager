@@ -1,5 +1,10 @@
 ﻿@model CreateUserServiceModel
 
+
+@{
+    this.ViewData["Title"] = "Регистрация";
+}
+
 <div class="container-scroller">
     <div class="">
         <div class="">
@@ -50,14 +55,14 @@
                             <div class="text-center">
                                 <input type="submit" class="btn btn-primary btn-block enter-btn" value="Регистрирай" />
                             </div>
-                            <div class="d-flex mt-2">
+                            @*<div class="d-flex mt-2">
                                 <button class="btn btn-facebook btn-social col mr-2">
                                     <i class="mdi mdi-facebook"></i> Facebook
                                 </button>
                                 <button class="btn btn-google btn-social col">
                                     <i class="mdi mdi-google-plus"></i> Google plus
                                 </button>
-                            </div>
+                            </div>*@
                             <p class="sign-up text-center">
                                 Вече имате профил?
                                 <a asp-area="Identity" asp-page="/Account/Login"> Вход</a>
