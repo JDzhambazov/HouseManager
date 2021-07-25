@@ -27,10 +27,14 @@
 
         public async Task<IActionResult> Index()
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var addresses = await userService.GetUserAddresses(User.Identity.Name);
 
-            var addresses = await userService.GetUserAddresses(User.Identity.Name);
+                return this.View(addresses);
+            }
 
-            return this.View(addresses);
+            return this.View();
         }
 
         public IActionResult Privacy()

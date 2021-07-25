@@ -4,9 +4,9 @@
     using HouseManager.Data.Models;
     using HouseManager.Services.Mapping;
 
-    public class AddressViewModel :IEquatable<AddressViewModel>, IMapFrom<Address>, IMapFrom<Property>
+    public class AddressViewModel :IEquatable<AddressViewModel>, IMapFrom<Address>
     {
-        public int AddressId { get; set; }
+        public int Id { get; set; }
 
         public string CityName { get; set; }
 
@@ -24,12 +24,12 @@
 
             if (Object.ReferenceEquals(this, other)) return true;
 
-            return AddressId.Equals(other.AddressId);
+            return Id.Equals(other.Id);
         }
 
         public override int GetHashCode()
         {
-            int hashAddressId = AddressId.GetHashCode();
+            int hashAddressId = Id.GetHashCode();
 
             return hashAddressId;
         }

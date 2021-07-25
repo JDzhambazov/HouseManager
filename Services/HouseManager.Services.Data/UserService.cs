@@ -92,14 +92,15 @@
             var properties =
                 this.propertyRepository.All()
                 .Where(x => x.Residents.Contains(user))
+                .Select(x => x.Address)
                 .To<AddressViewModel>()
-                .ToList<AddressViewModel>();
+                .ToList();
                 
                 var addressList = this.addressRepository
                     .All()
                     .Where(x => x.Manager == user || x.Paymaster == user || x.Creator == user)
                     .To<AddressViewModel>()
-                    .ToList<AddressViewModel>();
+                    .ToList();
 
             result.AddRange(addressList);
             result.AddRange(properties);
