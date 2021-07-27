@@ -32,18 +32,28 @@
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreatePropertyServiceModel property)
         {
-            var newProperty = this.NewProperty();
-            if(newProperty.PropertyCount -1 > 0)
+            if (!ModelState.IsValid)
             {
-                newProperty.Name = property.Name;
-                newProperty.ResidentsCount = property.ResidentsCount;
-                this.CreateProperty(property);
-                return View(newProperty);
+                var errorProperty = this.NewProperty();
+                errorProperty.Name = property.Name;
+                errorProperty.ResidentsCount = property.ResidentsCount;
+                return View(errorProperty);
             }
 
             this.CreateProperty(property);
-            return View(property);
-            //return RedirectToAction(nameof(Index));
+
+            var newProperty = this.NewProperty();
+            if(newProperty.PropertyCount > 0)
+            {
+                newProperty.Name = property.Name;
+                newProperty.ResidentsCount = property.ResidentsCount;
+                return View(newProperty);
+            }
+            else
+            {
+                this.CreateProperty(property);
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
         }
 
         public async Task<IActionResult> EditProperty(int? id)

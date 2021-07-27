@@ -20,6 +20,7 @@
 
         public int PropertyCount { get; set; }
 
+        [Required]
         public IEnumerable<string> Fees { get; set; }
 
         public IEnumerable<SelectListItem> PropertyTypes { get; set; }
