@@ -1,6 +1,6 @@
 ﻿namespace HouseManager.Web.ViewModels.DueAmount
 {
-    public class MounthAmountViewModel
+    public class MonthAmountViewModel
     {
         public int Id { get; set; }
 

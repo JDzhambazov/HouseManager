@@ -19,6 +19,7 @@
         private readonly IRepository<District> districtRepository;
         private readonly IRepository<Property> propertyRepository;
         private readonly IRepository<Street> streetRepository;
+        private readonly IRepository<MonthFee> monthFeeRepository;
 
         public AddressService(
             IDeletableEntityRepository<Address> addressRepository,
@@ -26,7 +27,8 @@
             IRepository<City> cityRepository,
             IRepository<District> districtRepository,
             IRepository<Property> propertyRepository,
-            IRepository<Street> streetRepository)
+            IRepository<Street> streetRepository,
+            IRepository<MonthFee> monthFeeRepository)
         {
             this.addressRepository = addressRepository;
             this.userRepository = userRepository;
@@ -34,6 +36,7 @@
             this.districtRepository = districtRepository;
             this.propertyRepository = propertyRepository;
             this.streetRepository = streetRepository;
+            this.monthFeeRepository = monthFeeRepository;
         }
 
         public async Task<int> CreateAddress(string cityName, string districtName,
@@ -123,10 +126,20 @@
             return adrress;
         }
 
-        public ICollection<Property> GetAllProperyies(int addressId)
-        {
-            return this.propertyRepository.All().Where(x => x.AddressId == addressId).ToList();
-        }
+        public ICollection<SelectListItem> GetAddressMounthFees(int addressId)
+            => this.monthFeeRepository.All().Where(x => x.AddressId == addressId)
+            .Select(x => new SelectListItem
+            {
+                Value = x.FeeType.Name ,
+                Text = x.FeeType.Name,
+            }).ToList();
+
+        public ICollection<Property> GetAllProperyies(int addressId) 
+            => this.propertyRepository.All().Where(x => x.AddressId == addressId).ToList();
+
+        public int GetPropertyCount(int addressId)
+            => this.addressRepository.All().Where(x => x.Id == addressId)
+            .Select(x => x.NumberOfProperties - x.Properties.Count).FirstOrDefault();
 
         public async Task SetAddressManager(int addressId, string userFullName)
         {
@@ -164,19 +177,13 @@
             return true;
         }
 
-        public async Task Delete(Address address)
-        {
-           this.addressRepository.Delete(address);
-        }
+        public void Delete(Address address)
+            => this.addressRepository.Delete(address);
 
         private Address GetAddressById(int addressId)
-        {
-            return this.addressRepository.All().FirstOrDefault(x => x.Id == addressId);
-        }
+            => this.addressRepository.All().FirstOrDefault(x => x.Id == addressId);
 
         private ApplicationUser GetUserByFullName(string userFullName)
-        {
-            return this.userRepository.All().FirstOrDefault(x => x.FullName == userFullName);
-        }
+            => this.userRepository.All().FirstOrDefault(x => x.FullName == userFullName);
     }
 }

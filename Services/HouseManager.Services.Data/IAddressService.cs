@@ -16,12 +16,16 @@
 
         Task SetAddressPaymaster(int addressId, string userFullName);
 
+        ICollection<SelectListItem> GetAddressMounthFees (int addressId);
+
         ICollection<Property> GetAllProperyies(int addressId);
 
-        Task Delete(Address address);
-
-        Task<bool> SetCurrentAddressId(int id , ApplicationUser user);
+        int GetPropertyCount(int addressId);
 
         AdressServiseInputModel GetSelectItems(AdressServiseInputModel adrress);
+
+        void Delete(Address address);
+
+        Task<bool> SetCurrentAddressId(int id , ApplicationUser user);
     }
 }

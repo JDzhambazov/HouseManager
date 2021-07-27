@@ -6,26 +6,44 @@
     using System.Threading.Tasks;
 
     using HouseManager.Services.Data;
+    using HouseManager.Services.Data.Models;
     using HouseManager.Web.ViewModels.Property;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize]
-    public class PropertyController : Controller
+    public class PropertyController : BaseController
     {
         private readonly IPropertyService propertyService;
+        private readonly IAddressService addressService;
 
-        public PropertyController(IPropertyService propertyService)
+        public PropertyController(
+            IPropertyService propertyService,
+            IAddressService addressService
+            )
         {
             this.propertyService = propertyService;
+            this.addressService = addressService;
         }
 
-        public async Task<IActionResult> GetAllProperies()
-        {
-            var currentAddress = int.Parse(this.Request.Cookies["CurrentAddressId"]);
-            var properies = await propertyService.GetAllPropertiesInAddress(currentAddress);
+        public IActionResult Create() => this.View(this.NewProperty());
 
-            return View(properies);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(CreatePropertyServiceModel property)
+        {
+            var newProperty = this.NewProperty();
+            if(newProperty.PropertyCount -1 > 0)
+            {
+                newProperty.Name = property.Name;
+                newProperty.ResidentsCount = property.ResidentsCount;
+                this.CreateProperty(property);
+                return View(newProperty);
+            }
+
+            this.CreateProperty(property);
+            return View(property);
+            //return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> EditProperty(int? id)
@@ -73,6 +91,40 @@
                 return RedirectToAction(nameof(GetAllProperies));
             }
             return View(property);
+        }
+
+        public IActionResult Details(int? id)
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details()
+        {
+            return this.View();
+        }
+
+        public async Task<IActionResult> GetAllProperies()
+        {
+            var properies = await propertyService.GetAllPropertiesInAddress(this.GetAddressId());
+
+            return View(properies);
+        }
+
+        private void CreateProperty(CreatePropertyServiceModel property)
+        {
+            this.propertyService.AddProperty(property , this.GetAddressId());
+        }
+
+        private CreatePropertyServiceModel NewProperty()
+        {
+            var property = new CreatePropertyServiceModel();
+            property.MonthFees = this.addressService.GetAddressMounthFees(this.GetAddressId());
+            property.PropertyTypes = this.propertyService.GetPropertyTypes();
+            property.PropertyCount = this.addressService.GetPropertyCount(this.GetAddressId());
+
+            return property;
         }
     }
 }

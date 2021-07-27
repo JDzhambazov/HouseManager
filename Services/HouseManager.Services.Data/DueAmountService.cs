@@ -14,10 +14,12 @@
     public class DueAmountService : IDueAmountService
     {
         private readonly ApplicationDbContext db;
+        private readonly IFeeService feeService;
 
-        public DueAmountService(ApplicationDbContext db)
+        public DueAmountService(ApplicationDbContext db , IFeeService feeService)
         {
             this.db = db;
+            this.feeService = feeService;
         }
 
         public void AddMounthDueAmountInProperies(int propertyId, int month, int year)
@@ -108,9 +110,9 @@
             }
         }
 
-        public ICollection<MounthAmountViewModel> GetAddressDueAmount(ICollection<Property> properties)
+        public ICollection<MonthAmountViewModel> GetAddressDueAmount(ICollection<Property> properties)
         {
-            var result = new List<MounthAmountViewModel>();
+            var result = new List<MonthAmountViewModel>();
 
             foreach (var property in properties)
             {
@@ -121,7 +123,7 @@
                         .Where(x => x.Id == property.Id)
                         .Select(x => x.Residents.FirstOrDefault())
                         .FirstOrDefault();
-                    result.Add(new MounthAmountViewModel
+                    result.Add(new MonthAmountViewModel
                     {
                         Id = property.Id,
                         PropertyName = property.Name,
@@ -138,7 +140,7 @@
 
         private void AddDueAmount(int month, int year, Property property)
         {
-            var propertyService = new PropertyService(this.db);
+            var propertyService = new PropertyService(this.db , this.feeService);
             var dueAmount = propertyService.CalculateDueAmount(property.Id);
             this.db.RegularDueAmounts.Add(new RegularDueAmount
             {

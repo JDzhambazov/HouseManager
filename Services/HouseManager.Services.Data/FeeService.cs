@@ -40,14 +40,12 @@
             this.db.SaveChanges();
         }
 
-        public void AddFeeToProperty(ICollection<int> propertiesId, string feeName)
+        public void AddFeeToProperty(int propertyId, string feeName)
         {
-            var properties = this.db.Properties.Where(x => propertiesId.Contains(x.Id)).ToList();
+            var property = this.db.Properties.FirstOrDefault(x => x.Id == propertyId);
             var currentFee = this.db.MonthlyFees.FirstOrDefault(x => x.FeeType.Name == feeName);
-            foreach (var property in properties)
-            {
-                property.MonthFees.Add(currentFee);
-            }
+
+            property.MonthFees.Add(currentFee);
 
             this.db.SaveChanges();
         }

@@ -32,16 +32,28 @@
                 .Include(x => x.Properties)
                 .FirstOrDefault(x => x.Id == 1);
         
-            foreach (var item in address.Properties)
-            {
-                propertyList.Add(item.Id);
-            }
-        
-            feeManager.AddFeeToProperty(propertyList, "Общи части");
-            feeManager.AddFeeToProperty(propertyList, "Ремонт вход");
-        
+            //foreach (var item in address.Properties)
+            //{
+            //    propertyList.Add(item.Id);
+            //}
+
+            //foreach (var id in propertyList)
+            //{
+            //    feeManager.AddFeeToProperty(id, "Общи части");
+            //}
+
+            //foreach (var id in propertyList)
+            //{
+            //    feeManager.AddFeeToProperty(id, "Ремонт вход");
+            //}
+
+       
             var lift = new List<int>() { 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-            feeManager.AddFeeToProperty(lift, "Асансьор");
+
+            foreach (var id in propertyList)
+            {
+                feeManager.AddFeeToProperty(id, "Асансьор");
+            }
         }
     }
 }

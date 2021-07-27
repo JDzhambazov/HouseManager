@@ -9,29 +9,43 @@
     using HouseManager.Data;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
+    using HouseManager.Services.Data.Models;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     public class PropertyService : IPropertyService
     {
         private readonly ApplicationDbContext db;
+        private readonly IFeeService feeService;
 
-        public PropertyService(ApplicationDbContext db)
+        public PropertyService(ApplicationDbContext db, IFeeService feeService)
         {
             this.db = db;
+            this.feeService = feeService;
         }
 
-        public void AddProperty(string name, string propertyType, int residents, int addressId)
+        public void AddProperty(CreatePropertyServiceModel newProperty, int addressId)
         {
-            var cyrrentPropertyType = this.db.PropertiesTypes.FirstOrDefault(x => x.Name == propertyType);
-            this.db.Properties.Add(new Property
+            var currentPropertyType = this.db
+                .PropertiesTypes
+                .FirstOrDefault(x => x.Name == newProperty.PropertyType);
+            
+            var property = new Property
             {
-                Name = name,
-                PropertyType = cyrrentPropertyType ?? new PropertyType { Name = propertyType },
+                Name = newProperty.Name,
+                PropertyType = currentPropertyType ?? new PropertyType { Name = newProperty.PropertyType },
                 AddressId = addressId,
-                ResidentsCount = residents,
-            });
+                ResidentsCount = newProperty.ResidentsCount,
+            };
+
+            this.db.Properties.Add(property);
             this.db.SaveChanges();
+
+            foreach (var fee in newProperty.Fees)
+            {
+                this.feeService.AddFeeToProperty(property.Id, fee);
+            }
         }
 
         public void AddResidentToProperty(string propertyName, string userName, string firstName, string lastName, string email, string password, int addressId)
@@ -113,6 +127,23 @@
             this.db.SaveChanges();
         }
 
+        public async Task<bool> Edit(int propertId, int residentsCount)
+        {
+            if (propertId == 0)
+            {
+                return false;
+            }
+
+
+            var currentProperty = await db.Properties.FirstOrDefaultAsync(x => x.Id == propertId);
+
+            currentProperty.ResidentsCount = residentsCount;
+
+            db.Entry(currentProperty).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<List<Property>> GetAllPropertiesInAddress(int addressId)
         {
             var result = db.Properties
@@ -134,21 +165,11 @@
             return propery;
         }
 
-        public async Task<bool> Edit(int propertId ,int residentsCount)
-        {
-            if (propertId == 0)
+        public List<SelectListItem> GetPropertyTypes()
+            => this.db.PropertiesTypes.Select(x => new SelectListItem
             {
-                return false;
-            }
-
-
-            var currentProperty = await db.Properties.FirstOrDefaultAsync(x => x.Id == propertId);
-            
-            currentProperty.ResidentsCount = residentsCount;
-
-            db.Entry(currentProperty).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return true;
-        }
+                Value = x.Name,
+                Text = x.Name,
+            }).ToList();
     }
 }

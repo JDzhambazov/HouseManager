@@ -9,7 +9,7 @@
     {
         void AddFeeToAddress(int addressId, string feeName, decimal cost, bool isPersonel, bool isRegular);
 
-        void AddFeeToProperty(ICollection<int> propertiesId, string feeName);
+        void AddFeeToProperty(int propertyId, string feeName);
 
         void EditAddresFee(int addressId, string feeName, decimal cost);
 
