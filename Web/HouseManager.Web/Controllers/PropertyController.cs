@@ -30,7 +30,18 @@
             this.userService = userService;
         }
 
-        public IActionResult Create() => this.View(this.NewProperty());
+        public IActionResult Create()
+        {
+            var property = this.NewProperty();
+
+            if (property.PropertyCount <= 0)
+            {
+                return RedirectToAction(nameof(GetAllProperies));
+            }
+
+            return this.View(property);
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

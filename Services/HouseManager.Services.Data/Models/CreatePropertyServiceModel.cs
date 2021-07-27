@@ -21,6 +21,8 @@
         public int PropertyCount { get; set; }
 
         [Required]
+        [StringLength(int.MaxValue,ErrorMessage ="Полето е задължително",MinimumLength =1)]
+        [Display(Name ="Месечни такси")]
         public IEnumerable<string> Fees { get; set; }
 
         public IEnumerable<SelectListItem> PropertyTypes { get; set; }
