@@ -1,9 +1,9 @@
-﻿@model List<Property>
+﻿@model List<AllPropertyViewModel>
 
 @{
     this.ViewData["Title"] = "Описание на имотите";
 }
-<h2>Данни за имотите</h2>
+<h2 class="text-center mt-4 mb-4">Данни за имотите</h2>
 
 <table class="table table-striped table-bordered text-center">
     <tr>
@@ -15,12 +15,26 @@
     </tr>
     @foreach (var property in Model)
     {
-        <tr>
-            <td>@property.Name</td>
-            <td>@property.PropertyType.Name</td>
-            <td>@property.ResidentsCount</td>
-            <td>@property.Residents.FirstOrDefault().FullName</td>
-            <td><a asp-controller="Property" asp-action="EditProperty" asp-route-id="@property.Id" class="btn btn-outline-warning">Подробна информация</a></td>
-        </tr>
+<tr>
+    <td>@property.Name</td>
+    <td>@property.PropertyType</td>
+    <td>@property.ResidentsCount</td>
+    @if (property.Owner == "N/A")
+    {
+        if (ViewBag.IsMakeChanges)
+        {
+            <td><a asp-area="" asp-controller="" asp-action="" asp-route-id="@property.Id" class="btn btn-outline-primary">Добави собственик</a></td>
+        }
+        else
+        {
+            <td>"Не е въведен"</td>
+        }
+    }
+    else
+    {
+        <td>@property.Owner</td>
+    }
+    <td><a asp-controller="Property" asp-action="Details" asp-route-id="@property.Id" class="btn btn-outline-warning">Подробна информация</a></td>
+</tr>
     }
 </table>

@@ -8,6 +8,7 @@
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
     using HouseManager.Web.ViewModels.Property;
+    using HouseManager.Web.Infrastructure;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -16,14 +17,17 @@
     {
         private readonly IPropertyService propertyService;
         private readonly IAddressService addressService;
+        private readonly IUserService userService;
 
         public PropertyController(
             IPropertyService propertyService,
-            IAddressService addressService
+            IAddressService addressService,
+            IUserService userService
             )
         {
             this.propertyService = propertyService;
             this.addressService = addressService;
+            this.userService = userService;
         }
 
         public IActionResult Create() => this.View(this.NewProperty());
@@ -52,7 +56,7 @@
             else
             {
                 this.CreateProperty(property);
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(GetAllProperies));
             }
         }
 
@@ -115,10 +119,10 @@
             return this.View();
         }
 
-        public async Task<IActionResult> GetAllProperies()
+        public IActionResult GetAllProperies()
         {
-            var properies = await propertyService.GetAllPropertiesInAddress(this.GetAddressId());
-
+            var properies = propertyService.GetAllPropertiesInAddress(this.GetAddressId());
+            ViewBag.IsMakeChanges = this.userService.IsUserMakeChanges(this.User.Id());
             return View(properies);
         }
 

@@ -2,6 +2,7 @@
 {
     using HouseManager.Data.Models;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Web.ViewModels.Property;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -18,7 +19,7 @@
 
         void ChangeResidentsCount(int propertyId, int newResidentsCount);
 
-        public Task<List<Property>> GetAllPropertiesInAddress(int addressId);
+        public List<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId);
 
         public Task<Property> GetPropetyById(int id);
 

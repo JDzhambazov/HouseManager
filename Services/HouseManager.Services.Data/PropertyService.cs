@@ -10,6 +10,7 @@
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Web.ViewModels.Property;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
@@ -144,12 +145,20 @@
             return true;
         }
 
-        public async Task<List<Property>> GetAllPropertiesInAddress(int addressId)
+        public List<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId)
         {
             var result = db.Properties
                 .Include(x => x.PropertyType)
                 .Include(x => x.Residents)
                 .Where(x => x.AddressId == addressId)
+                .Select(x => new AllPropertyViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    PropertyType = x.PropertyType.Name,
+                    ResidentsCount = x.ResidentsCount.ToString(),
+                    Owner = x.Residents.Select(x => x.FullName).FirstOrDefault() ?? "N/A",
+                })
                 .ToList();
 
             return result;
