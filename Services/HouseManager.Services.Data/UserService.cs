@@ -84,7 +84,7 @@
         }
 
 
-        public async Task<IEnumerable<AddressViewModel>> GetUserAddresses(string userName)
+        public IEnumerable<AddressViewModel> GetUserAddresses(string userName)
         {
             var user = this.userRepository.All().FirstOrDefault(x => x.UserName == userName);
             var result = new List<AddressViewModel>();

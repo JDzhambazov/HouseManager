@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\Data\HouseManager.Data\HouseManager.Data.csproj" />
     <ProjectReference Include="..\..\Web\HouseManager.Web.ViewModels\HouseManager.Web.ViewModels.csproj" />
     <ProjectReference Include="..\HouseManager.Services.Mapping\HouseManager.Services.Mapping.csproj" />
+    <ProjectReference Include="..\HouseManager.Services\HouseManager.Services.csproj" />
   </ItemGroup>
 
 </Project>

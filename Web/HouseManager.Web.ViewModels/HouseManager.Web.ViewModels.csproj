@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\HouseManager.Data.Models\HouseManager.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\HouseManager.Services.Mapping\HouseManager.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\HouseManager.Services\HouseManager.Services.csproj" />
   </ItemGroup>
 
 </Project>

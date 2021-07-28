@@ -3,12 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using HouseManager.Data;
     using HouseManager.Data.Common.Repositories;
     using HouseManager.Data.Models;
-    using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
-    using HouseManager.Web.ViewModels.Addresses;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class AddressService : IAddressService

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using HouseManager.Services.Data;
+    using HouseManager.Web.ViewModels.DueAmount;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,8 @@
 
         public ActionResult MonthAmount()
         {
-            var result = dueAmountService
+            var result = new MonthAmountViewModel();
+            result.MonthAmounts = dueAmountService
                 .GetAddressDueAmount(addressService.GetAllProperyies(this.GetAddressId()));
 
             return View(result);

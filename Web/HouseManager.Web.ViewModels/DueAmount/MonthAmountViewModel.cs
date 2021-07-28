@@ -1,17 +1,12 @@
 ﻿namespace HouseManager.Web.ViewModels.DueAmount
 {
+    using HouseManager.Services.Models;
+    using System.Collections.Generic;
+
     public class MonthAmountViewModel
     {
-        public int Id { get; set; }
+        public IEnumerable<MonthAmountServiseModel> MonthAmounts { get; set; }
 
-        public string PropertyName { get; set; }
-
-        public string ResidentName { get; set; }
-
-        public int ResidentsCount { get; set; }
-
-        public decimal RegularDueAmount { get; set; }
-
-        public decimal NotRegularDueAmount { get; set; }
+        public PagingServiceModel Pages { get; set; } = null;
     }
 }

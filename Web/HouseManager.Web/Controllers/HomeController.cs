@@ -25,11 +25,11 @@
             this.addressService = addressService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                var addresses = await userService.GetUserAddresses(User.Identity.Name);
+                var addresses = userService.GetUserAddresses(User.Identity.Name);
 
                 return this.View(addresses);
             }

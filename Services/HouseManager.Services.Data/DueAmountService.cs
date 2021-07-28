@@ -3,13 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     using HouseManager.Data;
     using HouseManager.Data.Models;
-    using HouseManager.Services.Data;
-    using HouseManager.Web.ViewModels.DueAmount;
+    using HouseManager.Services.Models;
 
     public class DueAmountService : IDueAmountService
     {
@@ -110,9 +106,9 @@
             }
         }
 
-        public ICollection<MonthAmountViewModel> GetAddressDueAmount(ICollection<Property> properties)
+        public ICollection<MonthAmountServiseModel> GetAddressDueAmount(ICollection<Property> properties)
         {
-            var result = new List<MonthAmountViewModel>();
+            var result = new List<MonthAmountServiseModel>();
 
             foreach (var property in properties)
             {
@@ -123,7 +119,7 @@
                         .Where(x => x.Id == property.Id)
                         .Select(x => x.Residents.FirstOrDefault())
                         .FirstOrDefault();
-                    result.Add(new MonthAmountViewModel
+                    result.Add(new MonthAmountServiseModel
                     {
                         Id = property.Id,
                         PropertyName = property.Name,

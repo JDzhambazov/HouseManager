@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     using HouseManager.Data.Models;
-    using HouseManager.Web.ViewModels.DueAmount;
+    using HouseManager.Services.Models;
 
     public interface IDueAmountService
     {
@@ -17,6 +17,6 @@
 
         (decimal RegularDueAmount, decimal NotRegularDueAmount) GetPropertyMountDueAmount(int propertyId);
 
-        ICollection<MonthAmountViewModel> GetAddressDueAmount(ICollection<Property> properties);
+        ICollection<MonthAmountServiseModel> GetAddressDueAmount(ICollection<Property> properties);
     }
 }

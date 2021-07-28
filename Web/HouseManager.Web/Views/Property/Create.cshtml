@@ -32,7 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Fees"></label>
-                                <select asp-for="Fees" asp-items="@Model.MonthFees" class="form-control simpleSelect2" name="fees[]" multiple="multiple"></select>
+                                <select asp-for="Fees" asp-items="@Model.MonthFees" class="form-control simpleSelect2" name="fees[]" multiple="multiple" required></select>
                                 <span asp-validation-for="Fees" class="text-danger"></span>
                             </div>
                             <div class="form-group">
