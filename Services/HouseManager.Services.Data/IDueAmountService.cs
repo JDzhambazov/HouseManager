@@ -17,6 +17,6 @@
 
         (decimal RegularDueAmount, decimal NotRegularDueAmount) GetPropertyMountDueAmount(int propertyId);
 
-        ICollection<MonthAmountServiseModel> GetAddressDueAmount(ICollection<Property> properties);
+        ICollection<MonthAmountServiseModel> GetAddressDueAmount(int addressId, int page = 1);
     }
 }

@@ -11,11 +11,17 @@
     {
         private readonly ApplicationDbContext db;
         private readonly IFeeService feeService;
+        private readonly IAddressService addressService;
 
-        public DueAmountService(ApplicationDbContext db , IFeeService feeService)
+        public DueAmountService(
+            ApplicationDbContext db,
+            IFeeService feeService,
+            IAddressService addressService
+            )
         {
             this.db = db;
             this.feeService = feeService;
+            this.addressService = addressService;
         }
 
         public void AddMounthDueAmountInProperies(int propertyId, int month, int year)
@@ -64,7 +70,7 @@
             if (currentMonthDueAmaount == null)
             {
                 var property = this.db.Properties.FirstOrDefault(x => x.Id == propertyId);
-                this.AddMounthDueAmountInAllProperies(property.Id);
+                this.AddMounthDueAmountInAllProperies(property.AddressId);
             }
 
             var regularDueAmount = this.db.RegularDueAmounts
@@ -106,24 +112,33 @@
             }
         }
 
-        public ICollection<MonthAmountServiseModel> GetAddressDueAmount(ICollection<Property> properties)
+        public ICollection<MonthAmountServiseModel> GetAddressDueAmount(int addressId, int page)
         {
             var result = new List<MonthAmountServiseModel>();
+            var properties = this.addressService.GetAllProperyies(addressId);
 
             foreach (var property in properties)
             {
                 var dueAmount = this.GetPropertyMountDueAmount(property.Id);
                 if (dueAmount.RegularDueAmount > 0 || dueAmount.NotRegularDueAmount > 0)
                 {
+                    var residentName = "N/A";
+
                     var user = this.db.Properties
                         .Where(x => x.Id == property.Id)
                         .Select(x => x.Residents.FirstOrDefault())
                         .FirstOrDefault();
+
+                    if(user != null)
+                    {
+                        residentName = user.FullName;
+                    }
+
                     result.Add(new MonthAmountServiseModel
                     {
                         Id = property.Id,
                         PropertyName = property.Name,
-                        ResidentName = user.FullName,
+                        ResidentName = residentName,
                         ResidentsCount = property.ResidentsCount,
                         RegularDueAmount = dueAmount.RegularDueAmount,
                         NotRegularDueAmount = dueAmount.NotRegularDueAmount,

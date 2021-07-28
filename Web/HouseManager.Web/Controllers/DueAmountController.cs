@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using HouseManager.Services.Data;
+    using HouseManager.Services.Models;
     using HouseManager.Web.ViewModels.DueAmount;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
@@ -22,87 +23,19 @@
             this.addressService = addressService;
         }
 
-        public ActionResult MonthAmount()
+        public IActionResult MonthAmount() 
+            => this.View(this.MonthAmountList());
+
+        private MonthAmountViewModel MonthAmountList(int page = 1)
         {
             var result = new MonthAmountViewModel();
             result.MonthAmounts = dueAmountService
-                .GetAddressDueAmount(addressService.GetAllProperyies(this.GetAddressId()));
-
-            return View(result);
-        }
-        // GET: DueAmountController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: DueAmountController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: DueAmountController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: DueAmountController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+                .GetAddressDueAmount(this.GetAddressId(),page);
+            if (result.MonthAmounts.Count() > 10)
             {
-                return RedirectToAction(nameof(Index));
+                result.Pages = new PagingServiceModel { MaxPages = 2 };
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: DueAmountController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: DueAmountController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: DueAmountController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: DueAmountController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return result;
         }
     }
 }

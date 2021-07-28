@@ -4,7 +4,7 @@
 
 @model MonthAmountViewModel
 @{
-    ViewData["Title"] = "Month DueAmount";
+    ViewData["Title"] = "Текущи задължения";
 }
 
 @{
@@ -41,8 +41,9 @@
                             <td class="text-primary h5">@item.NotRegularDueAmount лв.</td>
                             @if (isUserMakeChanges)
                             {
-                                <td class="text-primary h5"><a asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a></td>
-
+                                <td class="text-primary h5">
+                                    <a asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a>
+                                </td>
                             }
                         </tr>
                     }
@@ -50,8 +51,8 @@
             </table>
         </div>
     </div>
-    @if (Model.Pages != null)
-    {
-        <partial name="_PagePartial" model="@Model.Pages" />
-    }
+    @*@if (Model.Pages != null && Model.Pages.MaxPages > 1)
+        {
+            <partial name="_PagePartial" model="@Model.Pages" />
+        }*@
 </div>
