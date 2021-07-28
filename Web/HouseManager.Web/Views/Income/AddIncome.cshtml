@@ -16,12 +16,10 @@
                 <div class="form-group">
                     <label asp-for="RegularIncome" class="h5"> Задължения за общи части</label>
                     <input type="text" step="any" asp-for="RegularIncome" value="@Model.RegularIncome" class="form-control" />
-                    @*<span asp-validation-for="Input.UserName" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
                     <label asp-for="@Model.RegularIncomeDate" class="h5">Дата:</label>
                     <input asp-for="@Model.RegularIncomeDate" type="date" class="form-control" />
-                    @*<span asp-validation-for="Input.FirsName" class="text-danger"></span>*@
                 </div>
             }
 
@@ -29,12 +27,12 @@
             {
                 <div class="form-group">
                     <label asp-for="NotRegularIncome" class="h5">Задължения за ремонт</label>
-                    <input type="text" step="any"  asp-for="NotRegularIncome"  value="@Model.NotRegularIncome" class="form-control" />
+                    <input type="text" step="any" asp-for="NotRegularIncome" value="@Model.NotRegularIncome" class="form-control" />
                     <span asp-validation-for="NotRegularIncome" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="NotRegularIncomeDate" class="h5">Дата:</label>
-                    <input type="date" asp-for="NotRegularIncomeDate"class="form-control" />
+                    <input type="date" asp-for="NotRegularIncomeDate" class="form-control" />
                     <span asp-validation-for="NotRegularIncomeDate" class="text-danger"></span>
                 </div>
             }
@@ -49,4 +47,8 @@
             </div>
         </form>
     </div>
- </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

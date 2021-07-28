@@ -6,75 +6,66 @@
 }
 
 <div class="container-scroller">
-    <div class="">
-        <div class="">
-            <div class="container-scroller mt-3">
-                <div class="card col-lg-6 mx-auto dark">
-                    <div class="card-body px-5 py-5 text-info">
-                        <h3 class="card-title text-left mb-3">Регистрация</h3>
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <form method="post">
-                            <div class="form-group">
-                                <label asp-for="@Model.UserName"></label>
-                                <input asp-for="@Model.UserName" class="form-control p_input">
-                                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="@Model.FirstName"></label>
-                                <input asp-for="@Model.FirstName" class="form-control p_input">
-                                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="@Model.LastName"></label>
-                                <input asp-for="@Model.LastName" class="form-control p_input">
-                                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="@Model.Email"></label>
-                                <input asp-for="@Model.Email" class="form-control p_input">
-                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="@Model.Password"></label>
-                                <input asp-for="@Model.Password" class="form-control p_input">
-                                <span asp-validation-for="@Model.Password" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="@Model.ConfirmPassword"></label>
-                                <input asp-for="@Model.ConfirmPassword" class="form-control p_input">
-                                <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
-                            </div>
-                            <div class="form-group d-flex align-items-center justify-content-between">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input"> Запомни ме
-                                    </label>
-                                </div>
-                                <a href="#" class="forgot-pass">Забравена парола</a>
-                            </div>
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-primary btn-block enter-btn" value="Регистрирай" />
-                            </div>
-                            @*<div class="d-flex mt-2">
-                                <button class="btn btn-facebook btn-social col mr-2">
-                                    <i class="mdi mdi-facebook"></i> Facebook
-                                </button>
-                                <button class="btn btn-google btn-social col">
-                                    <i class="mdi mdi-google-plus"></i> Google plus
-                                </button>
-                            </div>*@
-                            <p class="sign-up text-center">
-                                Вече имате профил?
-                                <a asp-area="Identity" asp-page="/Account/Login"> Вход</a>
-                            </p>
-                            <p class="terms">
-                                Със създаването на профил в сайта се съгласявате с нашите
-                                <a href="#"> Terms & Conditions</a>
-                            </p>
-                        </form>
+    <div class="container-scroller mt-3">
+        <div class="card col-lg-6 mx-auto dark">
+            <div class="card-body px-5 py-5 text-info">
+                <h3 class="card-title text-left mb-3">Регистрация</h3>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form method="post">
+                    <div class="form-group">
+                        <label asp-for="@Model.UserName"></label>
+                        <input asp-for="@Model.UserName" class="form-control p_input">
+                        <span asp-validation-for="@Model.UserName" class="text-danger"></span>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.FirstName"></label>
+                        <input asp-for="@Model.FirstName" class="form-control p_input">
+                        <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.LastName"></label>
+                        <input asp-for="@Model.LastName" class="form-control p_input">
+                        <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Email"></label>
+                        <input asp-for="@Model.Email" class="form-control p_input">
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Password"></label>
+                        <input asp-for="@Model.Password" class="form-control p_input">
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.ConfirmPassword"></label>
+                        <input asp-for="@Model.ConfirmPassword" class="form-control p_input">
+                        <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group d-flex align-items-center justify-content-between">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input"> Запомни ме
+                            </label>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-block enter-btn" value="Регистрирай" />
+                    </div>
+                    <p class="sign-up text-center">
+                        Вече имате профил?
+                        <a asp-area="Identity" asp-page="/Account/Login"> Вход</a>
+                    </p>
+                    <p class="terms">
+                        Със създаването на профил в сайта се съгласявате с нашите
+                        <a href="#"> Terms & Conditions</a>
+                    </p>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

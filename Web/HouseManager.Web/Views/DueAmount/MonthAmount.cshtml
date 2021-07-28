@@ -32,21 +32,34 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr class="text-center">
-                        <td class="text-primary h5">@item.PropertyName</td>
-                        <td class="text-primary h5">@item.ResidentName</td>
-                        <td class="text-primary h5">@item.ResidentsCount</td>
-                        <td class="text-primary h5">@item.RegularDueAmount лв.</td>
-                        <td class="text-primary h5">@item.NotRegularDueAmount лв.</td>
-                        @if (isUserMakeChanges)
-                        {
-                            <td class="text-primary h5"><a asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a></td>
+                        <tr class="text-center">
+                            <td class="text-primary h5">@item.PropertyName</td>
+                            <td class="text-primary h5">@item.ResidentName</td>
+                            <td class="text-primary h5">@item.ResidentsCount</td>
+                            <td class="text-primary h5">@item.RegularDueAmount лв.</td>
+                            <td class="text-primary h5">@item.NotRegularDueAmount лв.</td>
+                            @if (isUserMakeChanges)
+                            {
+                                <td class="text-primary h5"><a asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a></td>
 
-                        }
-                    </tr>
+                            }
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Предходна</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Следваща</a>
+            </li>
+        </ul>
+    </nav>
 </div>

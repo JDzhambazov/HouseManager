@@ -42,7 +42,6 @@
             return this.View(property);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreatePropertyServiceModel property)
