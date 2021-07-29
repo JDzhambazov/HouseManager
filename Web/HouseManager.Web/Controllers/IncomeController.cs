@@ -2,16 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
-    using System.Threading.Tasks;
     using HouseManager.Data;
-    using HouseManager.Common;
     using HouseManager.Services.Data;
-    using HouseManager.Web.ViewModels.DueAmount;
     using HouseManager.Web.ViewModels.Incomes;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -82,7 +77,7 @@
 
                     if (result > 0)
                     {
-                            incomeService.AddIncome(income.PropertyId, result, income.NotRegularIncomeDate, resident, this.GetAddressId(), false);     
+                        incomeService.AddIncome(income.PropertyId, result, income.NotRegularIncomeDate, resident, this.GetAddressId(), false);     
                     }
                 }
                 return Redirect($"/DueAmount/MonthAmount/{this.GetAddressId()}");

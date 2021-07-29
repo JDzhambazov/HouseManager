@@ -11,12 +11,10 @@
     {
         public int PropertyId { get; set; }
 
-        [Required]
         public string RegularIncome { get; set; }
 
         public DateTime RegularIncomeDate { get; set; }
 
-        [Required]
         public string NotRegularIncome { get; set; }
 
         public DateTime NotRegularIncomeDate { get; set; }
