@@ -1,6 +1,6 @@
 ﻿namespace HouseManager.Services.Data.Models
 {
-    public class IsPropertyHavFee
+    public class IsPropertyHaveFee
     {
         public string Name { get; set; }
 

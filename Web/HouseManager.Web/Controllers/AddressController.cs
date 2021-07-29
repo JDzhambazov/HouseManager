@@ -73,6 +73,30 @@
             return RedirectToAction();
         }
 
+        public IActionResult AddManager()
+        {
+            var users = new AddManagerServiceModel();
+            return View(users);
+        }
+
+        [HttpPost]
+        public IActionResult AddManager(int id = 1)
+        {
+            return RedirectToAction(nameof(HomeController.Index));
+        }
+
+        public IActionResult AddPaymaster()
+        {
+            var users = new AddPaymasterSevriseModel();
+            return View(users);
+        }
+
+        [HttpPost]
+        public IActionResult AddPaymaster(int id = 1)
+        {
+            return RedirectToAction(nameof(HomeController.Index));
+        }
+
         public IActionResult MounthFee()
         {
             return this.View(this.NewFee());

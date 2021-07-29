@@ -1,0 +1,25 @@
+﻿@model IRoleToAddress
+
+
+<div class="container-scroller">
+    <div class="container-scroller mt-5">
+        <div class="card col-lg-6 mx-auto form-style">
+            <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Добавяне на @Model.Title</h3>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form method="post">
+                    <hr />
+                    <div class="form-group">
+                        <label asp-for="UserId"></label>
+                        <select asp-for="UserId" asp-items="@Model.Users" class="form-control" required></select>
+                        <span asp-validation-for="UserId" class="text-danger"></span>
+                    </div>
+                    <div class="text-center d-flex justify-content-around mt-4">
+                        <input type="submit" class="btn btn-primary" value="Добави" />
+                        <a class="btn btn-danger" asp-area="" asp-controller="Home" asp-action="Index">Отказ</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
