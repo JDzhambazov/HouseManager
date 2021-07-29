@@ -57,6 +57,11 @@
                     this.GetAddressId());
             }
 
+            if (RouteData.Values["id"] != null)
+            {
+                return RedirectToAction(nameof(HomeController.Index),"Home");
+            }
+
             return RedirectToAction(nameof(AddToProperty));
         }
     }
