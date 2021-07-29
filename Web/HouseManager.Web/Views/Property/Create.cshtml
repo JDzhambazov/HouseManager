@@ -11,41 +11,37 @@
             Не са въведени данните за @Model.PropertyCount имота!
         </div>
     }
-
-    <div class="">
-        <div class="">
-            <div class="container-scroller mt-3">
-                <div class="card col-lg-6 mx-auto dark">
-                    <div class="card-body px-5 py-5 text-info">
-                        <h3 class="card-title text-left mb-3">Добвяне на нов Имот</h3>
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <form method="post">
-                            <div class="form-group">
-                                <label asp-for="Name"></label>
-                                <input asp-for="Name" class="form-control" />
-                                <span asp-validation-for="Name" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="PropertyType"></label>
-                                <select asp-for="PropertyType" asp-items="@Model.PropertyTypes" class="form-control simpleSelect2"></select>
-                                <span asp-validation-for="PropertyType" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Fees"></label>
-                                <select asp-for="Fees" asp-items="@Model.MonthFees" class="form-control simpleSelect2" name="fees[]" multiple="multiple" required></select>
-                                <span asp-validation-for="Fees" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ResidentsCount"></label>
-                                <input asp-for="ResidentsCount" class="form-control p_input">
-                                <span asp-validation-for="ResidentsCount" class="text-danger"></span>
-                            </div>
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-primary btn-block enter-btn" value="Добави" />
-                            </div>
-                        </form>
+    <div class="container-scroller mt-3">
+        <div class="card col-lg-6 mx-auto form-style">
+            <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Добвяне на нов Имот</h3>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form method="post">
+                    <hr />
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label asp-for="PropertyType"></label>
+                        <select asp-for="PropertyType" asp-items="@Model.PropertyTypes" class="form-control simpleSelect2"></select>
+                        <span asp-validation-for="PropertyType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Fees"></label>
+                        <select asp-for="Fees" asp-items="@Model.MonthFees" class="form-control simpleSelect2" name="fees[]" multiple="multiple" required></select>
+                        <span asp-validation-for="Fees" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ResidentsCount"></label>
+                        <input asp-for="ResidentsCount" class="form-control p_input">
+                        <span asp-validation-for="ResidentsCount" class="text-danger"></span>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-block enter-btn" value="Добави" />
+                    </div>
+                </form>
             </div>
         </div>
     </div>

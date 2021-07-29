@@ -5,50 +5,46 @@
 }
 
 <div class="container-scroller">
-    <div class="">
-        <div class="">
-            <div class="container-scroller mt-3">
-                <div class="card col-lg-6 mx-auto form-style">
-                    <div class="card-body px-5 py-5">
-                        <h3 class="card-title text-left mb-3">Създаване на нов адрес</h3>
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <form method="post">
-                            <div class="form-group">
-                                <label asp-for="City"></label>
-                                <select asp-for="City" asp-items="@Model.AllCities" class="form-control simpleSelect2"></select>
-                                <span asp-validation-for="City" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="District"></label>
-                                <select asp-for="District" asp-items="@Model.AllDistricts" class="form-control simpleSelect2"></select>
-                                <span asp-validation-for="District" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Street"></label>
-                                <select asp-for="Street" asp-items="@Model.AllStreets" class="form-control simpleSelect2"></select>
-                                <span asp-validation-for="Street" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Number"></label>
-                                <input asp-for="Number" class="form-control p_input">
-                                <span asp-validation-for="Number" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Entrance"></label>
-                                <input asp-for="Entrance" class="form-control p_input">
-                                <span asp-validation-for="Entrance" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="NumberOfProperties"></label>
-                                <input asp-for="NumberOfProperties" class="form-control p_input">
-                                <span asp-validation-for="NumberOfProperties" class="text-danger"></span>
-                            </div>
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-primary btn-block enter-btn mt-4" value="Добави" />
-                            </div>
-                        </form>
+    <div class="container-scroller mt-3">
+        <div class="card col-lg-6 mx-auto form-style">
+            <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">Създаване на нов адрес</h3>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <form method="post">
+                    <div class="form-group">
+                        <label asp-for="City"></label>
+                        <select asp-for="City" asp-items="@Model.AllCities" class="form-control simpleSelect2"></select>
+                        <span asp-validation-for="City" class="text-danger"></span>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label asp-for="District"></label>
+                        <select asp-for="District" asp-items="@Model.AllDistricts" class="form-control simpleSelect2"></select>
+                        <span asp-validation-for="District" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Street"></label>
+                        <select asp-for="Street" asp-items="@Model.AllStreets" class="form-control simpleSelect2"></select>
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Number"></label>
+                        <input asp-for="Number" class="form-control p_input">
+                        <span asp-validation-for="Number" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Entrance"></label>
+                        <input asp-for="Entrance" class="form-control p_input">
+                        <span asp-validation-for="Entrance" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NumberOfProperties"></label>
+                        <input asp-for="NumberOfProperties" class="form-control p_input">
+                        <span asp-validation-for="NumberOfProperties" class="text-danger"></span>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-block enter-btn mt-4" value="Добави" />
+                    </div>
+                </form>
             </div>
         </div>
     </div>
