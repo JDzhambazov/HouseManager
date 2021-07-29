@@ -12,6 +12,20 @@ a {
     color: #0366d6;
 }
 
+.form-style {
+    background-color: rgba(12, 14, 12, 0.575);
+    color: white;
+}
+
+.form-style a {
+    color:deepskyblue;
+}
+
+.body-image {
+    background-image: url("/Login_bg.jpg");
+    background-size: cover;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
