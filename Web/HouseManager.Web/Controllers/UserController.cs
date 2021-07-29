@@ -20,10 +20,10 @@
             this.userService = userService;
             this.signInManager = signInManager;
         }
-        public IActionResult Create() => View();
+        public IActionResult AddToProperty() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateUserServiceModel user)
+        public async Task<IActionResult> AddToProperty(CreateUserServiceModel user)
         {
             if (!ModelState.IsValid)
             {
