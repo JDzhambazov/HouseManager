@@ -6,57 +6,58 @@
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
+    using Microsoft.AspNetCore.Authorization;
 
-
-    public class UserController : Controller
+    [Authorize]
+    public class UserController : BaseController
     {
         private readonly IUserService userService;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IPropertyService propertyService;
 
-        public UserController(IUserService userService,
-            SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+        public UserController(
+            IPropertyService propertyService,
+            IUserService userService,
+            SignInManager<ApplicationUser> signInManager)
+
         {
             this.userService = userService;
             this.signInManager = signInManager;
+            this.propertyService = propertyService;
         }
-        public IActionResult AddToProperty() => View();
+
+        public IActionResult AddToProperty()
+        {
+            var resident = new AddUserToPropertyServiceModel();
+            resident.Properties = this.propertyService.GetPropertiesInAddress(this.GetAddressId());
+            return View(resident);
+        }
+
 
         [HttpPost]
-        public async Task<IActionResult> AddToProperty(CreateUserServiceModel user)
+        [ValidateAntiForgeryToken]
+        public IActionResult AddToProperty(AddUserToPropertyServiceModel user)
         {
             if (!ModelState.IsValid)
             {
+                user.Properties =
+                    this.propertyService.GetPropertiesInAddress(this.GetAddressId());
                 return View(user);
             }
 
-            var newUser = new ApplicationUser
+            foreach (var property in user.Property)
             {
-                UserName = user.UserName,
-                FullName = $"{user.FirstName} {user.LastName}".Trim(),
-                Email = user.Email,
-            };
-
-            var result =await this.userService
-                .AddNewUser(
-                user.UserName,
-                user.FirstName,
-                user.LastName,
-                user.Email,
-                user.Password);
-            
-            if (result.Succeeded)
-            {
-                await this.signInManager.SignInAsync(newUser, isPersistent: false);
-                return RedirectToAction(nameof(AddressController.Create), "Address");
+                this.propertyService.AddResidentToProperty(
+                    int.Parse(property),
+                    user.UserName,
+                    user.FirstName,
+                    user.LastName,
+                    user.Email,
+                    user.Password,
+                    this.GetAddressId());
             }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-
-            return View(user);
+            return RedirectToAction(nameof(AddToProperty));
         }
     }
 }

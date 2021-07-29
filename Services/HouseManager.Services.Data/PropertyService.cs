@@ -11,6 +11,7 @@
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
     using HouseManager.Web.ViewModels.Property;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,15 @@
     {
         private readonly ApplicationDbContext db;
         private readonly IFeeService feeService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public PropertyService(ApplicationDbContext db, IFeeService feeService)
+        public PropertyService(ApplicationDbContext db, 
+            IFeeService feeService,
+            UserManager<ApplicationUser> userManager)
         {
             this.db = db;
             this.feeService = feeService;
+            this.userManager = userManager;
         }
 
         public void AddProperty(CreatePropertyServiceModel newProperty, int addressId)
@@ -49,24 +54,33 @@
             }
         }
 
-        public void AddResidentToProperty(string propertyName, string userName, string firstName, string lastName, string email, string password, int addressId)
+        public void AddResidentToProperty(int propertyId, string userName, string firstName, string lastName, string email, string password, int addressId)
         {
             var currentProperty = this.db.Properties
-                .Where(x => x.AddressId == addressId)
-                .FirstOrDefault(x => x.Name == propertyName);
-            var resident = this.db.Users.FirstOrDefault(x => x.Email == email)
-                ?? new ApplicationUser
+                .FirstOrDefault(x => x.Id == propertyId);
+
+            var resident = this.db.Users.FirstOrDefault(x => x.Email == email);
+                
+            if(resident == null)
+            {
+                var user = new ApplicationUser
                 {
                     UserName = userName,
-                    FullName = string.Join(' ', firstName, lastName).Trim(),
-                    NormalizedUserName = userName.ToUpper(),
+                    FullName = string.Join(" ", firstName, lastName).Trim(),
                     Email = email,
-                    NormalizedEmail = email.ToUpper(),
-                    CreatedOn = DateTime.Now,
-                    PasswordHash = password,
-                    EmailConfirmed = true,
                 };
-            currentProperty.Residents.Add(resident);
+
+                Task.Run(async () =>
+                {
+                   await this.userManager.CreateAsync(user, password);
+                }).GetAwaiter().GetResult();
+                currentProperty.Residents.Add(user);
+            }
+            else
+            {
+                currentProperty.Residents.Add(resident);
+            }
+
             this.db.SaveChanges();
         }
 
@@ -78,6 +92,15 @@
             currentProperty.Residents.Add(resident);
             this.db.SaveChanges();
         }
+
+        public IEnumerable<SelectListItem> GetPropertiesInAddress(int addressId)
+        => this.db.Properties
+                .Where(x => x.AddressId == addressId)
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name,
+                }).ToList();
 
         public ICollection<ApplicationUser> GetAllResidents(int propertyId)
         {

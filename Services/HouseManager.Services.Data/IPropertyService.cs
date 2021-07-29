@@ -11,7 +11,7 @@
     {
         void AddProperty(CreatePropertyServiceModel newProperty, int addressId);
 
-        void AddResidentToProperty(string propertyName, string userName, string firstName, string lastName, string email, string password, int addressId);
+        void AddResidentToProperty(int propertyId, string userName, string firstName, string lastName, string email, string password, int addressId);
 
         ICollection<ApplicationUser> GetAllResidents(int propertyId);
 
@@ -20,6 +20,8 @@
         void ChangeResidentsCount(int propertyId, int newResidentsCount);
 
         public List<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId);
+
+        public IEnumerable<SelectListItem> GetPropertiesInAddress(int addressId);
 
         public Task<Property> GetPropetyById(int id);
 

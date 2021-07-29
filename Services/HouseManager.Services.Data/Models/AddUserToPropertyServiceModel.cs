@@ -1,8 +1,10 @@
 ﻿namespace HouseManager.Services.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public class CreateUserServiceModel
+    public class AddUserToPropertyServiceModel:IValidatableObject
     {
         [Required]
         [StringLength(15, MinimumLength = 2, ErrorMessage = "Потребитеското име трябва да е мин {1} символ и максимум {0}")]
@@ -30,9 +32,19 @@
         [Display(Name = "Парола")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Потвърди паролата")]
-        [Compare("Password", ErrorMessage = "Въведените пароли не са еднакви.")]
-        public string ConfirmPassword { get; set; }
+        [Required]
+        [Display(Name = "Имот(имоти)")]
+        public ICollection<string> Property { get; set; }
+
+        public IEnumerable<SelectListItem> Properties { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if(Property == null)
+            {
+               yield return new ValidationResult("Въведете поне един имот",
+                new[] { nameof(Property) });
+            }
+        }
     }
 }

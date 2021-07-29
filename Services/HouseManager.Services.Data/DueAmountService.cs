@@ -12,16 +12,19 @@
         private readonly ApplicationDbContext db;
         private readonly IFeeService feeService;
         private readonly IAddressService addressService;
+        private readonly IPropertyService propertyService;
 
         public DueAmountService(
             ApplicationDbContext db,
             IFeeService feeService,
-            IAddressService addressService
+            IAddressService addressService,
+            IPropertyService propertyService
             )
         {
             this.db = db;
             this.feeService = feeService;
             this.addressService = addressService;
+            this.propertyService = propertyService;
         }
 
         public void AddMounthDueAmountInProperies(int propertyId, int month, int year)
@@ -151,8 +154,7 @@
 
         private void AddDueAmount(int month, int year, Property property)
         {
-            var propertyService = new PropertyService(this.db , this.feeService);
-            var dueAmount = propertyService.CalculateDueAmount(property.Id);
+            var dueAmount = this.propertyService.CalculateDueAmount(property.Id);
             this.db.RegularDueAmounts.Add(new RegularDueAmount
             {
                 Year = year,
