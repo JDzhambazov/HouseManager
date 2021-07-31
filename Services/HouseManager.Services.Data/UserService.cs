@@ -101,10 +101,18 @@
         }
 
 
-        public bool IsUserMakeChanges(string userId)
-            => this.addressRepository
+        public bool IsUserMakeChanges(string userId, int addressId)
+        {
+            if(addressId <= 0)
+            {
+                return false;
+            }
+
+            return this.addressRepository
                     .All()
+                    .Where(x => x.Id == addressId)
                     .Any(x => x.ManagerId == userId || x.PaymasterId == userId || x.CreatorId == userId);
+        }
 
         private static void ReplaseNames(AddressViewModel address)
         {

@@ -10,15 +10,17 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
-
     [Authorize]
     public class AddressController : BaseController
     {
         private readonly IAddressService addressService;
         private readonly IFeeService feeService;
         private readonly IUserService userService;
+        private readonly string manager = "Домоуправител";
+        private readonly string payMaster = "Касиер/Счетоводител";
 
-        public AddressController(IAddressService addressService,
+        public AddressController(
+            IAddressService addressService,
             IFeeService feeService,
             IUserService userService)
         {
@@ -37,12 +39,12 @@
         [HttpPost]
         public async Task<IActionResult> Create(AdressServiseInputModel address)
         {
-            if(address.City.Length < 3)
+            if (address.City.Length < 3)
             {
                 ModelState.AddModelError(string.Empty, "Името на населеното място трябва да е поне 3 символа");
             }
 
-            if(address.District != null && address.District.Length < 3)
+            if (address.District != null && address.District.Length < 3)
             {
                 ModelState.AddModelError(string.Empty, "Името на комплекса трябва да е поне 3 символа");
             }
@@ -52,7 +54,7 @@
                 ModelState.AddModelError(string.Empty, "Името на улицата трябва да е поне 3 символа");
             }
 
-            if(address.Street == null && address.District == null)
+            if (address.Street == null && address.District == null)
             {
                 ModelState.AddModelError(string.Empty, "Адреса трябва да има улица или комплекс");
             }
@@ -81,42 +83,66 @@
         public IActionResult AddManager()
         {
             var user = new RoleToAddress();
-            user.Title = "Домоуправител";
-            user.Users = this.userService.GetAllUsersInAddress(this.GetAddressId());
+            user.Title = manager;
+            user.Users = this.UserList();
             return View(user);
         }
 
         [HttpPost]
+        [Authorize(Roles ="Manager , PayMaster")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddManager(RoleToAddress user)
         {
+            if (this.userService.IsUserMakeChanges(this.User.Id(),this.GetAddressId()))
+            {
+                return BadRequest();
+            }
+
+            user.Users = this.UserList();
+
+            if (!user.Users.Any(x => x.Value == user.UserId))
+            {
+                ModelState.AddModelError(string.Empty, "Моля изберете съществуващ потребител");
+            }
+
             if (!ModelState.IsValid)
             {
-                user.Title = "Домоуправител";
-                user.Users = this.userService.GetAllUsersInAddress(this.GetAddressId());
+                user.Title = manager;
                 return View(user);
             }
 
             await this.addressService.SetAddressManager(this.GetAddressId(), user.UserId);
 
-            return RedirectToAction(nameof(HomeController.Index),"Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         public IActionResult AddPaymaster()
         {
             var user = new RoleToAddress();
-            user.Title = "Касиер/Счетоводител";
-            user.Users = this.userService.GetAllUsersInAddress(this.GetAddressId());
+            user.Title = payMaster;
+            user.Users = this.UserList();
             return View(user);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPaymaster(RoleToAddress user)
         {
+            if (this.userService.IsUserMakeChanges(this.User.Id(), this.GetAddressId()))
+            {
+                return BadRequest();
+            }
+
+            user.Users = this.UserList();
+
+            if (!user.Users.Any(x => x.Value == user.UserId))
+            {
+                ModelState.AddModelError(string.Empty, "Моля изберете съществуващ потребител");
+            }
 
             if (!ModelState.IsValid)
             {
-                user.Users = this.userService.GetAllUsersInAddress(this.GetAddressId());
-                user.Title = "Касиер/Счетоводител";
+                user.Title = payMaster;
                 return View(user);
             }
 
@@ -157,5 +183,8 @@
             newFee.FeeTypes = this.feeService.GetAllFees();
             return newFee;
         }
+
+        private IEnumerable<SelectListItem> UserList()
+            => this.userService.GetAllUsersInAddress(GetAddressId());
     }
 }

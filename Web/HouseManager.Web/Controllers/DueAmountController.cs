@@ -1,14 +1,11 @@
 ﻿namespace HouseManager.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using HouseManager.Services.Data;
     using HouseManager.Services.Models;
+    using HouseManager.Web.Infrastructure;
     using HouseManager.Web.ViewModels.DueAmount;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize]
@@ -16,15 +13,24 @@
     {
         private readonly IDueAmountService dueAmountService;
         private readonly IAddressService addressService;
+        private readonly IUserService userService;
 
-        public DueAmountController(IDueAmountService dueAmountService, IAddressService addressService)
+        public DueAmountController(IDueAmountService dueAmountService,
+            IAddressService addressService,
+            IUserService userService)
         {
             this.dueAmountService = dueAmountService;
             this.addressService = addressService;
+            this.userService = userService;
         }
 
-        public IActionResult MonthAmount() 
-            => this.View(this.MonthAmountList());
+        public IActionResult MonthAmount()
+        {
+            ViewBag.isUserMakeChanges = this.userService
+                .IsUserMakeChanges(this.User.Id(), this.GetAddressId());
+            return this.View(this.MonthAmountList());
+        }
+
 
         private MonthAmountViewModel MonthAmountList(int page = 1)
         {

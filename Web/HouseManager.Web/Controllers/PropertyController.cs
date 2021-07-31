@@ -132,7 +132,7 @@
         public IActionResult GetAllProperies()
         {
             var properies = propertyService.GetAllPropertiesInAddress(this.GetAddressId());
-            ViewBag.IsMakeChanges = this.userService.IsUserMakeChanges(this.User.Id());
+            ViewBag.IsMakeChanges = this.userService.IsUserMakeChanges(this.User.Id(),this.GetAddressId());
             return View(properies);
         }
 

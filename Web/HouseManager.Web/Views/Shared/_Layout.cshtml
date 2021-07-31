@@ -31,6 +31,10 @@
 
                     @if (this.SignInManager.IsSignedIn(this.User))
                     {
+                        var addressId = 0;
+                        int.TryParse(Context.Request.Cookies[GlobalConstants.AddressCookieName] , out addressId);
+                        var isMakeChanges = userService.IsUserMakeChanges(this.User.Id(), addressId);
+                        
                         <li class="nav-item dropdown">
                             <button class="btn dark text-info dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Финанси
@@ -58,9 +62,15 @@
                                 <div class="dropdown-divider border-info"></div>
                                 <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Данни за Адрес</a>
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="Property" asp-action="GetAllProperies">Данни за Имоти</a>
-                                <div class="dropdown-divider border-info"></div>
-                                <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="AddManager">Домоуправител</a>
-                                <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="AddPaymaster">Касиер</a>
+                                @if (this.User.IsInRole("Manager")
+                                    && isMakeChanges
+                                    || this.User.IsInRole("PayMaster")
+                                    && isMakeChanges)
+                                {
+                                    <div class="dropdown-divider border-info"></div>
+                                    <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="AddManager">Домоуправител</a>
+                                    <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="AddPaymaster">Касиер</a>
+                                }
                             </div>
                         </li>
                     }
