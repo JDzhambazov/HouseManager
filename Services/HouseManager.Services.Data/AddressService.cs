@@ -3,9 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using HouseManager.Data;
     using HouseManager.Data.Common.Repositories;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data.Models;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class AddressService : IAddressService
@@ -17,6 +19,10 @@
         private readonly IRepository<Property> propertyRepository;
         private readonly IRepository<Street> streetRepository;
         private readonly IRepository<MonthFee> monthFeeRepository;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly string managerRole = "Manager";
+        private readonly string payMasterRole = "PayMaster";
 
         public AddressService(
             IDeletableEntityRepository<Address> addressRepository,
@@ -25,7 +31,9 @@
             IRepository<District> districtRepository,
             IRepository<Property> propertyRepository,
             IRepository<Street> streetRepository,
-            IRepository<MonthFee> monthFeeRepository)
+            IRepository<MonthFee> monthFeeRepository,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager)
         {
             this.addressRepository = addressRepository;
             this.userRepository = userRepository;
@@ -34,6 +42,8 @@
             this.propertyRepository = propertyRepository;
             this.streetRepository = streetRepository;
             this.monthFeeRepository = monthFeeRepository;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public async Task<int> CreateAddress(string cityName, string districtName,
@@ -138,21 +148,58 @@
             => this.addressRepository.All().Where(x => x.Id == addressId)
             .Select(x => x.NumberOfProperties - x.Properties.Count).FirstOrDefault();
 
-        public async Task SetAddressManager(int addressId, string userFullName)
+        public async Task SetAddressManager(int addressId, string userId)
         {
             var address = GetAddressById(addressId);
-            var manager = GetUserByFullName(userFullName);
-            address.Manager = manager;
-            this.addressRepository.Update(address);
-            await this.addressRepository.SaveChangesAsync();
+            var roleExist = await this.roleManager.RoleExistsAsync(managerRole);
+
+            if (!roleExist)
+            {
+                await roleManager.CreateAsync(new ApplicationRole { Name = managerRole });
+            }
+
+            if (address.ManagerId != null)
+            {
+                var manager = userRepository.All().FirstOrDefault(x => x.Id == address.ManagerId);
+                await this.userManager.RemoveFromRoleAsync(manager, managerRole);
+            }
+
+            var user = userRepository.All().FirstOrDefault(x => x.Id == userId);
+            var addToRole = await this.userManager.AddToRoleAsync(user, managerRole);
+
+            if (addToRole.Succeeded)
+            {
+                address.ManagerId = userId;
+                this.addressRepository.Update(address);
+                await this.addressRepository.SaveChangesAsync();
+            }
         }
 
-        public async Task SetAddressPaymaster(int addressId, string userFullName)
+        public async Task SetAddressPaymaster(int addressId, string userId)
         {
             var address = GetAddressById(addressId);
-            var payMaster = GetUserByFullName(userFullName);
-            address.Paymaster = payMaster;
-            await this.addressRepository.SaveChangesAsync();
+            var roleExist = await this.roleManager.RoleExistsAsync(payMasterRole);
+
+            if (!roleExist)
+            {
+                await roleManager.CreateAsync(new ApplicationRole { Name = payMasterRole });
+            }
+
+            if (address.PaymasterId != null)
+            {
+                var payMaster = userRepository.All().FirstOrDefault(x => x.Id == address.PaymasterId);
+                await this.userManager.RemoveFromRoleAsync(payMaster, payMasterRole);
+            }
+
+            var user = userRepository.All().FirstOrDefault(x => x.Id == userId);
+            var addToRole = await this.userManager.AddToRoleAsync(user, payMasterRole);
+
+            if (addToRole.Succeeded)
+            {
+                address.PaymasterId = userId;
+                this.addressRepository.Update(address);
+                await this.addressRepository.SaveChangesAsync();
+            }
         }
 
         public async Task<bool> SetCurrentAddressId(int currentAddressId, ApplicationUser user)
@@ -179,8 +226,5 @@
 
         private Address GetAddressById(int addressId)
             => this.addressRepository.All().FirstOrDefault(x => x.Id == addressId);
-
-        private ApplicationUser GetUserByFullName(string userFullName)
-            => this.userRepository.All().FirstOrDefault(x => x.FullName == userFullName);
     }
 }

@@ -10,8 +10,8 @@
     using HouseManager.Data.Models;
     using HouseManager.Services.Mapping;
     using HouseManager.Web.ViewModels.Addresses;
-    using HouseManager.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     public class UserService : IUserService
@@ -63,26 +63,13 @@
 
         }
 
-        public IEnumerable<UserListViewModel> GetAllUsersInAddress(Address address)
-        {
-            var properties = propertyRepository
-                .All()
-                .Where(x => x.Address == address)
-                .ToList();
-
-            return GetUsers(properties);
-        }
-
-        public IEnumerable<UserListViewModel> GetAllUsersInAddress(int addressId)
-        {
-            var properties = propertyRepository
+        public IEnumerable<SelectListItem> GetAllUsersInAddress(int addressId)
+         => propertyRepository
                 .All()
                 .Where(x => x.AddressId == addressId)
+                .SelectMany(x => x.Residents
+                .Select(n => new SelectListItem { Value =n.Id ,Text = n.FullName}))
                 .ToList();
-
-            return GetUsers(properties);
-        }
-
 
         public IEnumerable<AddressViewModel> GetUserAddresses(string userName)
         {
@@ -118,23 +105,6 @@
             => this.addressRepository
                     .All()
                     .Any(x => x.ManagerId == userId || x.PaymasterId == userId || x.CreatorId == userId);
-
-        private static IEnumerable<UserListViewModel> GetUsers(IEnumerable<Property> properties)
-        {
-            var userList = new List<UserListViewModel>();
-            foreach (var property in properties)
-            {
-                foreach (var user in property.Residents)
-                {
-                    userList.Add(new UserListViewModel
-                    {
-                        FullName = user.FullName,
-                    });
-                }
-            }
-
-            return userList;
-        }
 
         private static void ReplaseNames(AddressViewModel address)
         {

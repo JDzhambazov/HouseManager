@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
-    public interface IRoleToAddress
+    public class RoleToAddress
     {
         [Required]
         [Display(Name ="Потребител")]

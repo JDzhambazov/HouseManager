@@ -1,4 +1,4 @@
-﻿@model IRoleToAddress
+﻿@model RoleToAddress
 
 
 <div class="container-scroller">
@@ -11,7 +11,7 @@
                     <hr />
                     <div class="form-group">
                         <label asp-for="UserId"></label>
-                        <select asp-for="UserId" asp-items="@Model.Users" class="form-control" required></select>
+                        <select asp-for="UserId" asp-items="@Model.Users" class="form-control simpleSelect2" required></select>
                         <span asp-validation-for="UserId" class="text-danger"></span>
                     </div>
                     <div class="text-center d-flex justify-content-around mt-4">

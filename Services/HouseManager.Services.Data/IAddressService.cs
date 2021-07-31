@@ -12,9 +12,9 @@
        
         Task<int> CreateAddress(string cityName, string districtName, string streetName, string number, string entrance, int numberOfProperties, string creatоrId);
 
-        Task SetAddressManager(int addressId, string userFullName);
+        Task SetAddressManager(int addressId, string userId);
 
-        Task SetAddressPaymaster(int addressId, string userFullName);
+        Task SetAddressPaymaster(int addressId, string userId);
 
         ICollection<SelectListItem> GetAddressMounthFees (int addressId);
 

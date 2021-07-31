@@ -25,4 +25,8 @@
     <ProjectReference Include="..\..\Services\HouseManager.Services\HouseManager.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Users\" />
+  </ItemGroup>
+
 </Project>

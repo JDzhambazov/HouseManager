@@ -1,6 +1,7 @@
 ﻿namespace HouseManager.Web.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
@@ -15,11 +16,15 @@
     {
         private readonly IAddressService addressService;
         private readonly IFeeService feeService;
+        private readonly IUserService userService;
 
-        public AddressController(IAddressService addressService, IFeeService feeService)
+        public AddressController(IAddressService addressService,
+            IFeeService feeService,
+            IUserService userService)
         {
             this.addressService = addressService;
             this.feeService = feeService;
+            this.userService = userService;
         }
 
         public IActionResult Create()
@@ -75,26 +80,49 @@
 
         public IActionResult AddManager()
         {
-            var users = new AddManagerServiceModel();
-            return View(users);
+            var user = new RoleToAddress();
+            user.Title = "Домоуправител";
+            user.Users = this.userService.GetAllUsersInAddress(this.GetAddressId());
+            return View(user);
         }
 
         [HttpPost]
-        public IActionResult AddManager(int id = 1)
+        public async Task<IActionResult> AddManager(RoleToAddress user)
         {
-            return RedirectToAction(nameof(HomeController.Index));
+            if (!ModelState.IsValid)
+            {
+                user.Title = "Домоуправител";
+                user.Users = this.userService.GetAllUsersInAddress(this.GetAddressId());
+                return View(user);
+            }
+
+            await this.addressService.SetAddressManager(this.GetAddressId(), user.UserId);
+
+            return RedirectToAction(nameof(HomeController.Index),"Home");
         }
 
         public IActionResult AddPaymaster()
         {
-            var users = new AddPaymasterSevriseModel();
-            return View(users);
+            var user = new RoleToAddress();
+            user.Title = "Касиер/Счетоводител";
+            user.Users = this.userService.GetAllUsersInAddress(this.GetAddressId());
+            return View(user);
         }
 
         [HttpPost]
-        public IActionResult AddPaymaster(int id = 1)
+        public async Task<IActionResult> AddPaymaster(RoleToAddress user)
         {
-            return RedirectToAction(nameof(HomeController.Index));
+
+            if (!ModelState.IsValid)
+            {
+                user.Users = this.userService.GetAllUsersInAddress(this.GetAddressId());
+                user.Title = "Касиер/Счетоводител";
+                return View(user);
+            }
+
+            await this.addressService.SetAddressPaymaster(this.GetAddressId(), user.UserId);
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         public IActionResult MounthFee()

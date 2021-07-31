@@ -2,8 +2,8 @@
 {
     using HouseManager.Data.Models;
     using HouseManager.Web.ViewModels.Addresses;
-    using HouseManager.Web.ViewModels.Users;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -12,9 +12,7 @@
     {
         Task<IdentityResult> AddNewUser(string userName, string firstName, string lastName, string email, string password);
 
-        IEnumerable<UserListViewModel> GetAllUsersInAddress(Address address);
-
-        IEnumerable<UserListViewModel> GetAllUsersInAddress(int addressId);
+        IEnumerable<SelectListItem> GetAllUsersInAddress(int addressId);
 
         IEnumerable<AddressViewModel> GetUserAddresses(string user);
 
