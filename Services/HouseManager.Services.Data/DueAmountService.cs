@@ -14,14 +14,14 @@
         private readonly IFeeService feeService;
         private readonly IAddressService addressService;
         private readonly IPropertyService propertyService;
-        private readonly IPagingService pagingService;
+        private readonly IPagingService<AmountListServiceModel> pagingService;
 
         public DueAmountService(
             ApplicationDbContext db,
             IFeeService feeService,
             IAddressService addressService,
             IPropertyService propertyService,
-            IPagingService pagingService
+            IPagingService<AmountListServiceModel> pagingService
             )
         {
             this.db = db;
@@ -119,12 +119,10 @@
             }
         }
 
-        public MonthAmountServiseModel GetAddressDueAmount(int addressId, int page)
+        public PagingServiceModel<AmountListServiceModel> GetAddressDueAmount(int addressId, int page)
         {
-            var result = new MonthAmountServiseModel();
             var amounts = new List<AmountListServiceModel>();
             var properties = this.addressService.GetAllProperyies(addressId);
-            var maxRowPerPage = GlobalConstants.MaxRowPerPage;
 
             foreach (var property in properties)
             {
@@ -154,14 +152,8 @@
                     });
                 }
             }
-
-            var pageInfo = this.pagingService.GetPageInfo(amounts, page);
-
-            result.CurrentPage = pageInfo.CurrentPage;
-            result.MaxPages = pageInfo.MaxPages;
-            result.Amounts = amounts.Skip((result.CurrentPage -1)*maxRowPerPage).Take(maxRowPerPage).ToList();
             
-            return result;
+            return this.pagingService.GetPageInfo(amounts, page); ;
         }
 
         private void AddDueAmount(int month, int year, Property property)

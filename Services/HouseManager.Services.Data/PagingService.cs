@@ -1,15 +1,16 @@
 ﻿namespace HouseManager.Services.Data
 {
     using System;
-    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
     using HouseManager.Common;
     using HouseManager.Services.Data.Models;
 
-    public class PagingService : IPagingService
+    public class PagingService<T> : IPagingService<T>
     {
-        public PagingServiceModel GetPageInfo(ICollection collection, int page)
+        public PagingServiceModel<T> GetPageInfo(ICollection<T> collection, int page)
         {
-            var pageInfo = new PagingServiceModel();
+            var pageInfo = new PagingServiceModel<T>();
             var maxRowPerPage = GlobalConstants.MaxRowPerPage;
 
             var currentPage = page > 0 ? page : 1;
@@ -17,7 +18,8 @@
 
             pageInfo.CurrentPage = currentPage > maxPage ? maxPage : currentPage;
             pageInfo.MaxPages = maxPage;
-
+            pageInfo.ItemList = collection.Skip((currentPage - 1) * maxRowPerPage).Take(maxRowPerPage).ToList();
+            
             return pageInfo;
         }
     }

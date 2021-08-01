@@ -1,9 +1,9 @@
-﻿namespace HouseManager.Services.Data.Models
-{
-    public class PagingServiceModel
-    {
-        public int CurrentPage { get; set; } = 1;
+﻿using System.Collections.Generic;
 
-        public int MaxPages { get; set; } = 1;
+namespace HouseManager.Services.Data.Models
+{
+    public class PagingServiceModel<T>: PagingModel
+    {
+        public ICollection<T> ItemList { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace HouseManager.Services.Data
 {
-    using System.Collections;
+    using System.Collections.Generic;
     using HouseManager.Services.Data.Models;
 
-    public interface IPagingService
+    public interface IPagingService<T>
     {
-        public PagingServiceModel GetPageInfo(ICollection collection, int currentPage);
+        public PagingServiceModel<T> GetPageInfo(ICollection<T> collection, int currentPage);
     }
 }

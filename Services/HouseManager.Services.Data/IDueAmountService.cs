@@ -17,6 +17,6 @@
 
         (decimal RegularDueAmount, decimal NotRegularDueAmount) GetPropertyMountDueAmount(int propertyId);
 
-        MonthAmountServiseModel GetAddressDueAmount(int addressId, int page = 1);
+        PagingServiceModel<AmountListServiceModel> GetAddressDueAmount(int addressId, int page = 1);
     }
 }

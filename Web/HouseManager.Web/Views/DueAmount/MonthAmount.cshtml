@@ -1,6 +1,6 @@
 ﻿@inject IUserService userService
 
-@model MonthAmountServiseModel
+@model PagingServiceModel<AmountListServiceModel>
 @{
     ViewData["Title"] = "Текущи задължения";
 }
@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody class="form-style">
-                    @foreach (var item in Model.Amounts)
+                    @foreach (var item in Model.ItemList)
                     {
                         <tr class="text-center">
                             <td class="text-white h5">@item.PropertyName</td>
@@ -49,7 +49,7 @@
     </div>
     @if (Model.MaxPages > 1)
     {
-        var paging = new PagingServiceModel()
+        var paging = new PagingModel()
         {
             CurrentPage = Model.CurrentPage,
             MaxPages = Model.MaxPages,

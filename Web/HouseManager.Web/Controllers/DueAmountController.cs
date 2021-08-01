@@ -29,7 +29,7 @@
             return this.View(this.MonthAmountList(currentPage));
         }
 
-        private MonthAmountServiseModel MonthAmountList(int page)
+        private PagingServiceModel<AmountListServiceModel> MonthAmountList(int page)
          => dueAmountService
                 .GetAddressDueAmount(this.GetAddressId(),page);
     }
