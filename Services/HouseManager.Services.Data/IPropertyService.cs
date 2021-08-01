@@ -19,7 +19,7 @@
 
         void ChangeResidentsCount(int propertyId, int newResidentsCount);
 
-        public List<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId);
+        public PagingServiceModel<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId, int page);
 
         public IEnumerable<SelectListItem> GetPropertiesInAddress(int addressId);
 

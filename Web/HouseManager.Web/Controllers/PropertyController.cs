@@ -129,9 +129,10 @@
             return this.View();
         }
 
-        public IActionResult GetAllProperies()
+        public IActionResult GetAllProperies([FromQuery]int currentPage)
         {
-            var properies = propertyService.GetAllPropertiesInAddress(this.GetAddressId());
+            var properies = propertyService
+                .GetAllPropertiesInAddress(this.GetAddressId(),currentPage);
             ViewBag.IsMakeChanges = this.userService.IsUserMakeChanges(this.User.Id(),this.GetAddressId());
             return View(properies);
         }

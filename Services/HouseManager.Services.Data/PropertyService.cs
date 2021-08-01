@@ -21,14 +21,17 @@
         private readonly ApplicationDbContext db;
         private readonly IFeeService feeService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IPagingService<AllPropertyViewModel> pagingService;
 
         public PropertyService(ApplicationDbContext db, 
             IFeeService feeService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IPagingService<AllPropertyViewModel> pagingService)
         {
             this.db = db;
             this.feeService = feeService;
             this.userManager = userManager;
+            this.pagingService = pagingService;
         }
 
         public void AddProperty(CreatePropertyServiceModel newProperty, int addressId)
@@ -168,7 +171,7 @@
             return true;
         }
 
-        public List<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId)
+        public PagingServiceModel<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId, int page)
         {
             var result = db.Properties
                 .Include(x => x.PropertyType)
@@ -184,7 +187,7 @@
                 })
                 .ToList();
 
-            return result;
+            return this.pagingService.GetPageInfo(result, page);
         }
 
         public async Task<Property> GetPropetyById(int id)

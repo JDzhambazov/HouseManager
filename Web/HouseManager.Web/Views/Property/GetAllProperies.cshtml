@@ -1,4 +1,4 @@
-﻿@model List<AllPropertyViewModel>
+﻿@model PagingServiceModel<AllPropertyViewModel>
 
 @{
     this.ViewData["Title"] = "Описание на имотите";
@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody class="form-style">
-                    @foreach (var property in Model)
+                    @foreach (var property in Model.ItemList)
                     {
                         <tr>
                             <td>@property.Name</td>
@@ -47,8 +47,12 @@
             </table>
         </div>
     </div>
-    @*@if (Model.Pages != null && Model.Pages.MaxPages > 1)
+    @if (Model.MaxPages > 1)
+    {
+        <partial name="_PagePartial" model="new PagingModel()
         {
-            <partial name="_PagePartial" model="@Model.Pages" />
-        }*@
+            CurrentPage = Model.CurrentPage,
+            MaxPages = Model.MaxPages,
+        }" />
+    }
 </div>
