@@ -5,7 +5,8 @@
     using System.Linq;
     using HouseManager.Data;
     using HouseManager.Data.Models;
-    using HouseManager.Services.Models;
+    using HouseManager.Services.Data.Models;
+    using HouseManager.Common;
 
     public class DueAmountService : IDueAmountService
     {
@@ -13,18 +14,21 @@
         private readonly IFeeService feeService;
         private readonly IAddressService addressService;
         private readonly IPropertyService propertyService;
+        private readonly IPagingService pagingService;
 
         public DueAmountService(
             ApplicationDbContext db,
             IFeeService feeService,
             IAddressService addressService,
-            IPropertyService propertyService
+            IPropertyService propertyService,
+            IPagingService pagingService
             )
         {
             this.db = db;
             this.feeService = feeService;
             this.addressService = addressService;
             this.propertyService = propertyService;
+            this.pagingService = pagingService;
         }
 
         public void AddMounthDueAmountInProperies(int propertyId, int month, int year)
@@ -115,10 +119,12 @@
             }
         }
 
-        public ICollection<MonthAmountServiseModel> GetAddressDueAmount(int addressId, int page)
+        public MonthAmountServiseModel GetAddressDueAmount(int addressId, int page)
         {
-            var result = new List<MonthAmountServiseModel>();
+            var result = new MonthAmountServiseModel();
+            var amounts = new List<AmountListServiceModel>();
             var properties = this.addressService.GetAllProperyies(addressId);
+            var maxRowPerPage = GlobalConstants.MaxRowPerPage;
 
             foreach (var property in properties)
             {
@@ -137,7 +143,7 @@
                         residentName = user.FullName;
                     }
 
-                    result.Add(new MonthAmountServiseModel
+                    amounts.Add(new AmountListServiceModel
                     {
                         Id = property.Id,
                         PropertyName = property.Name,
@@ -149,6 +155,12 @@
                 }
             }
 
+            var pageInfo = this.pagingService.GetPageInfo(amounts, page);
+
+            result.CurrentPage = pageInfo.CurrentPage;
+            result.MaxPages = pageInfo.MaxPages;
+            result.Amounts = amounts.Skip((result.CurrentPage -1)*maxRowPerPage).Take(maxRowPerPage).ToList();
+            
             return result;
         }
 

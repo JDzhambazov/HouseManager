@@ -1,15 +1,14 @@
-﻿@using HouseManager.Web.ViewModels.DueAmount
+﻿@inject IUserService userService
 
-@inject IUserService userService
-
-@model MonthAmountViewModel
+@model MonthAmountServiseModel
 @{
     ViewData["Title"] = "Текущи задължения";
 }
 
 <div class="text-center">
-    <h3 class="mt-3 mb-3 text-white">Задължения за месец: @DateTime.Now.ToString("MMM yyyy").ToUpper()</h3>
+    <h3 class="mt-3 mb-3 text-white">Задължения за месец: @DateTime.Now.ToString("MMMM yyyy").ToUpper() г.</h3>
 </div>
+
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="table-responsive">
         <div class="table-responsive mdi-margin">
@@ -28,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody class="form-style">
-                    @foreach (var item in Model.MonthAmounts)
+                    @foreach (var item in Model.Amounts)
                     {
                         <tr class="text-center">
                             <td class="text-white h5">@item.PropertyName</td>
@@ -48,8 +47,14 @@
             </table>
         </div>
     </div>
-    @*@if (Model.Pages != null && Model.Pages.MaxPages > 1)
+    @if (Model.MaxPages > 1)
+    {
+        var paging = new PagingServiceModel()
         {
-            <partial name="_PagePartial" model="@Model.Pages" />
-        }*@
+            CurrentPage = Model.CurrentPage,
+            MaxPages = Model.MaxPages,
+        };
+
+        <partial name="_PagePartial" model="paging" />
+    }
 </div>

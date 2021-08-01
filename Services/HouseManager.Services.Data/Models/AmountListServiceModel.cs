@@ -1,7 +1,6 @@
-﻿namespace HouseManager.Services.Models
+﻿namespace HouseManager.Services.Data.Models
 {
-
-    public class MonthAmountServiseModel
+    public class AmountListServiceModel
     {
         public int Id { get; set; }
 

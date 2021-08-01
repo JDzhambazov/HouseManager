@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DueAmount\" />
     <Folder Include="Users\" />
   </ItemGroup>
 
