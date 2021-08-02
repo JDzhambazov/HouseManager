@@ -84,5 +84,10 @@
             }
             return View(income);
         }
+        //public IActionResult GetAll([FromQuery] int currentPage)
+        //{
+        //    var incomes = this.incomeService.GetAll(this.GetAddressId(), currentPage);
+        //    return View(incomes);
+        //}
     }
 }

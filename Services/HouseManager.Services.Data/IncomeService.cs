@@ -16,10 +16,13 @@
     public class IncomeService : IIncomeService
     {
         private readonly ApplicationDbContext db;
+        private readonly IPagingService<IncomeServiceModel> pagingService;
 
-        public IncomeService(ApplicationDbContext db)
+        public IncomeService(ApplicationDbContext db,
+            IPagingService<IncomeServiceModel> pagingService)
         {
             this.db = db;
+            this.pagingService = pagingService;
         }
 
         public void AddIncome(int? properyId, decimal price, DateTime date, ApplicationUser resident, int addressId, bool isRegular)
@@ -66,6 +69,46 @@
                 currentIncome.Price = newPrice;
                 this.db.SaveChanges();
             }
+        }
+
+        public PagingServiceModel<IncomeServiceModel> GetAll(int addressId, int page)
+        {
+            var incomes = new List<IncomeServiceModel>();
+
+            var regularInkocoms = this.db.RegularIncomes
+                .Where(x => x.AddressId == addressId)
+                //.To<IncomeServiceModel>()
+                .Select(x => new IncomeServiceModel
+                {
+                    Id = x.Id,
+                    PropertyId = x.PropertyId,
+                    PropertyName = x.Property.Name,
+                    Date = x.Date,
+                    Price = x.Price,
+                    ResidentFullName = x.Resident.FullName ?? "N/A",
+                })
+                .OrderByDescending(x => x.Date)
+                .ToList();
+
+            var notRegularInkocoms = this.db.RegularIncomes
+                .Where(x => x.AddressId == addressId)
+                //.To<IncomeServiceModel>()
+                .Select(x => new IncomeServiceModel
+                {
+                    Id = x.Id,
+                    PropertyId = x.PropertyId,
+                    PropertyName = x.Property.Name,
+                    Date = x.Date,
+                    Price = x.Price,
+                    ResidentFullName = x.Resident.FullName ?? "N/A",
+                })
+                .OrderByDescending(x => x.Date)
+                .ToList();
+
+            incomes.AddRange(regularInkocoms);
+            incomes.AddRange(notRegularInkocoms);
+
+            return this.pagingService.GetPageInfo(incomes,page);
         }
 
         public ICollection<IncomeServiceModel> GetAllIncomeForPropery(int propertyId, bool isRegular)

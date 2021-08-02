@@ -1,0 +1,62 @@
+﻿@model PagingServiceModel<IncomeServiceModel>
+
+@{
+    this.ViewData["Title"] = "Справка плащания";
+}
+<h2 class="text-center mt-4 mb-4">Справка за плащания</h2>
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="table-responsive">
+        <div class="table-responsive mdi-margin">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="text-center text-primary border-top form-style">
+                    <tr>
+                        <th>Идентификатор</th>
+                        <th>Платена сума</th>
+                        <th>Дата</th>
+                        <th>Платил</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="form-style">
+                    @foreach (var income in Model.ItemList)
+                    {
+                        <tr>
+                            <td>@income.PropertyName</td>
+                            <td class="text-center">@income.Price лв.</td>
+                            <td>@income.Date</td>
+                            @if (income.ResidentFullName == "N/A")
+                            {
+                                if (ViewBag.isUserMakeChanges)
+                                {
+                                    <td>
+                                        <a asp-area="" asp-controller="User" asp-action="AddToProperty" asp-route-id="@income.Id" class="btn btn-outline-primary">Добави платил</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>"Не е въведен"</td>
+                                }
+                            }
+                            else
+                            {
+                                <td>@income.ResidentFullName</td>
+                            }
+                            <td class="text-center">
+                                <a asp-area="Statistics" asp-controller="Income" asp-action="Edit" asp-route-id="@income.Id" class="btn btn-outline-warning">Промени</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @if (Model.MaxPages > 1)
+    {
+        <partial name="_PagePartial" model="new PagingModel()
+        {
+            CurrentPage = Model.CurrentPage,
+            MaxPages = Model.MaxPages,
+        }" />
+    }
+</div>

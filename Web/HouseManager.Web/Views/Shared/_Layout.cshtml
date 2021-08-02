@@ -32,40 +32,24 @@
                     @if (this.SignInManager.IsSignedIn(this.User))
                     {
                         var addressId = 0;
-                        int.TryParse(Context.Request.Cookies[GlobalConstants.AddressCookieName] , out addressId);
+                        int.TryParse(Context.Request.Cookies[GlobalConstants.AddressCookieName], out addressId);
                         var isMakeChanges = userService.IsUserMakeChanges(this.User.Id(), addressId);
-                        
-                        <li class="nav-item dropdown">
-                            <button class="btn dark text-info dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Финанси
-                            </button>
-                            <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Приходи</a>
-                                <a class="dropdown-item text-info" asp-area="" asp-controller="Expense" asp-action="AddExpense">Разходи</a>
-                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Месечни Такси</a>
-                                <div class="dropdown-divider border-info"></div>
-                                <a class="dropdown-item text-info" asp-area="" asp-controller="DueAmount" asp-action="MonthAmount">Текущи задължения</a>
-                                <div class="dropdown-divider border-info"></div>
-                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Годищен Отчет</a>
-                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Месечен Отчет</a>
-                            </div>
-                        </li>
                         <li class="nav-item dropdown">
                             <button class="btn dark text-info dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Адрес
                             </button>
                             <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="Create">Създай Адрес</a>
-                                <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="MounthFee">Месечни такси</a>
-                                <a class="dropdown-item text-info" asp-area="" asp-controller="Property" asp-action="Create">Имоти</a>
-                                <a class="dropdown-item text-info" asp-area="" asp-controller="User" asp-action="AddToProperty">Потребители</a>
+                                <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="MounthFee">Въведи Месечни такси</a>
+                                <a class="dropdown-item text-info" asp-area="" asp-controller="Property" asp-action="Create">Добави Имоти</a>
+                                <a class="dropdown-item text-info" asp-area="" asp-controller="User" asp-action="AddToProperty">Добави Потребители</a>
                                 <div class="dropdown-divider border-info"></div>
                                 <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Данни за Адрес</a>
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="Property" asp-action="GetAllProperies">Данни за Имоти</a>
                                 @if (this.User.IsInRole("Manager")
-                                    && isMakeChanges
-                                    || this.User.IsInRole("PayMaster")
-                                    && isMakeChanges)
+                                 && isMakeChanges
+                                 || this.User.IsInRole("PayMaster")
+                                 && isMakeChanges)
                                 {
                                     <div class="dropdown-divider border-info"></div>
                                     <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="AddManager">Домоуправител</a>
@@ -73,8 +57,31 @@
                                 }
                             </div>
                         </li>
+                        <li class="nav-item dropdown">
+                            <button class="btn dark text-info dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Финанси
+                            </button>
+                            <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Приходи</a>
+                                <a class="dropdown-item text-info" asp-area="" asp-controller="Expense" asp-action="AddExpense">Разходи</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Промени Месечни Такси</a>
+                                <div class="dropdown-divider border-info"></div>
+                                <a class="dropdown-item text-info" asp-area="" asp-controller="DueAmount" asp-action="MonthAmount">Текущи задължения</a>
+                                <div class="dropdown-divider border-info"></div>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Месечен Отчет</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Годищен Отчет</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <button class="btn dark text-info dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Справки
+                            </button>
+                            <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-info" asp-area="Statistics" asp-controller="Income" asp-action="GetAll">Приходи</a>
+                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Разходи</a>
+                            </div>
+                        </li>
                     }
-
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
