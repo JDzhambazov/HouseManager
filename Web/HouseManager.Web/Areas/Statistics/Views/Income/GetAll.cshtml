@@ -5,6 +5,31 @@
 }
 <h2 class="text-center mt-4 mb-4">Справка за плащания</h2>
 
+<form method="get" class="mb-3  form-style pb-2 pt-3">
+    <div class="row d-flex justify-content-around text-primary">
+        <div class="form-inline">
+            <label for="propertyId" class="mr-2">Имот:</label>
+            <select name="propertyId" class="select2-container">
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="StartDate">Начална дата:</label>
+            <input name="StartDate" type="date" />
+        </div>
+
+        <div>
+            <label for="EndDate">Крайна дата:</label>
+            <input name="EndDate" type="date" />
+        </div>
+        <div>
+            <input type="submit" value="Филтрирай" class="btn-primary" />
+        </div>
+    </div>
+</form>
+
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="table-responsive">
         <div class="table-responsive mdi-margin">
@@ -15,7 +40,11 @@
                         <th>Платена сума</th>
                         <th>Дата</th>
                         <th>Платил</th>
-                        <th></th>
+                        @if (ViewBag.isUserMakeChanges)
+                        {
+                            <th></th>
+                        }
+
                     </tr>
                 </thead>
                 <tbody class="form-style">
@@ -24,27 +53,31 @@
                         <tr>
                             <td>@income.PropertyName</td>
                             <td class="text-center">@income.Price лв.</td>
-                            <td>@income.Date</td>
+                            <td class="text-center">@income.Date.ToShortDateString()</td>
                             @if (income.ResidentFullName == "N/A")
                             {
                                 if (ViewBag.isUserMakeChanges)
                                 {
-                                    <td>
+                                    <td class="text-center">
                                         <a asp-area="" asp-controller="User" asp-action="AddToProperty" asp-route-id="@income.Id" class="btn btn-outline-primary">Добави платил</a>
                                     </td>
                                 }
                                 else
                                 {
-                                    <td>"Не е въведен"</td>
+                                    <td class="text-center">"Не е въведен"</td>
                                 }
                             }
                             else
                             {
-                                <td>@income.ResidentFullName</td>
+                                <td class="text-center">@income.ResidentFullName</td>
                             }
-                            <td class="text-center">
-                                <a asp-area="Statistics" asp-controller="Income" asp-action="Edit" asp-route-id="@income.Id" class="btn btn-outline-warning">Промени</a>
-                            </td>
+                            @if (ViewBag.isUserMakeChanges)
+                            {
+                                <td class="text-center d-fle justify-content-sm-between">
+                                    <a asp-area="Statistics" asp-controller="Income" asp-action="Edit" asp-route-id="@income.Id" class="btn btn-outline-warning mr-2">Редактирай</a>
+                                    <a asp-area="Statistics" asp-controller="Income" asp-action="Edit" asp-route-id="@income.Id" class="btn btn-outline-danger">Изтрий</a>
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>
