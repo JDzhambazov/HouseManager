@@ -1,9 +1,11 @@
 ﻿namespace HouseManager.Web.Areas.Statisics.Contollers
 {
+    using System;
     using System.Xml;
     using HouseManager.Services.Data;
     using HouseManager.Web.Controllers;
     using HouseManager.Web.Infrastructure;
+    using HouseManager.Web.ViewModels.Incomes;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -13,23 +15,36 @@
     {
         private readonly IIncomeService incomeService;
         private readonly IUserService userService;
+        private readonly IPropertyService propertyService;
 
         public IncomeController(IIncomeService incomeService,
-            IUserService userService
+            IUserService userService,
+            IPropertyService propertyService
             )
         {
             this.incomeService = incomeService;
             this.userService = userService;
+            this.propertyService = propertyService;
         }
 
         public IIncomeService IncomeService { get; }
 
-        public IActionResult GetAll([FromQuery] int currentPage)
+        public IActionResult GetAll(int currentPage, string propertyId, 
+            DateTime startDate, DateTime endDate)
         {
             ViewBag.isUserMakeChanges = this.userService
                 .IsUserMakeChanges(this.User.Id(), this.GetAddressId());
-            var incomes = this.incomeService.GetAll(this.GetAddressId(), currentPage);
-            return View(incomes);
+            var incomes = this.incomeService.GetAll(this.GetAddressId(), currentPage,propertyId,startDate,endDate);
+
+            var viewIncomes = new AllIncomesViewModel()
+            {
+                IncomeList = incomes.ItemList,
+                CurrentPage = incomes.CurrentPage,
+                MaxPages = incomes.MaxPages,
+                Properties = propertyService.GetPropertiesInAddress(this.GetAddressId()),
+            };
+
+            return View(viewIncomes);
         }
     }
 }

@@ -16,10 +16,10 @@
     public class IncomeService : IIncomeService
     {
         private readonly ApplicationDbContext db;
-        private readonly IPagingService<IncomeServiceModel> pagingService;
+        private readonly IPagingService<AllIncomeServiceModel> pagingService;
 
         public IncomeService(ApplicationDbContext db,
-            IPagingService<IncomeServiceModel> pagingService)
+            IPagingService<AllIncomeServiceModel> pagingService)
         {
             this.db = db;
             this.pagingService = pagingService;
@@ -71,14 +71,44 @@
             }
         }
 
-        public PagingServiceModel<IncomeServiceModel> GetAll(int addressId, int page)
+        public PagingServiceModel<AllIncomeServiceModel> GetAll(int addressId, int page,
+            string propertyId, DateTime startDate, DateTime endDate)
         {
-            var incomes = new List<IncomeServiceModel>();
+            var incomes = new List<AllIncomeServiceModel>();
+            var regularIncomesQuery = this.db.RegularIncomes
+                .Where(x => x.AddressId == addressId);
+            var notRegularIncomesQuery = this.db.NotRegularIncomes
+                .Where(x => x.AddressId == addressId);
 
-            var regularInkocoms = this.db.RegularIncomes
-                .Where(x => x.AddressId == addressId)
-                //.To<IncomeServiceModel>()
-                .Select(x => new IncomeServiceModel
+            if(propertyId != null)
+            {
+                var id = int.Parse(propertyId);
+                regularIncomesQuery = regularIncomesQuery
+                    .Where(x => x.PropertyId == id);
+                notRegularIncomesQuery = notRegularIncomesQuery
+                    .Where(x => x.PropertyId == id);
+            }
+
+            if (startDate > DateTime.MinValue && startDate < DateTime.Now)
+            {
+                regularIncomesQuery = regularIncomesQuery
+                    .Where(x => x.Date >= startDate);
+                notRegularIncomesQuery = notRegularIncomesQuery
+                    .Where(x => x.Date >= startDate);
+            }
+
+            if (endDate > DateTime.MinValue && endDate < DateTime.Now)
+            {
+                regularIncomesQuery = regularIncomesQuery
+                    .Where(x => x.Date <= endDate);
+                notRegularIncomesQuery = notRegularIncomesQuery
+                    .Where(x => x.Date <= endDate);
+            }
+
+            var regularInkocoms = regularIncomesQuery
+                //this.db.RegularIncomes
+                //.Where(x => x.AddressId == addressId)
+                .Select(x => new AllIncomeServiceModel
                 {
                     Id = x.Id,
                     PropertyId = x.PropertyId,
@@ -87,13 +117,12 @@
                     Price = x.Price,
                     ResidentFullName = x.Resident.FullName ?? "N/A",
                 })
-                .OrderByDescending(x => x.Date)
                 .ToList();
 
-            var notRegularInkocoms = this.db.RegularIncomes
-                .Where(x => x.AddressId == addressId)
-                //.To<IncomeServiceModel>()
-                .Select(x => new IncomeServiceModel
+            var notRegularInkocoms = notRegularIncomesQuery
+                //this.db.RegularIncomes
+                //.Where(x => x.AddressId == addressId)
+                .Select(x => new AllIncomeServiceModel
                 {
                     Id = x.Id,
                     PropertyId = x.PropertyId,
@@ -102,22 +131,22 @@
                     Price = x.Price,
                     ResidentFullName = x.Resident.FullName ?? "N/A",
                 })
-                .OrderByDescending(x => x.Date)
                 .ToList();
 
             incomes.AddRange(regularInkocoms);
             incomes.AddRange(notRegularInkocoms);
+            incomes = incomes.OrderByDescending(x => x.Date).ToList();
 
-            return this.pagingService.GetPageInfo(incomes,page);
+            return this.pagingService.GetPageInfo(incomes, page);
         }
 
-        public ICollection<IncomeServiceModel> GetAllIncomeForPropery(int propertyId, bool isRegular)
+        public ICollection<AllIncomeServiceModel> GetAllIncomeForPropery(int propertyId, bool isRegular)
         {
             if (isRegular)
             {
                 return this.db.RegularIncomes
                     .Where(x => x.PropertyId == propertyId)
-                    .To<IncomeServiceModel>()
+                    .To<AllIncomeServiceModel>()
                     //.Select(x => new IncomeViewModel
                     //{
                     //    PropertyId = x.PropertyId,
@@ -133,7 +162,7 @@
             {
                 return this.db.NotRegularIncomes
                     .Where(x => x.PropertyId == propertyId)
-                    .To<IncomeServiceModel>()
+                    .To<AllIncomeServiceModel>()
                     //.Select(x => new IncomeViewModel
                     //{
                     //    PropertyId = x.PropertyId,

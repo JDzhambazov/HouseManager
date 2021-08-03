@@ -1,18 +1,6 @@
 ﻿@model PagingModel
 
 <form method="get" aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
-            <a asp-route-currentPage="@(Model.CurrentPage-1)" class="page-link form-style text-primary">Предходна</a>
-        </li>
-        @for (int i = 1; i <= @Model.MaxPages; i++)
-                {
-        <li class="page-item @(Model.CurrentPage == i ? "disabled" : string.Empty)">
-            <a asp-route-currentPage=@i class="page-link form-style text-primary">@i</a>
-        </li>
-    }
-        <li class="page-item @(Model.CurrentPage == Model.MaxPages ? "disabled" : string.Empty)">
-            <a asp-route-currentPage="@(Model.CurrentPage + 1)" class="page-link form-style text-primary">Следваща</a>
-        </li>
-    </ul>
+
+        <partial name="_PageButtonPartial" model=@Model/>
 </form>

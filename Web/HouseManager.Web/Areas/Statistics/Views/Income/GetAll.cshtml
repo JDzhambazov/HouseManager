@@ -1,33 +1,39 @@
-﻿@model PagingServiceModel<IncomeServiceModel>
+﻿@model AllIncomesViewModel
 
 @{
     this.ViewData["Title"] = "Справка плащания";
 }
 <h2 class="text-center mt-4 mb-4">Справка за плащания</h2>
 
+
 <form method="get" class="mb-3  form-style pb-2 pt-3">
     <div class="row d-flex justify-content-around text-primary">
         <div class="form-inline">
-            <label for="propertyId" class="mr-2">Имот:</label>
-            <select name="propertyId" class="select2-container">
-                <option value="1">1</option>
-                <option value="2">2</option>
+            <label asp-for="PropertyId" class="mr-2">Имот:</label>
+            <select asp-for="PropertyId" asp-items="@Model.Properties" class="select2-container">
             </select>
         </div>
 
         <div>
-            <label for="StartDate">Начална дата:</label>
-            <input name="StartDate" type="date" />
+            <label asp-for="StartDate">Начална дата:</label>
+            <input asp-for="StartDate" type="date" />
         </div>
 
         <div>
-            <label for="EndDate">Крайна дата:</label>
-            <input name="EndDate" type="date" />
+            <label asp-for="EndDate">Крайна дата:</label>
+            <input asp-for="EndDate" type="date" />
         </div>
         <div>
             <input type="submit" value="Филтрирай" class="btn-primary" />
         </div>
     </div>
+    @*<div class="mt-2">
+        <partial name="_PageButtonPartial" model="new PagingModel()
+        {
+            CurrentPage = Model.CurrentPage,
+            MaxPages = Model.MaxPages,
+        }" />
+    </div>*@
 </form>
 
 <div class="col-lg-12 grid-margin stretch-card">
@@ -48,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody class="form-style">
-                    @foreach (var income in Model.ItemList)
+                    @foreach (var income in Model.IncomeList)
                     {
                         <tr>
                             <td>@income.PropertyName</td>
