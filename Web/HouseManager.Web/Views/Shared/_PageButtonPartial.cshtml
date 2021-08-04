@@ -6,7 +6,7 @@
     @for (int i = 1; i <= @Model.MaxPages; i++)
     {
     <li class="page-item @(Model.CurrentPage == i ? "disabled" : string.Empty)">
-        <a asp-route-currentPage=@i class="page-link form-style text-primary">@i</a>
+        <input asp-for="CurrentPage" value=@i type="submit" class="page-link form-style text-primary" /input>
     </li>
     }
     <li class="page-item @(Model.CurrentPage == Model.MaxPages ? "disabled" : string.Empty)">
