@@ -47,10 +47,6 @@
     </div>
     @if (Model.Paging.MaxPages > 1)
     {
-        <partial name="_PagePartial" model="new PagingModel()
-        {
-            CurrentPage = Model.Paging.CurrentPage,
-            MaxPages = Model.Paging.MaxPages,
-        }" />
+        <partial name="_PagePartial" model="Model.Paging" />
     }
 </div>
