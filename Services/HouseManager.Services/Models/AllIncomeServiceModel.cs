@@ -14,6 +14,8 @@
 
         public DateTime Date { get; set; }
 
+        public string IncomeName { get; set; }
+
         public string ResidentFullName { get; set; }
     }
 }

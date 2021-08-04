@@ -50,8 +50,9 @@
             return View();
         }
 
-        public IActionResult Delete(int incomeId)
+        public IActionResult Delete(int Id)
         {
+            this.incomeService.DeleteIncome(Id, this.GetAddressId());
             return RedirectToAction(nameof(GetAll));
         }
     }

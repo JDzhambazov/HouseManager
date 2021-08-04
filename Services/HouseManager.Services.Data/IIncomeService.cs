@@ -11,10 +11,12 @@
     {
         void AddIncome(int? properyId, decimal price, DateTime date, ApplicationUser resident, int addressId, bool isRegular);
 
+        void EditMounthProperyIncome(int propertyId, int month, int year, decimal newPrice, bool isRegular);
+
+        void DeleteIncome(int incomeId, int addressId);
+
         PagingServiceModel<AllIncomeServiceModel> GetAll(int addressId,  int page, string propertyId, DateTime startDate, DateTime endDate);
 
         ICollection<AllIncomeServiceModel> GetAllIncomeForPropery(int properyId, bool isRegular);
-
-        void EditMounthProperyIncome(int propertyID, int month, int year, decimal newPrice, bool isRegular);
     }
 }

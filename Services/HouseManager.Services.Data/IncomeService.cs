@@ -72,6 +72,27 @@
             }
         }
 
+        public void DeleteIncome(int incomeId , int addressId)
+        {
+            var regularIncome = db.RegularIncomes
+                .FirstOrDefault(x => x.Id == incomeId && x.AddressId == addressId);
+            var notRegularIncome = db.NotRegularIncomes
+                .FirstOrDefault(x => x.Id == incomeId && x.AddressId == addressId);
+
+            if(regularIncome != null)
+            {
+                this.db.RegularIncomes.Remove(regularIncome);
+            }
+
+
+            if (notRegularIncome != null)
+            {
+                this.db.NotRegularIncomes.Remove(notRegularIncome);
+            }
+
+            this.db.SaveChanges();
+        }
+
         public PagingServiceModel<AllIncomeServiceModel> GetAll(int addressId, int page,
             string propertyId, DateTime startDate, DateTime endDate)
         {
@@ -107,8 +128,6 @@
             }
 
             var regularInkocoms = regularIncomesQuery
-                //this.db.RegularIncomes
-                //.Where(x => x.AddressId == addressId)
                 .Select(x => new AllIncomeServiceModel
                 {
                     Id = x.Id,
@@ -116,13 +135,12 @@
                     PropertyName = x.Property.Name,
                     Date = x.Date,
                     Price = x.Price,
+                    IncomeName = "Общи части",
                     ResidentFullName = x.Resident.FullName ?? "N/A",
                 })
                 .ToList();
 
             var notRegularInkocoms = notRegularIncomesQuery
-                //this.db.RegularIncomes
-                //.Where(x => x.AddressId == addressId)
                 .Select(x => new AllIncomeServiceModel
                 {
                     Id = x.Id,
@@ -130,6 +148,7 @@
                     PropertyName = x.Property.Name,
                     Date = x.Date,
                     Price = x.Price,
+                    IncomeName = "Ремонт Вход",
                     ResidentFullName = x.Resident.FullName ?? "N/A",
                 })
                 .ToList();
