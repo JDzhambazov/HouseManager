@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class IncomeServiceModel
+    public class AllIncomeServiceModel
     {
         public int Id { get; set; }
 

@@ -8,7 +8,7 @@
 
     public class AllIncomesViewModel
     {
-        public IEnumerable<IncomeServiceModel> IncomeList { get; set; }
+        public IEnumerable<AllIncomeServiceModel> IncomeList { get; set; }
 
         public string PropertyId { get; set; }
 

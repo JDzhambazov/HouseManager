@@ -10,6 +10,7 @@
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Services.Models;
     using HouseManager.Services.Mapping;
     using HouseManager.Web.ViewModels.Incomes;
 
