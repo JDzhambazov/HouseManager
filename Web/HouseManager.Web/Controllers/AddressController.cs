@@ -77,7 +77,7 @@
 
             this.SetAddressId(currentAddressId);
 
-            return RedirectToAction();
+            return RedirectToAction(nameof(HomeController.Index),"Home");
         }
 
         public IActionResult AddManager()
