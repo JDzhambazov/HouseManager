@@ -16,7 +16,5 @@
         void DeleteIncome(int incomeId, int addressId);
 
         PagingServiceModel<AllIncomeServiceModel> GetAll(int addressId,  int page, string propertyId, DateTime startDate, DateTime endDate);
-
-        ICollection<AllIncomeServiceModel> GetAllIncomeForPropery(int properyId, bool isRegular);
     }
 }

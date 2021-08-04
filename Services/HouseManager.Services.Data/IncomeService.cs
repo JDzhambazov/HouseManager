@@ -148,7 +148,7 @@
                     PropertyName = x.Property.Name,
                     Date = x.Date,
                     Price = x.Price,
-                    IncomeName = "Ремонт Вход",
+                    IncomeName = "Ремонти",
                     ResidentFullName = x.Resident.FullName ?? "N/A",
                 })
                 .ToList();
@@ -158,42 +158,6 @@
             incomes = incomes.OrderByDescending(x => x.Date).ToList();
 
             return this.pagingService.GetPageInfo(incomes, page);
-        }
-
-        public ICollection<AllIncomeServiceModel> GetAllIncomeForPropery(int propertyId, bool isRegular)
-        {
-            if (isRegular)
-            {
-                return this.db.RegularIncomes
-                    .Where(x => x.PropertyId == propertyId)
-                    .To<AllIncomeServiceModel>()
-                    //.Select(x => new IncomeViewModel
-                    //{
-                    //    PropertyId = x.PropertyId,
-                    //    Property = x.Property,
-                    //    Date = x.Date,
-                    //    Price = x.Price,
-                    //    Resident = x.Resident,
-                    //    ResidentId = x.ResidentId,
-                    //})
-                    .ToList();
-            }
-            else
-            {
-                return this.db.NotRegularIncomes
-                    .Where(x => x.PropertyId == propertyId)
-                    .To<AllIncomeServiceModel>()
-                    //.Select(x => new IncomeViewModel
-                    //{
-                    //    PropertyId = x.PropertyId,
-                    //    Property = x.Property,
-                    //    Date = x.Date,
-                    //    Price = x.Price,
-                    //    Resident = x.Resident,
-                    //    ResidentId = x.ResidentId,
-                    //})
-                    .ToList();
-            }
         }
     }
 }
