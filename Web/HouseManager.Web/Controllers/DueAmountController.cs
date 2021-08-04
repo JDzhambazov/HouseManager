@@ -2,6 +2,7 @@
 {
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Services.Models;
     using HouseManager.Web.Infrastructure;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

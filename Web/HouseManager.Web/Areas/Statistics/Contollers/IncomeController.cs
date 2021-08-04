@@ -39,8 +39,7 @@
             var viewIncomes = new AllIncomesViewModel()
             {
                 IncomeList = incomes.ItemList,
-                CurrentPage = incomes.CurrentPage,
-                MaxPages = incomes.MaxPages,
+                Paging = incomes.Paging,
                 Properties = propertyService.GetPropertiesInAddress(this.GetAddressId()),
             };
 

@@ -4,6 +4,7 @@
 
     using HouseManager.Data.Models;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Services.Models;
 
     public interface IDueAmountService
     {

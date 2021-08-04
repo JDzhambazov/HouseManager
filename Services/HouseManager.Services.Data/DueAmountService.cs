@@ -6,6 +6,7 @@
     using HouseManager.Data;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Services.Models;
     using HouseManager.Common;
 
     public class DueAmountService : IDueAmountService

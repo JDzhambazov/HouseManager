@@ -47,12 +47,12 @@
             </table>
         </div>
     </div>
-    @if (Model.MaxPages > 1)
+    @if (Model.Paging.MaxPages > 1)
     {
         <partial name="_PagePartial" model="new PagingModel()
         {
-            CurrentPage = Model.CurrentPage,
-            MaxPages = Model.MaxPages,
+            CurrentPage = Model.Paging.CurrentPage,
+            MaxPages = Model.Paging.MaxPages,
         }" />
     }
 </div>

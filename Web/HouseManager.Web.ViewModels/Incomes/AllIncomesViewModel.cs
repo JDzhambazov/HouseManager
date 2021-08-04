@@ -18,8 +18,6 @@
 
         public DateTime? EndDate { get; set; } = null;
 
-        public int CurrentPage { get; set; }
-
-        public int MaxPages { get; set; }
+        public PagingModel Paging { get; set; }
     }
 }

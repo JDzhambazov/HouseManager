@@ -27,14 +27,10 @@
             <input type="submit" value="Филтрирай" class="btn-primary" />
         </div>
     </div>
-    @if (Model.MaxPages > 1)
+    @if (Model.Paging.MaxPages > 1)
     {
         <div class="mt-2">
-            <partial name="_PageButtonPartial" model="new PagingModel()
-        {
-            CurrentPage = Model.CurrentPage,
-            MaxPages = Model.MaxPages,
-        }" />
+            <partial name="_PageButtonPartial" model="Model.Paging" />
         </div>
     }
 </form>

@@ -3,7 +3,7 @@
     <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
         <a asp-route-currentPage="@(Model.CurrentPage-1)" class="page-link form-style text-primary">Предходна</a>
     </li>
-    @for (int i = 1; i <= @Model.MaxPages; i++)
+    @for (int i = Model.StartPage; i <= @Model.EndPage; i++)
     {
     <li class="page-item @(Model.CurrentPage == i ? "disabled" : string.Empty)">
         <input asp-for="CurrentPage" value=@i type="submit" class="page-link form-style text-primary" /input>

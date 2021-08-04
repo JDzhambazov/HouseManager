@@ -2,6 +2,7 @@
 {
     using HouseManager.Data.Models;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Services.Models;
     using HouseManager.Web.ViewModels.Property;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
