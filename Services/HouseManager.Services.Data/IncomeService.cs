@@ -54,22 +54,31 @@
             this.db.SaveChanges();
         }
 
-        public void EditMounthProperyIncome(int propertyId, int month, int year, decimal newPrice, bool isRegular)
+        public void EditIncome(int incomeId, decimal newPrice, DateTime date, string residentId, int addressId)
         {
-            if (isRegular)
+            var regularIncome = this.db.RegularIncomes
+                .FirstOrDefault(x => x.Id == incomeId && x.AddressId == addressId);
+
+            if(regularIncome != null)
             {
-                var currentIncome = this.db.RegularIncomes
-                    .FirstOrDefault(x => x.PropertyId == propertyId && x.Date.Month == month && x.Date.Year == year);
-                currentIncome.Price = newPrice;
-                this.db.SaveChanges();
+                regularIncome.Price = newPrice;
+                regularIncome.Date = date;
+                regularIncome.ResidentId = residentId;
             }
             else
             {
-                var currentIncome = this.db.NotRegularIncomes
-                    .FirstOrDefault(x => x.PropertyId == propertyId && x.Date.Month == month && x.Date.Year == year);
-                currentIncome.Price = newPrice;
-                this.db.SaveChanges();
+                var notRegularIncome = this.db.NotRegularIncomes
+                    .FirstOrDefault(x => x.Id == incomeId && x.AddressId == addressId);
+
+                if(notRegularIncome != null)
+                {
+                    notRegularIncome.Price = newPrice;
+                    notRegularIncome.Date = date;
+                    notRegularIncome.ResidentId = residentId;
+                }
             }
+
+            this.db.SaveChanges();
         }
 
         public void DeleteIncome(int incomeId , int addressId)
@@ -158,6 +167,48 @@
             incomes = incomes.OrderByDescending(x => x.Date).ToList();
 
             return this.pagingService.GetPageInfo(incomes, page);
+        }
+
+        public EditIncomeServiceModel GetById(int incomeId, int addressId) {
+            var regularIncome = db.RegularIncomes
+                .Select(x => new EditIncomeServiceModel
+                {
+                    Id = x.Id,
+                    PropertyId = x.PropertyId,
+                    PropertyName = x.Property.Name,
+                    Price = x.Price,
+                    Date = x.Date,
+                    ResidentId = x.ResidentId,
+                    AddressId = x.AddressId,
+                    IncomeName = "Общи части",
+                })
+                .FirstOrDefault(x => x.Id == incomeId && x.AddressId == addressId);
+
+            var notRegularIncome = db.NotRegularIncomes
+                .Select(x => new EditIncomeServiceModel
+                {
+                    Id = x.Id,
+                    PropertyId = x.PropertyId,
+                    PropertyName = x.Property.Name,
+                    Price = x.Price,
+                    Date = x.Date,
+                    ResidentId = x.ResidentId,
+                    AddressId = x.AddressId,
+                    IncomeName = "Ремонт",
+                })
+                .FirstOrDefault(x => x.Id == incomeId && x.AddressId == addressId);
+
+            if(regularIncome != null)
+            {
+                return regularIncome;
+            }
+
+            if (notRegularIncome != null)
+            {
+                return notRegularIncome;
+            }
+
+            return null;
         }
     }
 }

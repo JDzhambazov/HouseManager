@@ -32,14 +32,6 @@
 
         public ActionResult AddIncome(int id) 
         {
-            var residents = propertyService.GetAllResidents(id);
-            var residentSelectItems = new List<SelectListItem>();
-
-            foreach (var item in residents)
-            {
-                residentSelectItems.Add(new SelectListItem { Value = item.Id, Text = item.FullName });
-            }
-
             var currentAmount = dueAmountService.GetPropertyMountDueAmount(id);
             var result = new AddIncomeFormModel
             {
@@ -48,7 +40,7 @@
                 RegularIncome = currentAmount.RegularDueAmount.ToString(),
                 RegularIncomeDate = DateTime.Now,
                 NotRegularIncomeDate = DateTime.Now,
-                Residents = residentSelectItems,
+                Residents = propertyService.GetAllResidents(id),
             };
             return View(result);
         }

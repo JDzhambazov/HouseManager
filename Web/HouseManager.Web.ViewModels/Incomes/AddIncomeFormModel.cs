@@ -22,6 +22,6 @@
         [Required]
         public string Resident { get; set; }
 
-        public ICollection<SelectListItem> Residents { get; set; }
+        public SelectList Residents { get; set; }
     }
 }

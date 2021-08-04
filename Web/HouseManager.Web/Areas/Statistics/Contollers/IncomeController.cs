@@ -3,11 +3,13 @@
     using System;
     using System.Xml;
     using HouseManager.Services.Data;
+    using HouseManager.Services.Models;
     using HouseManager.Web.Controllers;
     using HouseManager.Web.Infrastructure;
     using HouseManager.Web.ViewModels.Incomes;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     [Area("Statistics")]
     [Authorize]
@@ -45,14 +47,54 @@
             return View(viewIncomes);
         }
 
-        public IActionResult Edit(int incomeId)
+        public IActionResult Edit(int id)
         {
-            return View();
+            var income = incomeService.GetById(id, this.GetAddressId());
+
+
+            if (income == null)
+            {
+                return BadRequest();
+            }
+
+            var viewIncome = new EditIncomeViewModel
+            {
+                Id = income.Id,
+                PropertyName = income.PropertyName,
+                Price = income.Price.ToString(),
+                Date = income.Date,
+                IncomeName = income.IncomeName,
+                ResidentId = income.ResidentId,
+                Residents = propertyService.GetAllResidents((int)income.PropertyId),
+            };
+
+            return View(viewIncome);
         }
 
-        public IActionResult Delete(int Id)
+        [HttpPost]
+        public IActionResult Edit(EditIncomeViewModel income)
         {
-            this.incomeService.DeleteIncome(Id, this.GetAddressId());
+            var price = this.DecimalValue(income.Price);
+
+            if(price <= 0)
+            {
+                this.ModelState.AddModelError(string.Empty, "Платената сума трябва да е положително число");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction();
+            }
+
+            this.incomeService.EditIncome(income.Id,
+                price, income.Date, income.ResidentId, this.GetAddressId());
+
+            return RedirectToAction(nameof(GetAll));
+        }
+
+        public IActionResult Delete(int id)
+        {
+            this.incomeService.DeleteIncome(id, this.GetAddressId());
             return RedirectToAction(nameof(GetAll));
         }
     }

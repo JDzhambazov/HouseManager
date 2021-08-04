@@ -14,7 +14,7 @@
 
         void AddResidentToProperty(int propertyId, string userName, string firstName, string lastName, string email, string password, int addressId);
 
-        ICollection<ApplicationUser> GetAllResidents(int propertyId);
+        SelectList GetAllResidents(int propertyId);
 
         (decimal RegularDueAmount, decimal NotRegularDueAmount) CalculateDueAmount(int propertyId);
 

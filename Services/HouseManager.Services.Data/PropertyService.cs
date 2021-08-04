@@ -106,17 +106,25 @@
                     Text = x.Name,
                 }).ToList(), "Value", "Text", null);
 
-        public ICollection<ApplicationUser> GetAllResidents(int propertyId)
-        {
-            var result = this.db.Properties
-                      .Where(x => x.Id == propertyId)
-                      .Select(x => new
-                      {
-                          user = x.Residents,
-                      })
-                      .FirstOrDefault();
-            return result.user.ToList();
-        }
+        public SelectList GetAllResidents(int propertyId)
+             => new SelectList(this.db.Properties
+                .Where(x => x.Id == propertyId)
+                .SelectMany(x => x.Residents.Select(r =>
+                new SelectListItem
+                {
+                    Value = r.Id.ToString(),
+                    Text = r.FullName,
+                })).ToList(), "Value", "Text", null);
+        //{
+        //    var result = this.db.Properties
+        //              .Where(x => x.Id == propertyId)
+        //              .Select(x => new
+        //              {
+        //                  user = x.Residents,
+        //              })
+        //              .FirstOrDefault();
+        //    return result.user.ToList();
+        //}
 
         public (decimal RegularDueAmount, decimal NotRegularDueAmount) CalculateDueAmount(int propertyId)
         {
