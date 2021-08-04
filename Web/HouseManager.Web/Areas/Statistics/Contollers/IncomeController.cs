@@ -35,15 +35,24 @@
             ViewBag.isUserMakeChanges = this.userService
                 .IsUserMakeChanges(this.User.Id(), this.GetAddressId());
             var incomes = this.incomeService.GetAll(this.GetAddressId(), currentPage,propertyId,startDate,endDate);
-
             var viewIncomes = new AllIncomesViewModel()
             {
                 IncomeList = incomes.ItemList,
                 Paging = incomes.Paging,
-                Properties = propertyService.GetPropertiesInAddress(this.GetAddressId()),
+                Properties = this.AddNullValueInSelectListItem(propertyService.GetPropertiesInAddress(this.GetAddressId())),
             };
 
             return View(viewIncomes);
+        }
+
+        public IActionResult Edit(int incomeId)
+        {
+            return View();
+        }
+
+        public IActionResult Delete(int incomeId)
+        {
+            return RedirectToAction(nameof(GetAll));
         }
     }
 }

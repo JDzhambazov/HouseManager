@@ -133,13 +133,13 @@
             return adrress;
         }
 
-        public ICollection<SelectListItem> GetAddressMounthFees(int addressId)
-            => this.monthFeeRepository.All().Where(x => x.AddressId == addressId)
+        public SelectList GetAddressMounthFees(int addressId)
+            => new SelectList(this.monthFeeRepository.All().Where(x => x.AddressId == addressId)
             .Select(x => new SelectListItem
             {
-                Value = x.FeeType.Name ,
+                Value = x.FeeType.Name,
                 Text = x.FeeType.Name,
-            }).ToList();
+            }).ToList(), "Value", "Text", null);
 
         public ICollection<Property> GetAllProperyies(int addressId) 
             => this.propertyRepository.All().Where(x => x.AddressId == addressId).ToList();

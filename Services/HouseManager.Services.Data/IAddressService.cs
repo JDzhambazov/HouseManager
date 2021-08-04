@@ -16,7 +16,7 @@
 
         Task SetAddressPaymaster(int addressId, string userId);
 
-        ICollection<SelectListItem> GetAddressMounthFees (int addressId);
+        SelectList GetAddressMounthFees (int addressId);
 
         ICollection<Property> GetAllProperyies(int addressId);
 

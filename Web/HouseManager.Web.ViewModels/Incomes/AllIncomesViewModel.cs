@@ -12,7 +12,7 @@
 
         public string PropertyId { get; set; }
 
-        public IEnumerable<SelectListItem> Properties { get; set; }
+        public SelectList Properties { get; set; }
 
         public DateTime? StartDate { get; set; } = null;
 

@@ -62,14 +62,12 @@
             this.db.SaveChanges();
         }
 
-        public ICollection<SelectListItem> GetAllFees()
+        public SelectList GetAllFees()
+        => new SelectList(this.db.FeeTypes.Select(f => new SelectListItem
         {
-            return this.db.FeeTypes.Select(f => new SelectListItem
-            {
-                Value = f.Name,
-                Text = f.Name,
-            }).ToList();
-        }
+            Value = f.Name,
+            Text = f.Name,
+        }).ToList(),"Value", "Text", null);
 
         public ICollection<MonthFee> GetAllFeesInAddress(int addressId)
         {

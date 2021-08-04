@@ -13,7 +13,7 @@
 
         void EditAddresFee(int addressId, string feeName, decimal cost);
 
-        ICollection<SelectListItem> GetAllFees();
+        SelectList GetAllFees();
 
         ICollection<MonthFee> GetAllFeesInAddress(int addressId);
 

@@ -22,11 +22,11 @@
 
         public PagingServiceModel<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId, int page);
 
-        public IEnumerable<SelectListItem> GetPropertiesInAddress(int addressId);
+        public SelectList GetPropertiesInAddress(int addressId);
 
         public Task<Property> GetPropetyById(int id);
 
-        public List<SelectListItem> GetPropertyTypes();
+        public SelectList GetPropertyTypes();
 
         public Task<bool> Edit(int id, int residentsCount);
     }

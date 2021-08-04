@@ -97,14 +97,14 @@
             this.db.SaveChanges();
         }
 
-        public IEnumerable<SelectListItem> GetPropertiesInAddress(int addressId)
-        => this.db.Properties
+        public SelectList GetPropertiesInAddress(int addressId)
+        => new SelectList(this.db.Properties
                 .Where(x => x.AddressId == addressId)
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
                     Text = x.Name,
-                }).ToList();
+                }).ToList(), "Value", "Text", null);
 
         public ICollection<ApplicationUser> GetAllResidents(int propertyId)
         {
@@ -201,11 +201,11 @@
             return propery;
         }
 
-        public List<SelectListItem> GetPropertyTypes()
-            => this.db.PropertiesTypes.Select(x => new SelectListItem
+        public SelectList GetPropertyTypes()
+            => new SelectList(this.db.PropertiesTypes.Select(x => new SelectListItem
             {
                 Value = x.Name,
                 Text = x.Name,
-            }).ToList();
+            }).ToList(), "Value", "Text", null);
     }
 }

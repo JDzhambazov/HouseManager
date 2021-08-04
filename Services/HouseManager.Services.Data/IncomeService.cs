@@ -81,7 +81,7 @@
             var notRegularIncomesQuery = this.db.NotRegularIncomes
                 .Where(x => x.AddressId == addressId);
 
-            if(propertyId != null)
+            if(propertyId != null && propertyId != "null")
             {
                 var id = int.Parse(propertyId);
                 regularIncomesQuery = regularIncomesQuery
