@@ -11,6 +11,7 @@
     using HouseManager.Web.Infrastructure;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using HouseManager.Services.Models;
 
     [Authorize]
     public class PropertyController : BaseController
@@ -117,14 +118,29 @@
             return View(property);
         }
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            return this.View();
+            var propertyInfo = new PropertyDetailsServiceModel
+            {
+                Id = id,
+                Name = $"Ap.{id}",
+                PropertyTypeId = 6,
+                PropertyTypeName = "Апартамент",
+                MonthFees = new List<string>() { "Почистване","Асансьор","Ремонт"},
+                ResidentsCount = 3,
+                Residents = new List<UserIdAndFullname>() 
+                { 
+                    new UserIdAndFullname {  Id = "asdasfs", FullName = "Ivan Ivanov"} ,
+                    new UserIdAndFullname {  Id = "asdasfs", FullName = "Ivan Ivanov2"} ,
+                },
+            };
+
+            return this.View(propertyInfo);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Details()
+        public IActionResult Details(PropertyDetailsServiceModel property)
         {
             return this.View();
         }

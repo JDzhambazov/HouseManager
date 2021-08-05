@@ -1,7 +1,7 @@
 ﻿@model CreatePropertyServiceModel
 
 @{
-    this.ViewData["Title"] = "Създаване на Имот";
+    this.ViewData["Title"] = "Добавяне на имот към адрес";
 }
 
 <div class="container-scroller">
@@ -14,7 +14,7 @@
     <div class="container-scroller mt-3">
         <div class="card col-lg-6 mx-auto form-style">
             <div class="card-body px-5 py-5">
-                <h3 class="card-title text-left mb-3">Добвяне на нов Имот</h3>
+                <h3 class="card-title text-left mb-3">@ViewData["Title"]</h3>
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <form method="post">
                     <hr />

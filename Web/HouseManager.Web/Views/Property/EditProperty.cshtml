@@ -4,20 +4,49 @@
     this.ViewData["Title"] = "Редактиране на имот";
 }
 
-<form method="post" class="col-lg-8 offset-2">
-    <input asp-for="Id" class="form-control d-none" />
+<div class="container-scroller">
+    <div class="container-scroller mt-3">
+        <div class="card col-lg-6 mx-auto form-style">
+            <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">@this.ViewData["Title"]</h3>
+                @*<form method="post" col-lg-8 offset-2>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="PropertyName"></label>
+                        <input asp-for="PropertyName" class="form-control" />
+                        <span asp-validation-for="PropertyName" class="text-danger"></span>
+                    </div>
+                    <input asp-for="PropertyId" value="@Model.PropertyId" type="hidden" />
+                    <div class="form-group">
+                        <label asp-for="Price"></label>
+                        <input asp-for="Price" class="form-control p_input">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Date"></label>
+                        <input asp-for="Date" type="date" class="form-control p_input">
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IncomeName"></label>
+                        <input asp-for="IncomeName" class="form-control p_input">
+                        <span asp-validation-for="IncomeName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ResidentId"></label>
+                        <select asp-for="ResidentId" asp-items="@Model.Residents" class="form-control"></select>
+                        <span asp-validation-for="ResidentId" class="text-danger"></span>
+                    </div>
+                    <div class="text-center mt-4">
+                        <input type="submit" class="btn btn-primary btn-block enter-btn" value="Промени" />
+                    </div>
+                </form>*@
+            </div>
+        </div>
+    </div>
+</div>
 
-    <label asp-for="Name"></label>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name"></span>
-
-    <label asp-for="PropertyType.Name"></label>
-    <input asp-for="PropertyType.Name" class="form-control" />
-    <span asp-validation-for="PropertyType.Name"></span>
-
-    <label asp-for="ResidentsCount"></label>
-    <input asp-for="ResidentsCount" class="form-control" />
-    <span asp-validation-for="ResidentsCount"></span>
-
-    <input type="submit" class="btn btn-outline-primary mt-5" />
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
