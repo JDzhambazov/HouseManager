@@ -1,10 +1,10 @@
 ﻿@model PagingServiceModel<AmountListServiceModel>
 @{
-    ViewData["Title"] = "Текущи задължения";
+    ViewData["Title"] = "Дължими суми";
 }
 
 <div class="text-center">
-    <h3 class="mt-3 mb-3 text-white">Задължения за месец: @DateTime.Now.ToString("MMMM yyyy").ToUpper() г.</h3>
+    <h3 class="mt-3 mb-3 text-white">@ViewData["Title"] до месец: @DateTime.Now.ToString("MMMM yyyy").ToUpper() г.</h3>
 </div>
 
 <div class="col-lg-12 grid-margin stretch-card">
@@ -35,8 +35,9 @@
                             <td class="text-white h5">@item.NotRegularDueAmount лв.</td>
                             @if (ViewBag.isUserMakeChanges)
                             {
-                                <td class="text-primary h5">
-                                    <a asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a>
+                                <td class="text-center d-fle justify-content-sm-between">
+                                    <a asp-area="" asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a>
+                                    <a asp-area="" asp-controller="" asp-action="" asp-route-id="@item.Id" class="btn btn-outline-warning mr-2">Редактирай</a>
                                 </td>
                             }
                         </tr>
