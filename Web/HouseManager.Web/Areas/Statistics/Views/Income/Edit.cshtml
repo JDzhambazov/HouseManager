@@ -17,6 +17,7 @@
                         <input asp-for="PropertyName" class="form-control" />
                         <span asp-validation-for="PropertyName" class="text-danger"></span>
                     </div>
+                    <input asp-for="PropertyId" value="@Model.PropertyId" type="hidden" />
                     <div class="form-group">
                         <label asp-for="Price"></label>
                         <input asp-for="Price" class="form-control p_input">
@@ -37,7 +38,7 @@
                         <select asp-for="ResidentId" asp-items="@Model.Residents" class="form-control"></select>
                         <span asp-validation-for="ResidentId" class="text-danger"></span>
                     </div>
-                    <div class="text-center">
+                    <div class="text-center mt-4">
                         <input type="submit" class="btn btn-primary btn-block enter-btn" value="Промени" />
                     </div>
                 </form>

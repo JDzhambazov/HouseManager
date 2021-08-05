@@ -60,6 +60,7 @@
             var viewIncome = new EditIncomeViewModel
             {
                 Id = income.Id,
+                PropertyId = income.PropertyId,
                 PropertyName = income.PropertyName,
                 Price = income.Price.ToString(),
                 Date = income.Date,
@@ -78,12 +79,18 @@
 
             if(price <= 0)
             {
-                this.ModelState.AddModelError(string.Empty, "Платената сума трябва да е положително число");
+                ModelState.AddModelError(string.Empty, "Платената сума трябва да е положително число");
+            }
+
+            if(income.Date > DateTime.Now)
+            {
+                ModelState.AddModelError(string.Empty, "Датата на плащане трябва да е преди текущата");
             }
 
             if (!ModelState.IsValid)
             {
-                return RedirectToAction();
+                income.Residents = propertyService.GetAllResidents((int)income.PropertyId);
+                return View(income);
             }
 
             this.incomeService.EditIncome(income.Id,
