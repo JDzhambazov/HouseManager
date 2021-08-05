@@ -28,6 +28,6 @@
 
         public SelectList GetPropertyTypes();
 
-        public Task<bool> Edit(int id, int residentsCount);
+        public Task<bool> Edit(EditPropertySevriceModel property);
     }
 }

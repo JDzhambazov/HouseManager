@@ -16,8 +16,8 @@
                         <th>Имот</th>
                         <th>Собственик</th>
                         <th>Бр.Обитатели</th>
-                        <th>Задължения Общи части</th>
-                        <th>Задължения Ремонт</th>
+                        <th>Общи части</th>
+                        <th>Ремонти</th>
                         @if (ViewBag.isUserMakeChanges)
                         {
                             <th>Плащане</th>
@@ -37,7 +37,7 @@
                             {
                                 <td class="text-center d-fle justify-content-sm-between">
                                     <a asp-area="" asp-controller="Income" asp-action="AddIncome" asp-route-id="@item.Id" class="btn btn-outline-primary">Плащане</a>
-                                    <a asp-area="" asp-controller="" asp-action="" asp-route-id="@item.Id" class="btn btn-outline-warning mr-2">Редактирай</a>
+                                    <a asp-area="" asp-controller="Property" asp-action="EditProperty" asp-route-id="@item.Id" class="btn btn-outline-warning mr-2">Промени</a>
                                 </td>
                             }
                         </tr>

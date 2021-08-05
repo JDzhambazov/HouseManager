@@ -8,6 +8,7 @@
     using HouseManager.Services.Data.Models;
     using HouseManager.Services.Models;
     using HouseManager.Common;
+    using Microsoft.EntityFrameworkCore;
 
     public class DueAmountService : IDueAmountService
     {
@@ -35,7 +36,7 @@
         public void AddMounthDueAmountInProperies(int propertyId, int month, int year)
         {
             var property = this.db.Properties.FirstOrDefault(x => x.Id == propertyId);
-            this.AddDueAmount(month, year, property);
+            this.AddDueAmount(month, year, property.Id);
         }
 
         public void AddMounthDueAmountInAllProperies(int addressId)
@@ -46,8 +47,51 @@
 
             foreach (var property in properties)
             {
-                this.AddDueAmount(month, year, property);
+                this.AddDueAmount(month, year, property.Id);
             }
+        }
+
+
+        public void EditMountDueAmount(int propertyId, DateTime startDate)
+        {
+            var regularAmounts = this.db.RegularDueAmounts
+                .Where(x => x.PropertyId == propertyId)
+                .Where(x => x.Month >= startDate.Month && x.Year == startDate.Year)
+                .ToList();
+
+            var notRegularAmounts = this.db.NotRegularDueAmounts
+                .Where(x => x.PropertyId == propertyId)
+                .Where(x => x.Month >= startDate.Month && x.Year == startDate.Year)
+                .ToList();
+
+            if ( startDate.Year < DateTime.Now.Year)
+            {
+                regularAmounts.AddRange(this.db.RegularDueAmounts
+                    .Where(x => x.PropertyId == propertyId)
+                    .Where(x => x.Year > startDate.Year)
+                    .ToList());
+
+                notRegularAmounts.AddRange(this.db.NotRegularDueAmounts
+                    .Where(x => x.PropertyId == propertyId)
+                    .Where(x => x.Year > startDate.Year)
+                    .ToList());
+            }
+
+            foreach (var amount in regularAmounts)
+            {
+                var currentAmount = propertyService.CalculateDueAmount(amount.PropertyId);
+                amount.Cost = currentAmount.RegularDueAmount;
+                db.Entry(amount).State = EntityState.Modified;
+            }
+
+            foreach (var amount in notRegularAmounts)
+            {
+                var currentAmount = propertyService.CalculateDueAmount(amount.PropertyId);
+                amount.Cost = currentAmount.NotRegularDueAmount;
+                db.Entry(amount).State = EntityState.Modified;
+            }
+
+            db.SaveChanges();
         }
 
         public void EditMountDueAmount(int month, int year, int propertyId, decimal cost, bool isRegular)
@@ -157,15 +201,15 @@
             return this.pagingService.GetPageInfo(amounts, page); ;
         }
 
-        private void AddDueAmount(int month, int year, Property property)
+        private void AddDueAmount(int month, int year, int propertyId)
         {
-            var dueAmount = this.propertyService.CalculateDueAmount(property.Id);
+            var dueAmount = this.propertyService.CalculateDueAmount(propertyId);
             this.db.RegularDueAmounts.Add(new RegularDueAmount
             {
                 Year = year,
                 Month = month,
                 Cost = dueAmount.RegularDueAmount,
-                PropertyId = property.Id,
+                PropertyId = propertyId,
             });
 
             this.db.NotRegularDueAmounts.Add(new NotRegularDueAmount
@@ -173,7 +217,7 @@
                 Year = year,
                 Month = month,
                 Cost = dueAmount.NotRegularDueAmount,
-                PropertyId = property.Id,
+                PropertyId = propertyId,
             });
 
             this.db.SaveChanges();

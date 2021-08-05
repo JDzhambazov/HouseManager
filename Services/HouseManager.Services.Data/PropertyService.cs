@@ -115,16 +115,6 @@
                     Value = r.Id.ToString(),
                     Text = r.FullName,
                 })).ToList(), "Value", "Text", null);
-        //{
-        //    var result = this.db.Properties
-        //              .Where(x => x.Id == propertyId)
-        //              .Select(x => new
-        //              {
-        //                  user = x.Residents,
-        //              })
-        //              .FirstOrDefault();
-        //    return result.user.ToList();
-        //}
 
         public (decimal RegularDueAmount, decimal NotRegularDueAmount) CalculateDueAmount(int propertyId)
         {
@@ -163,17 +153,16 @@
             this.db.SaveChanges();
         }
 
-        public async Task<bool> Edit(int propertId, int residentsCount)
+        public async Task<bool> Edit(EditPropertySevriceModel property)
         {
-            if (propertId == 0)
+            if (property.Id == 0)
             {
                 return false;
             }
 
+            var currentProperty = await db.Properties.FirstOrDefaultAsync(x => x.Id == property.Id);
 
-            var currentProperty = await db.Properties.FirstOrDefaultAsync(x => x.Id == propertId);
-
-            currentProperty.ResidentsCount = residentsCount;
+            currentProperty.ResidentsCount = property.ResidentsCount;
 
             db.Entry(currentProperty).State = EntityState.Modified;
             await db.SaveChangesAsync();

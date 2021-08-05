@@ -16,18 +16,21 @@
     [Authorize]
     public class PropertyController : BaseController
     {
-        private readonly IPropertyService propertyService;
         private readonly IAddressService addressService;
+        private readonly IDueAmountService dueAmountService;
+        private readonly IPropertyService propertyService;
         private readonly IUserService userService;
 
         public PropertyController(
-            IPropertyService propertyService,
             IAddressService addressService,
+            IDueAmountService dueAmountService,
+            IPropertyService propertyService,
             IUserService userService
             )
         {
-            this.propertyService = propertyService;
             this.addressService = addressService;
+            this.dueAmountService = dueAmountService;
+            this.propertyService = propertyService;
             this.userService = userService;
         }
 
@@ -84,14 +87,13 @@
                 return NotFound();
             }
 
-            var currentProprty = new EditPropertyViewModel
+            var currentProprty = new EditPropertySevriceModel
             {
                 Id = property.Id,
                 Name = property.Name,
-                PropertyType = property.PropertyType,
-                PropertyTypeId = property.PropertyTypeId,
+                PropertyTypeName = property.PropertyType.Name,
+                PropertyTypes = propertyService.GetPropertyTypes(),
                 ResidentsCount = property.ResidentsCount,
-                Residents = property.Residents,
             };
 
             return View(currentProprty);
@@ -99,7 +101,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProperty(EditPropertyInputModel property)
+        public async Task<IActionResult> EditProperty(EditPropertySevriceModel property)
         {
             if (await propertyService.GetPropetyById(property.Id) == null)
             {
@@ -108,12 +110,14 @@
 
             if (!ModelState.IsValid)
             {
-                return NotFound();
+                property.PropertyTypes = propertyService.GetPropertyTypes();
+                return View(property);
             }
 
-            if (await propertyService.Edit(property.Id, property.ResidentsCount))
+            if (await propertyService.Edit(property))
             {
-                return RedirectToAction(nameof(GetAllProperies));
+                dueAmountService.EditMountDueAmount(property.Id, property.StartDate);
+                return RedirectToAction(nameof(DueAmountController.MonthAmount), "DueAmount");
             }
             return View(property);
         }

@@ -1,5 +1,6 @@
 ﻿namespace HouseManager.Services.Data
 {
+    using System;
     using System.Collections.Generic;
 
     using HouseManager.Data.Models;
@@ -13,6 +14,8 @@
         void AddMounthDueAmountInAllProperies(int addressId);
 
         void AddStartDueAmount(int propertyId, int month, int year, decimal cost, bool isRegular);
+
+        void EditMountDueAmount(int propertyId, DateTime startDate);
 
         void EditMountDueAmount(int month, int year, int propertyId, decimal cost, bool isRegular);
 
