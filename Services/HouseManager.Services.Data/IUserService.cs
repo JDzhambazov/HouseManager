@@ -16,6 +16,8 @@
 
         IEnumerable<AddressViewModel> GetUserAddresses(string user);
 
+        ApplicationUser GetUserById(string userId);
+
         bool IsUserMakeChanges(string userId , int addressId);
     }
 }

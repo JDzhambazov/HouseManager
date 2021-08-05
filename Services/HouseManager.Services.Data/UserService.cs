@@ -101,6 +101,9 @@
         }
 
 
+        public ApplicationUser GetUserById(string userId)
+            => this.userRepository.All().FirstOrDefault(x => x.Id == userId);
+
         public bool IsUserMakeChanges(string userId, int addressId)
         {
             if(addressId <= 0)

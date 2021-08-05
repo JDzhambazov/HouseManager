@@ -16,18 +16,18 @@
         private readonly IPropertyService propertyService;
         private readonly IDueAmountService dueAmountService;
         private readonly IIncomeService incomeService;
-        private readonly ApplicationDbContext dbContext;
+        private readonly IUserService userService;
 
         public IncomeController(
             IPropertyService propertyService,
             IDueAmountService dueAmountService,
             IIncomeService incomeService,
-            ApplicationDbContext dbContext)
+            IUserService userService)
         {
             this.propertyService = propertyService;
             this.dueAmountService = dueAmountService;
             this.incomeService = incomeService;
-            this.dbContext = dbContext;
+            this.userService = userService;
         }
 
         public ActionResult AddIncome(int id) 
@@ -51,7 +51,7 @@
         {
             if (ModelState.IsValid)
             {
-                var resident = dbContext.Users.FirstOrDefault(x => x.Id == income.Resident);
+                var resident = userService.GetUserById(income.Resident);
 
                 if (income.RegularIncome != null)
                 {
@@ -76,10 +76,5 @@
             }
             return View(income);
         }
-        //public IActionResult GetAll([FromQuery] int currentPage)
-        //{
-        //    var incomes = this.incomeService.GetAll(this.GetAddressId(), currentPage);
-        //    return View(incomes);
-        //}
     }
 }
