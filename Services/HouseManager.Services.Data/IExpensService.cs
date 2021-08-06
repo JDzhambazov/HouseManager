@@ -12,6 +12,7 @@
 
         void EditExpense(int expenseId, int expenseTypeId, decimal newPrice, DateTime date, int addressId);
 
+        void DeleteExpense(int expenseId, int addressId);
 
         PagingServiceModel<AllExpenseServiseModel> GetAll(int addressId, int page, DateTime startDate, DateTime endDate);
 

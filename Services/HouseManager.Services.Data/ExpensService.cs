@@ -53,6 +53,19 @@
             this.db.SaveChanges();
         }
 
+        public void DeleteExpense(int expenseId, int addressId)
+        {
+            var expense = db.Expens
+                .FirstOrDefault(x => x.Id == expenseId && x.AddressId == addressId);
+
+            if (expense != null)
+            {
+                this.db.Expens.Remove(expense);
+            }
+
+            this.db.SaveChanges();
+        }
+
         public PagingServiceModel<AllExpenseServiseModel> GetAll(int addressId, int page, DateTime startDate, DateTime endDate)
         {
             var expense = new List<AllExpenseServiseModel>();

@@ -95,5 +95,11 @@
 
             return RedirectToAction(nameof(GetAll));
         }
+
+        public IActionResult Delete(int id)
+        {
+            this.expensService.DeleteExpense(id, this.GetAddressId());
+            return RedirectToAction(nameof(GetAll));
+        }
     }
 }

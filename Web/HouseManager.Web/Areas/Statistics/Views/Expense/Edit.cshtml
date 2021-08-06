@@ -29,8 +29,9 @@
                         <span asp-validation-for="Date" class="text-danger"></span>
                     </div>
 
-                    <div class="text-center mt-4">
-                        <input type="submit" class="btn btn-primary btn-block enter-btn" value="Промени" />
+                    <div class="text-center mt-4 d-flex justify-content-around">
+                        <input type="submit" class="btn btn-danger enter-btn" value="Промени" />
+                        <a asp-area="Statistics" asp-controller="Expense" asp-action="GetAll" class="btn btn-primary enter-btn">Отказ</a>
                     </div>
                 </form>
             </div>
