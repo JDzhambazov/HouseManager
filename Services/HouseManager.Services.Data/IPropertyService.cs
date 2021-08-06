@@ -14,11 +14,13 @@
 
         void AddResidentToProperty(int propertyId, string userName, string firstName, string lastName, string email, string password, int addressId);
 
-        SelectList GetAllResidents(int propertyId);
-
         (decimal RegularDueAmount, decimal NotRegularDueAmount) CalculateDueAmount(int propertyId);
 
-        void ChangeResidentsCount(int propertyId, int newResidentsCount);
+        PropertyDetailsServiceModel Details(int propertyId);
+
+        public Task<bool> Edit(EditPropertySevriceModel property);
+
+        SelectList GetAllResidents(int propertyId);
 
         public PagingServiceModel<AllPropertyViewModel> GetAllPropertiesInAddress(int addressId, int page);
 
@@ -27,7 +29,5 @@
         public Task<Property> GetPropetyById(int id);
 
         public SelectList GetPropertyTypes();
-
-        public Task<bool> Edit(EditPropertySevriceModel property);
     }
 }

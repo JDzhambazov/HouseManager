@@ -42,18 +42,22 @@
                     @foreach (var user in Model.Residents)
                     {
                         <tr>
-                            <td></td>
-                            <td>@user.FullName</td>
+                            <td class="border-warning border-top">@user.FullName</td>
+                            <td class="border-warning">@user.Id</td>
+                            <td class="border-warning"></td>
+                        </tr>
+                    }
+                    @if (ViewBag.IsUserMakeChanges)
+                    {
+
+                        <tr>
+                            <td>Добави обитател</td>
+                            <td class="text-center">
+                                <a asp-area="" asp-controller="User" asp-action="AddToProperty" asp-route-id="@Model.Id" class="btn btn-outline-primary">Добавяне</a>
+                            </td>
                             <td></td>
                         </tr>
                     }
-                    <tr>
-                        <td>Добави обитател</td>
-                        <td class="text-center">
-                            <a asp-area="" asp-controller="User" asp-action="AddToProperty" asp-route-id="@Model.Id" class="btn btn-outline-primary">Добавяне</a>
-                        </td>
-                        <td></td>
-                    </tr>
                     @foreach (var fee in Model.MonthFees)
                     {
                         <tr>
@@ -64,7 +68,11 @@
                     }
                 </tbody>
             </table>
-            <a class="btn btn-primary col-md-12 text-center" asp-area="" asp-controller="Property" asp-action="EditProperty" asp-route-id="@Model.Id">Корегирай</a>
+            @if (ViewBag.IsUserMakeChanges)
+            {
+                <a class="btn btn-primary col-md-12 text-center" asp-area="" asp-controller="Property" asp-action="EditProperty" asp-route-id="@Model.Id">Корегирай</a>
+            }
+            <a class="btn btn-primary col-md-12 text-center mt-3" asp-area="" asp-controller="Property" asp-action="GetAllProperies" asp-route-id="@Model.Id">Назад</a>
         </div>
     </div>
 </div>

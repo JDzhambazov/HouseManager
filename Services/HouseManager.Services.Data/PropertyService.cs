@@ -146,11 +146,26 @@
             return (regularDueAmount, notRegularDueAmount);
         }
 
-        public void ChangeResidentsCount(int propertyId, int newResidentsCount)
+
+        public PropertyDetailsServiceModel Details(int propertyId)
         {
-            var currentProperty = this.db.Properties.FirstOrDefault(x => x.Id == propertyId);
-            currentProperty.ResidentsCount = newResidentsCount;
-            this.db.SaveChanges();
+            return db.Properties
+                .Where(x => x.Id == propertyId)
+                .Select(x => new PropertyDetailsServiceModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    PropertyTypeId = x.PropertyTypeId,
+                    PropertyTypeName = x.PropertyType.Name,
+                    MonthFees = x.MonthFees.Select(n => n.FeeType.Name),
+                    ResidentsCount = x.ResidentsCount,
+                    Residents = x.Residents.Select(r => new UserIdAndFullname
+                    {
+                        Id = r.Email,
+                        FullName = r.FullName,
+                    }),
+                })
+                .FirstOrDefault();
         }
 
         public async Task<bool> Edit(EditPropertySevriceModel property)
@@ -162,6 +177,8 @@
 
             var currentProperty = await db.Properties.FirstOrDefaultAsync(x => x.Id == property.Id);
 
+            currentProperty.Name = property.Name;
+            currentProperty.PropertyType.Name = property.PropertyTypeName;
             currentProperty.ResidentsCount = property.ResidentsCount;
 
             db.Entry(currentProperty).State = EntityState.Modified;
