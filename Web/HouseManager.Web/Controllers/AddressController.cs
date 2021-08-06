@@ -1,12 +1,15 @@
 ﻿namespace HouseManager.Web.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
     using HouseManager.Web.Infrastructure;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -15,18 +18,24 @@
     {
         private readonly IAddressService addressService;
         private readonly IFeeService feeService;
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IUserService userService;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly string manager = "Домоуправител";
         private readonly string payMaster = "Касиер/Счетоводител";
 
         public AddressController(
             IAddressService addressService,
             IFeeService feeService,
-            IUserService userService)
+            RoleManager<ApplicationRole> roleManager,
+            IUserService userService,
+            UserManager<ApplicationUser> userManager)
         {
             this.addressService = addressService;
             this.feeService = feeService;
+            this.roleManager = roleManager;
             this.userService = userService;
+            this.userManager = userManager;
         }
 
         public IActionResult Create()
@@ -37,6 +46,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AdressServiseInputModel address)
         {
             if (address.City.Length < 3)
@@ -75,6 +85,21 @@
                 address.NumberOfProperties,
                 this.User.Id());
 
+
+            var roleName = "Creator";
+
+            var role = await roleManager.FindByNameAsync(roleName);
+            if (role == null)
+            {
+                var result = await roleManager.CreateAsync(new ApplicationRole(roleName));
+                if (!result.Succeeded)
+                {
+                    throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+                }
+            }
+
+            await userManager.AddToRoleAsync(userService.GetUserById(this.User.Id()), roleName);
+            
             this.SetAddressId(currentAddressId);
 
             return RedirectToAction(nameof(HomeController.Index),"Home");

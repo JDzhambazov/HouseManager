@@ -26,9 +26,9 @@
             var seeders = new List<ISeeder>
                           {
                               new RolesSeeder(),
-                              new UserSeeder(),
-                              new AddressSeeder(),
-                              new PropertiesTypesSeeder(),
+                              // new UserSeeder(),
+                              // new AddressSeeder(),
+                              // new PropertiesTypesSeeder(),
                               // new PropertiesSeeder(),
                               // new FeesSeeder(),
                           };
