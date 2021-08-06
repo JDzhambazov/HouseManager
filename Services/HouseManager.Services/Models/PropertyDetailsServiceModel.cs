@@ -21,7 +21,7 @@
         [MaxLength(2)]
         public int ResidentsCount { get; set; }
 
-        public IEnumerable<UserIdAndFullname> Residents { get; set; }
+        public IEnumerable<UserEmailAndFullname> Residents { get; set; }
 
         public IEnumerable<string> MonthFees { get; set; }
     }

@@ -159,9 +159,9 @@
                     PropertyTypeName = x.PropertyType.Name,
                     MonthFees = x.MonthFees.Select(n => n.FeeType.Name),
                     ResidentsCount = x.ResidentsCount,
-                    Residents = x.Residents.Select(r => new UserIdAndFullname
+                    Residents = x.Residents.Select(r => new UserEmailAndFullname
                     {
-                        Id = r.Email,
+                        Email = r.Email,
                         FullName = r.FullName,
                     }),
                 })
