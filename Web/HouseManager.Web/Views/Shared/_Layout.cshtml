@@ -47,9 +47,11 @@
                                 <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Данни за Адрес</a>
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="Property" asp-action="GetAllProperies">Данни за Имоти</a>
                                 @if (this.User.IsInRole("Manager")
-                                 && isMakeChanges
-                                 || this.User.IsInRole("PayMaster")
-                                 && isMakeChanges)
+                                && isMakeChanges
+                                || this.User.IsInRole("PayMaster")
+                                && isMakeChanges
+                                || this.User.IsInRole("Creator")
+                                && isMakeChanges)
                                 {
                                     <div class="dropdown-divider border-info"></div>
                                     <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="AddManager">Домоуправител</a>

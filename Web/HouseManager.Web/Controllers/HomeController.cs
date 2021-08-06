@@ -7,6 +7,7 @@
     using HouseManager.Services.Data;
     using HouseManager.Web.ViewModels;
     using HouseManager.Web.ViewModels.Addresses;
+    using HouseManager.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -29,9 +30,12 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                var addresses = userService.GetUserAddresses(User.Identity.Name);
+                var indexInfo = new HomeViewModel();
 
-                return this.View(addresses);
+                indexInfo.UsersAddresses = userService.GetUserAddresses(User.Identity.Name);
+                indexInfo.CurrntAddress = userService.CurrentAddressInfo(this.GetAddressId());
+
+                return this.View(indexInfo);
             }
 
             return this.View();

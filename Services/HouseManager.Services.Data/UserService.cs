@@ -71,6 +71,18 @@
                 .Select(n => new SelectListItem { Value =n.Id ,Text = n.FullName}))
                 .ToList();
 
+        public AddressViewModel CurrentAddressInfo(int addressId)
+        {
+            var currentAddres = addressRepository.All()
+                .Where(x => x.Id == addressId)
+                .To<AddressViewModel>()
+                .FirstOrDefault();
+            
+            ReplaseNames(currentAddres);
+
+            return currentAddres ;
+        }
+
         public IEnumerable<AddressViewModel> GetUserAddresses(string userName)
         {
             var user = this.userRepository.All().FirstOrDefault(x => x.UserName == userName);

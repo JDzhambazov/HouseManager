@@ -12,6 +12,8 @@
     {
         Task<IdentityResult> AddNewUser(string userName, string firstName, string lastName, string email, string password);
 
+        AddressViewModel CurrentAddressInfo(int addressId);
+
         IEnumerable<SelectListItem> GetAllUsersInAddress(int addressId);
 
         IEnumerable<AddressViewModel> GetUserAddresses(string user);

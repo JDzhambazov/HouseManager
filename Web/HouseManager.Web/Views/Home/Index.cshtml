@@ -1,6 +1,6 @@
 ﻿@using HouseManager.Common
 
-@model IEnumerable<AddressViewModel>;
+@model HomeViewModel;
 @{
     this.ViewData["Title"] = "Home Page";
 }
@@ -9,10 +9,14 @@
 
     @if (User.Identity.Name != null)
     {
-        <div class="row">
+        var currentAddress = Model.CurrntAddress;
+
+    <div class="row">
+        @if (Model.UsersAddresses.Count() > 1)
+        {
             <aside class="col-md-2 border-dark">
                 <h3 class="text-center"> Моите имоти</h3>
-                @foreach (var address in Model)
+                @foreach (var address in Model.UsersAddresses)
                 {
                     <a asp-controller="Home" asp-action="SetCurrentAddress" asp-route-id="@address.Id" class="btn btn-outline-primary mb-2">
                         @address.CityName @address?.DistrictName
@@ -20,15 +24,21 @@
                     </a>
                 }
             </aside>
-            <div class="col-md-10 border-danger">
-                <div>@User.Identity.Name</div>
-            </div>
+        }
+        <div class="col-md-10 border-danger">
+            <h3 class="text-center">
+                @currentAddress.CityName @currentAddress?.DistrictName
+                @currentAddress?.StreetName @currentAddress.Number @currentAddress?.Entrance
+            </h3>
+
         </div>
+    </div>
     }
     else
     {
         <div class="text-center">
-            <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
+            <h1 class="display-4">Етажна собственост</h1>
+            <h3>Най-добрата платформа за управление на етажната собственост</h3>
             <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
         </div>
     }
