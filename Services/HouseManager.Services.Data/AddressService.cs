@@ -134,7 +134,8 @@
         }
 
         public SelectList GetAddressMounthFees(int addressId)
-            => new SelectList(this.monthFeeRepository.All().Where(x => x.AddressId == addressId)
+            => new SelectList(this.monthFeeRepository.All()
+                .Where(x => x.AddressId == addressId)
             .Select(x => new SelectListItem
             {
                 Value = x.FeeType.Name,

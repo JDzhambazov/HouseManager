@@ -52,7 +52,7 @@
             this.db.Properties.Add(property);
             this.db.SaveChanges();
 
-            foreach (var fee in newProperty.Fees)
+            foreach (var fee in newProperty.Fee)
             {
                 this.feeService.AddFeeToProperty(property.Id, fee);
             }

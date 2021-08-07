@@ -29,9 +29,9 @@
                         <span asp-validation-for="PropertyType" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Fees"></label>
-                        <select asp-for="Fees" asp-items="@Model.MonthFees" class="form-control simpleSelect2" name="fees[]" multiple="multiple" required></select>
-                        <span asp-validation-for="Fees" class="text-danger"></span>
+                        <label asp-for="Fee"></label>
+                        <select asp-for="Fee" asp-items="@Model.Fees" class="form-control simpleSelect2" name="fee[]" multiple="multiple" required></select>
+                        <span asp-validation-for="Fee" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="ResidentsCount"></label>

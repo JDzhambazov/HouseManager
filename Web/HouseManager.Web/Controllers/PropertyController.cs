@@ -65,7 +65,7 @@
             {
                 newProperty.Name = property.Name;
                 newProperty.ResidentsCount = property.ResidentsCount;
-                return View(newProperty);
+                return RedirectToAction(nameof(Create));
             }
             else
             {
@@ -127,20 +127,6 @@
             ViewBag.IsUserMakeChanges = userService
                 .IsUserMakeChanges(this.User.Id(), this.GetAddressId());
             var propertyInfo = propertyService.Details(id);
-            //    new PropertyDetailsServiceModel
-            //{
-            //    Id = id,
-            //    Name = $"Ap.{id}",
-            //    PropertyTypeId = 6,
-            //    PropertyTypeName = "Апартамент",
-            //    MonthFees = new List<string>() { "Почистване","Асансьор","Ремонт"},
-            //    ResidentsCount = 3,
-            //    Residents = new List<UserIdAndFullname>() 
-            //    { 
-            //        new UserIdAndFullname {  Id = "asdasfs", FullName = "Ivan Ivanov"} ,
-            //        new UserIdAndFullname {  Id = "asdasfs", FullName = "Ivan Ivanov2"} ,
-            //    },
-            //};
 
             return this.View(propertyInfo);
         }
@@ -168,7 +154,7 @@
         private CreatePropertyServiceModel NewProperty()
         {
             var property = new CreatePropertyServiceModel();
-            property.MonthFees = this.addressService.GetAddressMounthFees(this.GetAddressId());
+            property.Fees = this.addressService.GetAddressMounthFees(this.GetAddressId());
             property.PropertyTypes = this.propertyService.GetPropertyTypes();
             property.PropertyCount = this.addressService.GetPropertyCount(this.GetAddressId());
 
