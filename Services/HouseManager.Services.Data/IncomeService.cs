@@ -106,7 +106,7 @@
         {
             var message = new StringBuilder();
             message.AppendLine("<h1>Потвърждение за извършено плащане</h1>");
-            message.AppendLine($"<h2>Днес {DateTime.Now} е получено плащане за:</h2>");
+            message.AppendLine($"<h2>Днес {DateTime.Now} от {payer} е получено плащане за:</h2>");
 
             if(regularIncome != null)
             {
