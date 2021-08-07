@@ -118,7 +118,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddManager(RoleToAddress user)
         {
-            if (this.userService.IsUserMakeChanges(this.User.Id(),this.GetAddressId()))
+            if (!this.userService.IsUserMakeChanges(this.User.Id(),this.GetAddressId()))
             {
                 return BadRequest();
             }
@@ -153,7 +153,7 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPaymaster(RoleToAddress user)
         {
-            if (this.userService.IsUserMakeChanges(this.User.Id(), this.GetAddressId()))
+            if (!this.userService.IsUserMakeChanges(this.User.Id(), this.GetAddressId()))
             {
                 return BadRequest();
             }
