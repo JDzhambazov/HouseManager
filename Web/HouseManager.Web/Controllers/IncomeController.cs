@@ -1,14 +1,13 @@
 ﻿namespace HouseManager.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using HouseManager.Data;
+    using System.Threading.Tasks;
     using HouseManager.Services.Data;
+    using HouseManager.Services.Messaging;
+    using HouseManager.Web.Infrastructure;
     using HouseManager.Web.ViewModels.Incomes;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
     [Authorize]
     public class IncomeController : BaseController
@@ -16,17 +15,20 @@
         private readonly IPropertyService propertyService;
         private readonly IDueAmountService dueAmountService;
         private readonly IIncomeService incomeService;
+        private readonly IEmailSender emailSender;
         private readonly IUserService userService;
 
         public IncomeController(
-            IPropertyService propertyService,
             IDueAmountService dueAmountService,
             IIncomeService incomeService,
+            IEmailSender emailSender,
+            IPropertyService propertyService,
             IUserService userService)
         {
             this.propertyService = propertyService;
             this.dueAmountService = dueAmountService;
             this.incomeService = incomeService;
+            this.emailSender = emailSender;
             this.userService = userService;
         }
 
@@ -47,7 +49,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddIncome(AddIncomeFormModel income)
+        public async Task<IActionResult> AddIncome(AddIncomeFormModel income)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +74,16 @@
                         incomeService.AddIncome(income.PropertyId, result, income.NotRegularIncomeDate, resident, this.GetAddressId(), false);     
                     }
                 }
+
+                var sender = userService.GetUserById(this.User.Id());
+                var message = incomeService
+                    .IncomeConfirmationМessage(income.RegularIncome,
+                    income.NotRegularIncome, resident.FullName);
+                await this.emailSender.SendEmailAsync(sender.Email, 
+                    sender.FullName, 
+                    resident.Email, 
+                    "Получено плащане", 
+                    message);
                 return Redirect($"/DueAmount/MonthAmount/{this.GetAddressId()}");
             }
             return View(income);

@@ -15,6 +15,8 @@
 
         void DeleteIncome(int incomeId, int addressId);
 
+        string IncomeConfirmationМessage(string regularIncome, string notRegularIncome, string payer);
+
         PagingServiceModel<AllIncomeServiceModel> GetAll(int addressId,  int page, string propertyId, DateTime startDate, DateTime endDate);
 
         EditIncomeServiceModel GetById(int incomeId, int addressId);

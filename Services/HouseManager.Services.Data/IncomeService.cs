@@ -102,6 +102,29 @@
             this.db.SaveChanges();
         }
 
+        public string IncomeConfirmationМessage(string regularIncome, string notRegularIncome, string payer)
+        {
+            var message = new StringBuilder();
+            message.AppendLine("<h1>Потвърждение за извършено плащане</h1>");
+            message.AppendLine($"<h2>Днес {DateTime.Now} е получено плащане за:</h2>");
+
+            if(regularIncome != null)
+            {
+                message.AppendLine($"<h3>Сума за разходи за общи части -  {regularIncome} лв.</h3>");
+            }
+
+            if(notRegularIncome != null)
+            {
+                message.AppendLine($"<h3>Сума за разходи за ремот и поддръжка -  {notRegularIncome} лв.</h3>");
+            }
+
+            message.AppendLine("<br />");
+            message.AppendLine("<h3>Благодарим за извършеното плащане.</h3>");
+            message.AppendLine("<h5>Лек ден.</h6>");
+
+            return message.ToString();
+        }
+
         public PagingServiceModel<AllIncomeServiceModel> GetAll(int addressId, int page,
             string propertyId, DateTime startDate, DateTime endDate)
         {
