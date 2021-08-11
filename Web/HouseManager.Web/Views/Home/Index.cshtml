@@ -11,35 +11,99 @@
     {
         var currentAddress = Model.CurrntAddress;
 
-    <div class="row">
-        @if (Model.UsersAddresses.Count() > 1)
-        {
-            <aside class="col-md-2 border-dark">
-                <h3 class="text-center"> Моите имоти</h3>
-                @foreach (var address in Model.UsersAddresses)
-                {
-                    <a asp-controller="Home" asp-action="SetCurrentAddress" asp-route-id="@address.Id" class="btn btn-outline-primary mb-2">
-                        @address.CityName @address?.DistrictName
-                        @address?.StreetName @address.Number @address?.Entrance
-                    </a>
-                }
-            </aside>
-        }
-    <div class="col-md-10 border-danger">
-        <h3 class="text-center">
-            @currentAddress.CityName @currentAddress?.DistrictName
-            @currentAddress?.StreetName @currentAddress.Number @currentAddress?.Entrance
-        </h3>
+        <div class="row">
+            @if (Model.UsersAddresses.Count() > 1)
+            {
+                <aside class="col-md-2 border-dark mt-4">
+                    <h3 class="text-center"> Моите имоти</h3>
+                    @foreach (var address in Model.UsersAddresses)
+                    {
+                        <a asp-controller="Home" asp-action="SetCurrentAddress" asp-route-id="@address.Id" class="btn btn-outline-primary mb-2">
+                            @address.CityName @address?.DistrictName
+                            @address?.StreetName @address.Number @address?.Entrance
+                        </a>
+                    }
+                </aside>
+            }
+            <div class="col-md-10 border-danger">
+                <h3 class="text-center mt-4">
+                    @currentAddress.CityName @currentAddress?.DistrictName
+                    @currentAddress?.StreetName @currentAddress.Number @currentAddress?.Entrance
+                </h3>
+                <div class="card text-center mt-4 form-style">
+                    <div class="card-header">
+                        Иван Иванов
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Смяна входна врата</h5>
+                        <p class="card-text">Постъпило е предложение за събиране на средства за смяна на входната врата моля да дадете своето мнение по въпроса до 1.1.0001 г.</p>
+                        <a href="#" class="btn btn-primary">За предложението</a>
+                        <a href="#" class="btn btn-danger">Против предложението</a>
+                    </div>
+                    <div class="card-footer">
+                        Резултат от гласуване
 
-    </div>
-    </div>
+                        <div class="progress mt-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%">За предложението</div>
+                        </div>
+
+                        <div class="progress mt-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%">Против предложението</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="card mt-4 form-style">
+                        <h5 class="card-header">Иван Иванов</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Общо събрание</h5>
+                            <p class="card-text">На 1.1.0001 г. от 00:00 часа се свиква общо събрание с дневен ред посочен по долу.</p>
+                            <p>
+                                @*<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Link with href
+                                    </a>*@
+                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    Подробна информация
+                                </button>
+                            </p>
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body  form-style">
+                                    Точка 1.
+                                </div>
+                                <div class="card card-body  form-style">
+                                    Точка 2.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
     else
     {
         <div class="text-center">
-            <h1 class="display-4">Етажна собственост</h1>
+            <h1 class="display-4 mt-5">Етажна собственост</h1>
             <h3>Най-добрата платформа за управление на етажната собственост</h3>
-            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+            <div class="form-style mt-5">
+                <h4 class="mt-4">Предлагаме следните следните услуги:</h4>
+                <ul class="list-unstyled">
+                    <li>Бърза и лесна регистрация на етажнта собственост <a asp-area="Identity" asp-page="/Account/Register">от тук</a></li>
+                    <li>Съхранение на данни за имотите и техните ползватели</li>
+                    <li>Описание на таксите за Вашата етажна собственост</li>
+                    <li>Справки за приходи , разходи , текущи задължения</li>
+                    <li>Уведомление по email за извършени плащания</li>
+                </ul>
+            </div>
+
+            <div class="form-style mt-5">
+                <h4>Очаквайте скоро:</h4>
+                <ul class="list-unstyled">
+                    <li>Годишни и месечни отчети</li>
+                    <li>Табло за предложения с възможност за гласуване</li>
+                    <li class="mb-5">Публикуване на съобщения до другите обитатели на етажната собственост</li>
+                </ul>
+            </div>
         </div>
     }
 
