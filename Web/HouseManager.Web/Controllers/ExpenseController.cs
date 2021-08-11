@@ -17,27 +17,28 @@ namespace HouseManager.Web.Controllers
     [Authorize]
     public class ExpenseController : BaseController
     {
-        private readonly ApplicationDbContext dbContext;
+        //private readonly ApplicationDbContext dbContext;
         private readonly IExpensService expensService;
 
         public ExpenseController(ApplicationDbContext dbContext, IExpensService expensService)
         {
-            this.dbContext = dbContext;
+            //this.dbContext = dbContext;
             this.expensService = expensService;
         }
+
         public IActionResult AddExpense()
         {
-            var expenseType = dbContext.ExpensesTypes.ToList();
-            var expenseTypeSelectItems = new List<SelectListItem>();
-            foreach (var item in expenseType)
-            {
-                expenseTypeSelectItems.Add(new SelectListItem { Value = item.Name, Text = item.Name });
-            }
+            //var expenseType = dbContext.ExpensesTypes.ToList();
+            //var expenseTypeSelectItems = new List<SelectListItem>();
+            //foreach (var item in expenseType)
+            //{
+            //    expenseTypeSelectItems.Add(new SelectListItem { Value = item.Name, Text = item.Name });
+            //}
 
             var result = new ExpenseViewModel
             {
-                AddressId = this.GetAddressId() ,
-                ExpensTypeList = expenseTypeSelectItems ?? new List<SelectListItem>(),
+                AddressId = this.GetAddressId(),
+                ExpensTypeList = expensService.GetExpenseTypes(this.GetAddressId()),
                 Date = DateTime.UtcNow,
             };
 

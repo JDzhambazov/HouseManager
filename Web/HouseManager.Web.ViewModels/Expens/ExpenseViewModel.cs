@@ -9,7 +9,7 @@ namespace HouseManager.Web.ViewModels.Expens
     {
         public int AddressId { get; set; }
 
-        public List<SelectListItem> ExpensTypeList { get; set; }
+        public SelectList ExpensTypeList { get; set; }
 
         public string ExpensType { get; set; }
 
