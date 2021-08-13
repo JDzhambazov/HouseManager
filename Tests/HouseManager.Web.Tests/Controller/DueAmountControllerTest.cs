@@ -4,11 +4,11 @@
     using MyTested.AspNetCore.Mvc;
     using Xunit;
 
-    public class AddressControllerTest
+    public class DueAmountControllerTest
     {
         [Fact]
-        public void AddressControllerMastHaveAutorizeAtributeTest()
-            => MyController<AddressController>
+        public void DueAmountControllerMastHaveAutorizeAtribute()
+            => MyController<DueAmountController>
             .Instance()
             .ShouldHave()
             .Attributes(attribute => attribute

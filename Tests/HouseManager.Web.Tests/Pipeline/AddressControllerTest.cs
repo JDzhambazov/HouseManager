@@ -1,11 +1,8 @@
 ﻿namespace HouseManager.Web.Tests.Pipeline
 {
-    using HouseManager.Data.Models;
     using HouseManager.Services.Data.Models;
     using HouseManager.Web.Controllers;
     using MyTested.AspNetCore.Mvc;
-    using System;
-    using System.Linq;
     using Xunit;
 
     using static Data.MyTestConstants;

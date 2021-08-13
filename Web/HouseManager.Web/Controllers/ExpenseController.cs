@@ -1,39 +1,25 @@
-﻿using HouseManager.Common;
-using HouseManager.Data;
-using HouseManager.Data.Models;
-using HouseManager.Services.Data;
-using HouseManager.Web.ViewModels.Expens;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HouseManager.Web.Controllers
+﻿namespace HouseManager.Web.Controllers
 {
+    using System;
+    using System.Globalization;
+    using HouseManager.Common;
+    using HouseManager.Services.Data;
+    using HouseManager.Web.ViewModels.Expens;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
     [Authorize]
     public class ExpenseController : BaseController
     {
-        //private readonly ApplicationDbContext dbContext;
         private readonly IExpensService expensService;
 
-        public ExpenseController(ApplicationDbContext dbContext, IExpensService expensService)
+        public ExpenseController(IExpensService expensService)
         {
-            //this.dbContext = dbContext;
             this.expensService = expensService;
         }
 
         public IActionResult AddExpense()
         {
-            //var expenseType = dbContext.ExpensesTypes.ToList();
-            //var expenseTypeSelectItems = new List<SelectListItem>();
-            //foreach (var item in expenseType)
-            //{
-            //    expenseTypeSelectItems.Add(new SelectListItem { Value = item.Name, Text = item.Name });
-            //}
 
             var result = new ExpenseViewModel
             {
