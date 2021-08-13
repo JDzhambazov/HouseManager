@@ -32,4 +32,8 @@
     <ProjectReference Include="..\..\Web\HouseManager.Web\HouseManager.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StatisticsArea\Pipeline\" />
+  </ItemGroup>
+
 </Project>

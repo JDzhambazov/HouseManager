@@ -1,4 +1,4 @@
-﻿namespace HouseManager.Web.Areas.Statistics.Contollers
+﻿namespace HouseManager.Web.Areas.Statistics.Controllers
 {
     using System;
     using System.Linq;

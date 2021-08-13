@@ -79,10 +79,10 @@
                 var message = incomeService
                     .IncomeConfirmationМessage(income.RegularIncome,
                     income.NotRegularIncome, resident.FullName);
-                await this.emailSender.SendEmailAsync(sender.Email, 
-                    sender.FullName, 
-                    resident.Email, 
-                    "Получено плащане", 
+                await this.emailSender.SendEmailAsync(sender.Email,
+                    sender.FullName,
+                    resident.Email,
+                    "Получено плащане",
                     message);
                 return Redirect($"/DueAmount/MonthAmount/{this.GetAddressId()}");
             }

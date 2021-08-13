@@ -27,12 +27,12 @@
             .WithModelOfType<ExpenseViewModel>());
 
         [Theory]
-        [InlineData(1, "Почистване", "20", true)]
-        public void AddPaymasterPostMustReturnBadRequestIfUserNotMakeChanges(
-                int addressId,
+        [InlineData("1", "Почистване", "20", "true")]
+        public void AddExpensePostMustRedirectToAddExpenseGetAction(
+                string addressId,
                 string expensType,
                 string price,
-                bool isRegular)
+                string isRegular)
              => MyMvc
              .Pipeline()
              .ShouldMap(request => request
@@ -40,13 +40,13 @@
              .WithMethod(HttpMethod.Post)
              .WithFormFields(new
              {
-                 AddressId = 1,
+                 AddressId = addressId,
                  ExpensType = expensType,
                  Price = price,
-                 //Date = new DateTime(DateTime.Now.Year,
-                 //    DateTime.Now.Month,
-                 //    DateTime.Now.Day),
-                 IsRegular = true,
+                 Date = new DateTime(DateTime.Now.Year,
+                     DateTime.Now.Month,
+                     DateTime.Now.Day).ToString(),
+                 IsRegular = isRegular,
              })
              .WithUser(user => user.InRole("Manager"))
              .WithAntiForgeryToken())

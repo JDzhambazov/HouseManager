@@ -1,4 +1,4 @@
-﻿namespace HouseManager.Web.Areas.Statisics.Contollers
+﻿namespace HouseManager.Web.Areas.Statistics.Controllers
 {
     using System;
     using System.Xml;
@@ -19,7 +19,8 @@
         private readonly IUserService userService;
         private readonly IPropertyService propertyService;
 
-        public IncomeController(IIncomeService incomeService,
+        public IncomeController(
+            IIncomeService incomeService,
             IUserService userService,
             IPropertyService propertyService
             )

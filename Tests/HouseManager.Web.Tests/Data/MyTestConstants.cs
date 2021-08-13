@@ -4,7 +4,10 @@
     using HouseManager.Data.Models;
     using HouseManager.Services.Data.Models;
     using HouseManager.Web.ViewModels.Expens;
+    using HouseManager.Web.ViewModels.Incomes;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public static class MyTestConstants
     {
@@ -31,15 +34,42 @@
         };
 
         public static ExpenseViewModel newExpense
-            => new ExpenseViewModel
+        => new ExpenseViewModel
+        {
+            AddressId = 1,
+            ExpensType = "Почистване",
+            Price ="20",
+            Date = new DateTime(DateTime.Now.Year,
+                DateTime.Now.Month,
+                DateTime.Now.Day),
+            IsRegular = true,
+        };
+
+        public static IEnumerable<Property> GetProperty
+            => Enumerable.Range(1, 10).Select(x => new Property());
+
+        public static AddIncomeFormModel AddIncome
+        => new AddIncomeFormModel
+        {
+            PropertyId = 1,
+            RegularIncome = "20",
+            RegularIncomeDate = new DateTime(DateTime.Now.Year,
+                DateTime.Now.Month,
+                DateTime.Now.Day),
+            NotRegularIncome ="30",
+            NotRegularIncomeDate = new DateTime(DateTime.Now.Year,
+                DateTime.Now.Month,
+                DateTime.Now.Day),
+            Resident = "TestId",
+        };
+
+        public static ApplicationUser UserInDatabase
+            => new ApplicationUser
             {
-                AddressId = 0,
-                ExpensType = "Почистване",
-                Price ="20",
-                //Date = new DateTime(DateTime.Now.Year,
-                //    DateTime.Now.Month,
-                //    DateTime.Now.Day),
-                IsRegular = false,
+                Id = "TestId",
+                UserName = "TestName",
+                FullName = "TestName TestName",
+                Email = "test@test.com",
             };
     }
 }
