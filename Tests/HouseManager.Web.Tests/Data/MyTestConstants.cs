@@ -3,6 +3,8 @@
     using HouseManager.Common;
     using HouseManager.Data.Models;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Web.ViewModels.Expens;
+    using System;
 
     public static class MyTestConstants
     {
@@ -27,5 +29,17 @@
             Number = "12",
             NumberOfProperties = 1,
         };
+
+        public static ExpenseViewModel newExpense
+            => new ExpenseViewModel
+            {
+                AddressId = 0,
+                ExpensType = "Почистване",
+                Price ="20",
+                //Date = new DateTime(DateTime.Now.Year,
+                //    DateTime.Now.Month,
+                //    DateTime.Now.Day),
+                IsRegular = false,
+            };
     }
 }
