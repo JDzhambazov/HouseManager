@@ -98,10 +98,11 @@
                 }
             }
 
-            await userManager.AddToRoleAsync(userService.GetUserById(this.User.Id()), roleName);
-            
-            this.SetAddressId(currentAddressId);
+            var user = userService.GetUserById(this.User.Id());
+            await userManager.AddToRoleAsync(user , roleName);
 
+            this.SetAddressId(currentAddressId);
+            await addressService.SetCurrentAddressId(currentAddressId, user);
             return RedirectToAction(nameof(HomeController.Index),"Home");
         }
 
