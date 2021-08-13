@@ -69,6 +69,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(EditExpenseViewModel expense)
         {
             var price = this.DecimalValue(expense.Cost);
