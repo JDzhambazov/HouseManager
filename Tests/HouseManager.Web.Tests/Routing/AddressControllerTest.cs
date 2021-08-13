@@ -10,14 +10,14 @@
     public class AddressControllerTest
     {
         [Fact]
-        public void MathcCreateAddressPostMethod()
+        public void MatchCreateAddressPostAction()
             => MyRouting
             .Configuration()
             .ShouldMap(request => request
                 .WithPath("/Address/Create")
                 .WithMethod(HttpMethod.Post)
                 .WithAntiForgeryToken())
-            .To<AddressController>(c => c.Create(new AdressServiseInputModel()));
+            .To<AddressController>(c => c.Create(With.Any<AdressServiseInputModel>()));
 
     }
 }
