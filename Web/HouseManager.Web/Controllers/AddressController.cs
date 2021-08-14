@@ -200,7 +200,7 @@
                 fee.IsPersonal,
                 fee.IsRegular);
 
-            return this.View(this.NewFee());
+            return RedirectToAction(nameof(MounthFee));
         }
 
         private FeeServiseModel NewFee()
