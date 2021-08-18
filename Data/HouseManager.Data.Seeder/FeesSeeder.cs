@@ -52,7 +52,7 @@
 
             foreach (var id in propertyList)
             {
-                feeManager.AddFeeToProperty(id, "Асансьор");
+                feeManager.AddFeeToProperty(id,2);
             }
         }
     }

@@ -40,23 +40,20 @@
             this.db.SaveChanges();
         }
 
-        public void AddFeeToProperty(int propertyId, string feeName)
+        public void AddFeeToProperty(int propertyId, int feeId)
         {
             var property = this.db.Properties.FirstOrDefault(x => x.Id == propertyId);
-            var currentFee = this.db.MonthlyFees.FirstOrDefault(x => x.FeeType.Name == feeName);
+            var currentFee = this.db.MonthlyFees.FirstOrDefault(x => x.Id == feeId);
 
             property.MonthFees.Add(currentFee);
 
             this.db.SaveChanges();
         }
 
-        public void EditAddresFee(int addressId, string feeName, decimal cost)
+        public void EditFee(int feeId, decimal cost)
         {
-            var fee = this.db.Addresses
-                .Include(x => x.MonthlyFees)
-                .ThenInclude(x => x.FeeType)
-                .Select(x => x.MonthlyFees.FirstOrDefault(f => f.FeeType.Name == feeName))
-                .FirstOrDefault();
+            var fee = this.db.MonthlyFees
+                .FirstOrDefault(x => x.Id == feeId);
 
             fee.Cost = cost;
             this.db.SaveChanges();

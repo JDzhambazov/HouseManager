@@ -9,9 +9,9 @@
     {
         void AddFeeToAddress(int addressId, string feeName, decimal cost, bool isPersonel, bool isRegular);
 
-        void AddFeeToProperty(int propertyId, string feeName);
+        void AddFeeToProperty(int propertyId, int feeId);
 
-        void EditAddresFee(int addressId, string feeName, decimal cost);
+        void EditFee(int feeId, decimal cost);
 
         SelectList GetAllFees();
 

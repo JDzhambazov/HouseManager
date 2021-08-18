@@ -18,6 +18,7 @@
     public class AddressController : BaseController
     {
         private readonly IAddressService addressService;
+        private readonly IDueAmountService dueAmountService;
         private readonly IFeeService feeService;
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly IUserService userService;
@@ -27,12 +28,14 @@
 
         public AddressController(
             IAddressService addressService,
+            IDueAmountService dueAmountService,
             IFeeService feeService,
             RoleManager<ApplicationRole> roleManager,
             IUserService userService,
             UserManager<ApplicationUser> userManager)
         {
             this.addressService = addressService;
+            this.dueAmountService = dueAmountService;
             this.feeService = feeService;
             this.roleManager = roleManager;
             this.userService = userService;
@@ -180,9 +183,7 @@
 
         public IActionResult EditMonthFee(int addresId)
         {
-            var fees = new EditMonthFeeServiceModel();
-            fees.AddressFees = feeService.GetAllFeesInAddress(addresId);
-            fees.StartDate = DateTime.Now;
+            var fees = GetAddressFees(addresId);
 
             return this.View(fees);
         }
@@ -191,8 +192,28 @@
         [ValidateAntiForgeryToken]
         public IActionResult EditMonthFee(ICollection<int> feeId, ICollection<string> cost, DateTime startDate)
         {
+            if (ModelState.IsValid)
+            {
+                var feeList = feeId.ToArray();
+                var costList = cost.ToArray();
 
-            return RedirectToAction(nameof(DueAmountController.MonthAmount), "DueAmount");
+                for (int i = 0; i < feeList.Count(); i++)
+                {
+                    var newCost = this.DecimalValue(cost.ToArray()[i]);
+                    feeService.EditFee(feeList[i], this.DecimalValue(costList[i]));
+                }
+
+                var properties = addressService.GetAllProperyies(this.GetAddressId());
+
+                foreach (var property in properties)
+                {
+                    dueAmountService.EditPropertyMountDueAmount(property.Id, startDate);
+                }
+
+                return RedirectToAction(nameof(DueAmountController.MonthAmount), "DueAmount");
+            }
+
+            return View(GetAddressFees(this.GetAddressId()));
         }
 
         public IActionResult MounthFee()
@@ -226,6 +247,14 @@
             var newFee = new FeeServiseModel();
             newFee.FeeTypes = this.feeService.GetAllFees();
             return newFee;
+        }
+
+        private EditMonthFeeServiceModel GetAddressFees(int addresId)
+        {
+            var fees = new EditMonthFeeServiceModel();
+            fees.AddressFees = feeService.GetAllFeesInAddress(addresId);
+            fees.StartDate = DateTime.Now;
+            return fees;
         }
 
         private IEnumerable<SelectListItem> UserList()

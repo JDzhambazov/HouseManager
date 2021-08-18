@@ -138,7 +138,7 @@
                 .Where(x => x.AddressId == addressId)
             .Select(x => new SelectListItem
             {
-                Value = x.FeeType.Name,
+                Value = x.Id.ToString(),
                 Text = x.FeeType.Name,
             }).ToList(), "Value", "Text", null);
 

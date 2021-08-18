@@ -51,7 +51,6 @@
             }
         }
 
-
         public void EditPropertyMountDueAmount(int propertyId, DateTime startDate)
         {
             var regularAmounts = this.db.RegularDueAmounts

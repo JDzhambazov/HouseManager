@@ -54,7 +54,7 @@
 
             foreach (var fee in newProperty.Fee)
             {
-                this.feeService.AddFeeToProperty(property.Id, fee);
+                this.feeService.AddFeeToProperty(property.Id, int.Parse(fee));
             }
         }
 
