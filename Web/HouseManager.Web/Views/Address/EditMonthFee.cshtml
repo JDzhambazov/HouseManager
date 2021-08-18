@@ -1,0 +1,42 @@
+﻿@model EditMonthFeeServiceModel
+
+@{
+    this.ViewData["Title"] = "Корекция на месечни такси";
+}
+
+<div class="container-scroller">
+    <div class="container-scroller mt-3">
+        <div class="card col-lg-6 mx-auto form-style">
+            <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">@this.ViewData["Title"]</h3>
+                <form method="post" col-lg-8 offset-2>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @foreach (var fee in Model.AddressFees)
+                    {
+
+                        <input type="hidden" asp-for="FeeId" value="@fee.Id" />
+                        <div class="form-group">
+                            <label asp-for="Cost">@fee.FeeType.Name</label>
+                            <input asp-for="Cost" class="form-control p_input" value="@fee.Cost">
+                            <span asp-validation-for="Cost" class="text-danger"></span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label asp-for="StartDate"></label>
+                        <input asp-for="StartDate" type="date" class="form-control p_input">
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="text-center mt-4 d-flex justify-content-around">
+                        <input type="submit" class="btn btn-danger enter-btn" value="Промени" />
+                        <a asp-area="Statistics" asp-controller="Income" asp-action="GetAll" class="btn btn-primary enter-btn">Отказ</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

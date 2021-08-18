@@ -52,7 +52,7 @@
         }
 
 
-        public void EditMountDueAmount(int propertyId, DateTime startDate)
+        public void EditPropertyMountDueAmount(int propertyId, DateTime startDate)
         {
             var regularAmounts = this.db.RegularDueAmounts
                 .Where(x => x.PropertyId == propertyId)

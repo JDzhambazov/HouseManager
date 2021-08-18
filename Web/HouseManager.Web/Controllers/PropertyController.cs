@@ -116,7 +116,7 @@
 
             if (await propertyService.Edit(property))
             {
-                dueAmountService.EditMountDueAmount(property.Id, property.StartDate);
+                dueAmountService.EditPropertyMountDueAmount(property.Id, property.StartDate);
                 return RedirectToAction(nameof(DueAmountController.MonthAmount), "DueAmount");
             }
             return View(property);

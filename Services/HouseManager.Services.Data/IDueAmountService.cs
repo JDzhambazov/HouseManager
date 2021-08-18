@@ -15,7 +15,7 @@
 
         void AddStartDueAmount(int propertyId, int month, int year, decimal cost, bool isRegular);
 
-        void EditMountDueAmount(int propertyId, DateTime startDate);
+        void EditPropertyMountDueAmount(int propertyId, DateTime startDate);
 
         void EditMountDueAmount(int month, int year, int propertyId, decimal cost, bool isRegular);
 

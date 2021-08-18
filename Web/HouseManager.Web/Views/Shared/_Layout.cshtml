@@ -66,7 +66,7 @@
                             <div class="dropdown-menu dark" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Приходи</a>
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="Expense" asp-action="AddExpense">Разходи</a>
-                                <a class="dropdown-item text-info disabled" asp-area="" asp-controller="" asp-action="">Промени Месечни Такси</a>
+                                <a class="dropdown-item text-info" asp-area="" asp-controller="Address" asp-action="EditMonthFee" asp-route-addresId=@addressId>Промени Месечни Такси</a>
                                 <div class="dropdown-divider border-info"></div>
                                 <a class="dropdown-item text-info" asp-area="" asp-controller="DueAmount" asp-action="MonthAmount">Текущи задължения</a>
                                 <div class="dropdown-divider border-info"></div>

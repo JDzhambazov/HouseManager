@@ -7,6 +7,7 @@
     using HouseManager.Data.Models;
     using HouseManager.Services.Data;
     using HouseManager.Services.Data.Models;
+    using HouseManager.Services.Models;
     using HouseManager.Web.Infrastructure;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -175,6 +176,23 @@
             await this.addressService.SetAddressPaymaster(this.GetAddressId(), user.UserId);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        public IActionResult EditMonthFee(int addresId)
+        {
+            var fees = new EditMonthFeeServiceModel();
+            fees.AddressFees = feeService.GetAllFeesInAddress(addresId);
+            fees.StartDate = DateTime.Now;
+
+            return this.View(fees);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditMonthFee(ICollection<int> feeId, ICollection<string> cost, DateTime startDate)
+        {
+
+            return RedirectToAction(nameof(DueAmountController.MonthAmount), "DueAmount");
         }
 
         public IActionResult MounthFee()
