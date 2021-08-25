@@ -35,7 +35,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult AddExpense(ExpenseViewModel expense)
         {
-            var price = decimal.Parse(expense.Price, GlobalConstants.decimalStyle, CultureInfo.InvariantCulture);
+            var price = this.DecimalValue(expense.Price);
             expensService.AddExpens(expense.ExpensType, price, expense.Date, expense.IsRegular, expense.AddressId);
             return RedirectToAction(nameof(AddExpense));
         }

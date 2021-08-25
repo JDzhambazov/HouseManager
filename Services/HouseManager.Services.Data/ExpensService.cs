@@ -25,9 +25,11 @@
 
         public void AddExpens(string expensType, decimal price, DateTime date, bool isRegular, int addressId)
         {
+            var success = int.TryParse(expensType, out int id);
+
             this.db.Expens.Add(new Expens
             {
-                ExpenseType = this.db.ExpensesTypes.FirstOrDefault(x => x.Name == expensType)
+                ExpenseType = this.db.ExpensesTypes.FirstOrDefault(x => x.Id == id)
                 ?? new ExpensType { Name = expensType },
                 Price = price,
                 DateOfPayment = date,
